@@ -7,10 +7,14 @@ type AppointmentNode implements Node {
 }
 
 type AppointmentNodeConnection {
+  """Pagination data for this connection."""
   pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
   edges: [AppointmentNodeEdge]!
 }
 
+"""A Relay edge containing a `AppointmentNode` and its cursor."""
 type AppointmentNodeEdge {
   """The item at the end of the edge"""
   node: AppointmentNode
@@ -23,14 +27,18 @@ type AppointmentStateNode implements Node {
   """The ID of the object."""
   id: ID!
   name: String!
-  appointments(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection
+  appointments(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection!
 }
 
 type AppointmentStateNodeConnection {
+  """Pagination data for this connection."""
   pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
   edges: [AppointmentStateNodeEdge]!
 }
 
+"""A Relay edge containing a `AppointmentStateNode` and its cursor."""
 type AppointmentStateNodeEdge {
   """The item at the end of the edge"""
   node: AppointmentStateNode
@@ -71,9 +79,12 @@ type Mutation {
   createAppointmentState(name: String!): CreateAppointmentState
   updateAppointmentState(id: String!, name: String!): UpdateAppointmentState
   deleteAppointmentState(id: String!): DeleteAppointmentState
-  tokenAuth(username: String!, password: String!): ObtainJSONWebToken
-  verifyToken(token: String!): Verify
-  refreshToken(token: String!): Refresh
+
+  """Obtain JSON Web Token mutation"""
+  tokenAuth(input: ObtainJSONWebTokenInput!): ObtainJSONWebTokenPayload
+  verifyToken(input: VerifyInput!): VerifyPayload
+  refreshToken(input: RefreshInput!): RefreshPayload
+  revokeToken(input: RevokeInput!): RevokePayload
 }
 
 """An object with an ID"""
@@ -82,9 +93,16 @@ interface Node {
   id: ID!
 }
 
+input ObtainJSONWebTokenInput {
+  clientMutationId: String
+  username: String!
+  password: String!
+}
+
 """Obtain JSON Web Token mutation"""
-type ObtainJSONWebToken {
+type ObtainJSONWebTokenPayload {
   token: String
+  clientMutationId: String
 }
 
 """Subscription triggers on a new appointment state."""
@@ -93,6 +111,9 @@ type OnAppointmentState {
   appointmentStateNode: AppointmentStateNode
 }
 
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
 type PageInfo {
   """When paginating forwards, are there more items?"""
   hasNextPage: Boolean!
@@ -114,7 +135,7 @@ type Query {
 
   """The ID of the object"""
   relayUserInfo(id: ID!): UserInfoNode
-  relayUserInfos(before: String, after: String, first: Int, last: Int, user: ID, user_Username: String, user_Username_Contains: String, user_Username_Istartswith: String, user_FirstName: String, user_FirstName_Contains: String, user_FirstName_Istartswith: String, user_LastName: String, user_LastName_Contains: String, user_LastName_Istartswith: String, user_Email: String, user_Email_Contains: String): UserInfoNodeConnection
+  relayUserInfos(before: String, after: String, first: Int, last: Int, user: ID, user_Username: ID, user_Username_Contains: String, user_Username_Istartswith: String, user_FirstName: ID, user_FirstName_Contains: String, user_FirstName_Istartswith: String, user_LastName: ID, user_LastName_Contains: String, user_LastName_Istartswith: String, user_Email: ID, user_Email_Contains: String): UserInfoNodeConnection
 
   """The ID of the object"""
   relayAppointmentState(id: ID!): AppointmentStateNode
@@ -125,9 +146,25 @@ type Query {
   relayAppointments(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection
 }
 
-type Refresh {
+input RefreshInput {
+  token: String!
+  clientMutationId: String
+}
+
+type RefreshPayload {
   token: String
   payload: GenericScalar
+  clientMutationId: String
+}
+
+input RevokeInput {
+  refreshToken: String!
+  clientMutationId: String
+}
+
+type RevokePayload {
+  revoked: Int
+  clientMutationId: String
 }
 
 """The project root subscription definition"""
@@ -143,14 +180,19 @@ type UserInfoNode implements Node {
   """The ID of the object."""
   id: ID!
   user: UserType!
+  isVip: Boolean!
   userManagedBy: UserType
 }
 
 type UserInfoNodeConnection {
+  """Pagination data for this connection."""
   pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
   edges: [UserInfoNodeEdge]!
 }
 
+"""A Relay edge containing a `UserInfoNode` and its cursor."""
 type UserInfoNodeEdge {
   """The item at the end of the edge"""
   node: UserInfoNode
@@ -184,11 +226,17 @@ type UserType {
   isActive: Boolean!
   dateJoined: DateTime!
   userinfo: UserInfoNode
-  manager(before: String, after: String, first: Int, last: Int, user: ID, user_Username: String, user_Username_Contains: String, user_Username_Istartswith: String, user_FirstName: String, user_FirstName_Contains: String, user_FirstName_Istartswith: String, user_LastName: String, user_LastName_Contains: String, user_LastName_Istartswith: String, user_Email: String, user_Email_Contains: String): UserInfoNodeConnection
-  appointmentSet(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection
+  manager(before: String, after: String, first: Int, last: Int, user: ID, user_Username: ID, user_Username_Contains: String, user_Username_Istartswith: String, user_FirstName: ID, user_FirstName_Contains: String, user_FirstName_Istartswith: String, user_LastName: ID, user_LastName_Contains: String, user_LastName_Istartswith: String, user_Email: ID, user_Email_Contains: String): UserInfoNodeConnection!
+  appointmentSet(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection!
 }
 
-type Verify {
+input VerifyInput {
+  token: String!
+  clientMutationId: String
+}
+
+type VerifyPayload {
   payload: GenericScalar
+  clientMutationId: String
 }
 
