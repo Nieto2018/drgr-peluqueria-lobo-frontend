@@ -1,0 +1,30 @@
+/* React Toast Notifications - Beginning */
+
+.Toastify__toast-container.Toastify__toast-container--top-right {
+  top: 50px;
+}
+
+/* React Toast Notifications - End */
+
+/* Login - Beginning */
+.inner.login .content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.inner.login .content > * {
+  margin-bottom: 10px;
+}
+
+.inner.login .content > a {
+  text-align: center;
+}
+
+@media screen and (min-width: 340px) {
+  .inner.login {
+    width: 350px !important;
+  } 
+}
+
+/* Login - End */

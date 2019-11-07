@@ -1,0 +1,22 @@
+{
+    "login": {
+        "SignIn": "Iniciar sesión",
+        "SignUp": "Registrarte",
+        "LogIn": "Entrar",
+        "Password": "Password",
+        "Email": "Correo electrónico",
+        "EmailForgotten": "¿Has olvidado tu correo electrónico?",
+        "Hello": "Hola"
+    },
+    "home": {
+        "Title": "Bienvenido a Peluquería Lobo",
+        "HairdressersName": "Peluquería Lobo",
+        "AppointmentsList": "Lista de citas",
+        "Title2": "Welcome to {param}"
+    },
+    "generic": {
+        "Create": "Crear",
+        "Update": "Actualizar",
+        "Delete": "Eliminar"
+    }
+  }

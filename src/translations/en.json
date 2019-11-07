@@ -1,0 +1,13 @@
+{
+    "generic": {
+        "Create": "Create",
+        "Cpdate": "Update",
+        "Delete": "Delete"
+    },
+    "home": {
+        "Title": "Welcome to Hairdresser's Lobo",
+        "HairdressersName": "Hairdresser's Lobo",
+        "AppointmentsList": "Appointment list",
+        "Title2": "Welcome to {param}"
+    }
+  }

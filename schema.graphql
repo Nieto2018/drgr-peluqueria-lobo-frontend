@@ -1,0 +1,194 @@
+type AppointmentNode implements Node {
+  """The ID of the object."""
+  id: ID!
+  user: UserType!
+  appointmentDate: DateTime!
+  appointmentState: AppointmentStateNode!
+}
+
+type AppointmentNodeConnection {
+  pageInfo: PageInfo!
+  edges: [AppointmentNodeEdge]!
+}
+
+type AppointmentNodeEdge {
+  """The item at the end of the edge"""
+  node: AppointmentNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type AppointmentStateNode implements Node {
+  """The ID of the object."""
+  id: ID!
+  name: String!
+  appointments(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection
+}
+
+type AppointmentStateNodeConnection {
+  pageInfo: PageInfo!
+  edges: [AppointmentStateNodeEdge]!
+}
+
+type AppointmentStateNodeEdge {
+  """The item at the end of the edge"""
+  node: AppointmentStateNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type CreateAppointmentState {
+  appointmentStateNode: AppointmentStateNode
+}
+
+type CreateUser {
+  user: UserType
+}
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+type DeleteAppointmentState {
+  appointmentStateNode: AppointmentStateNode
+}
+
+"""
+The `GenericScalar` scalar type represents a generic
+GraphQL scalar value that could be:
+String, Boolean, Int, Float, List or Object.
+"""
+scalar GenericScalar
+
+"""The project root mutation definition"""
+type Mutation {
+  createUser(email: String!, password: String!, username: String!): CreateUser
+  createAppointmentState(name: String!): CreateAppointmentState
+  updateAppointmentState(id: String!, name: String!): UpdateAppointmentState
+  deleteAppointmentState(id: String!): DeleteAppointmentState
+  tokenAuth(username: String!, password: String!): ObtainJSONWebToken
+  verifyToken(token: String!): Verify
+  refreshToken(token: String!): Refresh
+}
+
+"""An object with an ID"""
+interface Node {
+  """The ID of the object."""
+  id: ID!
+}
+
+"""Obtain JSON Web Token mutation"""
+type ObtainJSONWebToken {
+  token: String
+}
+
+"""Subscription triggers on a new appointment state."""
+type OnAppointmentState {
+  action: String
+  appointmentStateNode: AppointmentStateNode
+}
+
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""The project root query definition"""
+type Query {
+  me: UserType
+  users: [UserType]
+
+  """The ID of the object"""
+  relayUserInfo(id: ID!): UserInfoNode
+  relayUserInfos(before: String, after: String, first: Int, last: Int, user: ID, user_Username: String, user_Username_Contains: String, user_Username_Istartswith: String, user_FirstName: String, user_FirstName_Contains: String, user_FirstName_Istartswith: String, user_LastName: String, user_LastName_Contains: String, user_LastName_Istartswith: String, user_Email: String, user_Email_Contains: String): UserInfoNodeConnection
+
+  """The ID of the object"""
+  relayAppointmentState(id: ID!): AppointmentStateNode
+  relayAppointmentStates(before: String, after: String, first: Int, last: Int, name: String, appointments: [ID]): AppointmentStateNodeConnection
+
+  """The ID of the object"""
+  relayAppointment(id: ID!): AppointmentNode
+  relayAppointments(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection
+}
+
+type Refresh {
+  token: String
+  payload: GenericScalar
+}
+
+"""The project root subscription definition"""
+type Subscription {
+  onAppointmentStateAction(action: String): OnAppointmentState
+}
+
+type UpdateAppointmentState {
+  appointmentStateNode: AppointmentStateNode
+}
+
+type UserInfoNode implements Node {
+  """The ID of the object."""
+  id: ID!
+  user: UserType!
+  userManagedBy: UserType
+}
+
+type UserInfoNodeConnection {
+  pageInfo: PageInfo!
+  edges: [UserInfoNodeEdge]!
+}
+
+type UserInfoNodeEdge {
+  """The item at the end of the edge"""
+  node: UserInfoNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type UserType {
+  id: ID!
+  password: String!
+  lastLogin: DateTime
+
+  """
+  Designates that this user has all permissions without explicitly assigning them.
+  """
+  isSuperuser: Boolean!
+
+  """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."""
+  username: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+
+  """Designates whether the user can log into this admin site."""
+  isStaff: Boolean!
+
+  """
+  Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+  """
+  isActive: Boolean!
+  dateJoined: DateTime!
+  userinfo: UserInfoNode
+  manager(before: String, after: String, first: Int, last: Int, user: ID, user_Username: String, user_Username_Contains: String, user_Username_Istartswith: String, user_FirstName: String, user_FirstName_Contains: String, user_FirstName_Istartswith: String, user_LastName: String, user_LastName_Contains: String, user_LastName_Istartswith: String, user_Email: String, user_Email_Contains: String): UserInfoNodeConnection
+  appointmentSet(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection
+}
+
+type Verify {
+  payload: GenericScalar
+}
+
