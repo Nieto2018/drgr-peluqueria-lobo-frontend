@@ -55,6 +55,11 @@ type CreateUser {
   user: UserType
 }
 
+type CustomObtainJSONWebToken {
+  token: String!
+  user: UserType
+}
+
 """
 The `DateTime` scalar type represents a DateTime
 value as specified by
@@ -79,9 +84,7 @@ type Mutation {
   createAppointmentState(name: String!): CreateAppointmentState
   updateAppointmentState(id: String!, name: String!): UpdateAppointmentState
   deleteAppointmentState(id: String!): DeleteAppointmentState
-
-  """Obtain JSON Web Token mutation"""
-  tokenAuth(input: ObtainJSONWebTokenInput!): ObtainJSONWebTokenPayload
+  tokenAuth(email: String!, password: String!): CustomObtainJSONWebToken
   verifyToken(input: VerifyInput!): VerifyPayload
   refreshToken(input: RefreshInput!): RefreshPayload
   revokeToken(input: RevokeInput!): RevokePayload
@@ -91,18 +94,6 @@ type Mutation {
 interface Node {
   """The ID of the object."""
   id: ID!
-}
-
-input ObtainJSONWebTokenInput {
-  clientMutationId: String
-  username: String!
-  password: String!
-}
-
-"""Obtain JSON Web Token mutation"""
-type ObtainJSONWebTokenPayload {
-  token: String
-  clientMutationId: String
 }
 
 """Subscription triggers on a new appointment state."""

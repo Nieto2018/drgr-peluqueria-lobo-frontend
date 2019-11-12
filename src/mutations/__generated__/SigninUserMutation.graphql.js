@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 28a47bdfecf879b07b6d514f1372f8ad
+ * @relayHash c96ae9681e8660b357425aaa73cec1bf
  */
 
 /* eslint-disable */
@@ -9,17 +9,13 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type ObtainJSONWebTokenInput = {|
-  clientMutationId?: ?string,
-  username: string,
-  password: string,
-|};
 export type SigninUserMutationVariables = {|
-  input: ObtainJSONWebTokenInput
+  email: string,
+  password: string,
 |};
 export type SigninUserMutationResponse = {|
   +tokenAuth: ?{|
-    +token: ?string
+    +token: string
   |}
 |};
 export type SigninUserMutation = {|
@@ -31,9 +27,10 @@ export type SigninUserMutation = {|
 
 /*
 mutation SigninUserMutation(
-  $input: ObtainJSONWebTokenInput!
+  $email: String!
+  $password: String!
 ) {
-  tokenAuth(input: $input) {
+  tokenAuth(email: $email, password: $password) {
     token
   }
 }
@@ -43,8 +40,14 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "ObtainJSONWebTokenInput!",
+    "name": "email",
+    "type": "String!",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "password",
+    "type": "String!",
     "defaultValue": null
   }
 ],
@@ -57,11 +60,16 @@ v1 = [
     "args": [
       {
         "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
+        "name": "email",
+        "variableName": "email"
+      },
+      {
+        "kind": "Variable",
+        "name": "password",
+        "variableName": "password"
       }
     ],
-    "concreteType": "ObtainJSONWebTokenPayload",
+    "concreteType": "CustomObtainJSONWebToken",
     "plural": false,
     "selections": [
       {
@@ -94,11 +102,11 @@ return {
     "operationKind": "mutation",
     "name": "SigninUserMutation",
     "id": null,
-    "text": "mutation SigninUserMutation(\n  $input: ObtainJSONWebTokenInput!\n) {\n  tokenAuth(input: $input) {\n    token\n  }\n}\n",
+    "text": "mutation SigninUserMutation(\n  $email: String!\n  $password: String!\n) {\n  tokenAuth(email: $email, password: $password) {\n    token\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '90843e3fe29f01256162f35c8c397aa2';
+(node/*: any*/).hash = '1be86c5b5df55c0c61462b0c2474f910';
 module.exports = node;

@@ -2,16 +2,48 @@ import React, { useState } from 'react'
 import { translate } from 'react-multi-lang'
 import { G_USER_ID, G_USER_EMAIL, G_AUTH_TOKEN } from '../constants'
 import SigninUserMutation from '../mutations/SigninUserMutation'
+import Alert from 'react-bootstrap/Alert'
+
+import { fetchQuery, graphql } from 'relay-runtime';
+import environment from '../Environment'
+
+const query = graphql`
+    query LoginQuery{
+      me{
+          id
+          username
+        }
+    }
+`
 
 function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [show, setShow] = useState(false);
+    const [error, setError] = useState('');
+
+    const [idMe, setIdMe] = useState('');
+    const [nombreMe, setNombreMe] = useState('');
+
     async function _confirm() {
-        // alert("email: " + email + " -- password: " + password)
-        SigninUserMutation(email, password, (token) => {
-            _saveUserData(token)
-            props.history.push('/')
+        setShow(false)
+        SigninUserMutation(email, password, (token, errors) => {
+            if (errors !== null) {
+                setError(errors[0].message)
+                setShow(true)
+            } else {
+                _saveUserData(token)
+                // props.history.push('/')
+
+                const variables = {};
+
+                fetchQuery(environment, query, variables)
+                    .then(data => {
+                        setIdMe(data.me.id)
+                        setNombreMe(data.me.username)
+                    });
+            }
         })
     }
 
@@ -36,36 +68,6 @@ function Login(props) {
                 <div className="inner login">
                     <div className="content">
 
-                        {/* <form> */}
-                        {/* <div><h3>{props.t('login.SignIn')}</h3></div>
-                        <div className="row gtr-uniform">
-                            <div className="col-7">
-                                <input type="email"
-                                    name="email"
-                                    id="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder={props.t('login.Email')} />
-                            </div>
-                            <div className="col-7">
-                                <input type="password"
-                                    name="password"
-                                    id="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder={props.t('login.Password')} />
-                            </div>
-
-                            <div className="col-7">
-                                <div>
-                                    <input type="submit" value={props.t('login.LogIn')} className="primary" />
-                                </div>
-                                <div>
-                                    <a href="#">{props.t('login.EmailForgotten')}</a>
-                                </div>
-                            </div>
-                        </div> */}
-
                         <h3>{props.t('login.SignIn')}</h3>
 
                         <input type="email"
@@ -82,15 +84,24 @@ function Login(props) {
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder={props.t('login.Password')} />
 
+                        {show &&
+                            <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+                                {error}
+                            </Alert>
+                        }
+
                         <input type="submit" value={props.t('login.LogIn')} className="primary" onClick={() => _confirm()} />
                         <a href="#">{props.t('login.EmailForgotten')}</a>
                         {/* </form> */}
 
                         <div>
-                            Email: {email}<br />
-                            Password: {password}<br />
                             G_USER_EMAIL: {localStorage.getItem(G_USER_EMAIL)}<br />
                             G_AUTH_TOKEN: {localStorage.getItem(G_AUTH_TOKEN)}<br />
+                        </div>
+
+                        <div>
+                            id_me: {idMe}<br />
+                            nombre_me: {nombreMe}<br />
                         </div>
 
                     </div>

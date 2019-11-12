@@ -1,6 +1,7 @@
 import { execute } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws'
+import { G_AUTH_TOKEN } from './constants'
 
 const {
   Environment,
@@ -9,14 +10,13 @@ const {
   Store,
 } = require('relay-runtime')
 
-// const store = new Store(new RecordSource())
-
 const fetchQuery = (operation, variables) => {
   return fetch('http://localhost:8000/graphql/', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${localStorage.getItem(G_AUTH_TOKEN)}`
     },
     body: JSON.stringify({
       query: operation.text,
