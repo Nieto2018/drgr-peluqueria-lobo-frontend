@@ -12,7 +12,7 @@ import en from './translations/en.json'
 setDefaultTranslations({ es, en })
 
 const app_language = localStorage.getItem(APP_LANGUAGE)
-if (app_language !== 'es') {
+if (app_language != null && app_language !== 'es') {
     setDefaultLanguage(app_language)
 } else {
     setDefaultLanguage('es')
