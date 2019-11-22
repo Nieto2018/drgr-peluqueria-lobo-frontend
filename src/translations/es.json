@@ -1,12 +1,18 @@
 {
-    "login": {
+    "link": {
+        "Home": "Inicio",
+        "GoTo": "Ir a {param}"
+    },
+    "account": {
         "SignIn": "Iniciar sesión",
         "SignUp": "Registrarte",
         "LogIn": "Entrar",
-        "Password": "Password",
-        "Email": "Correo electrónico",
-        "EmailForgotten": "¿Has olvidado tu correo electrónico?",
-        "Hello": "Hola"
+        "Password": "Contraseña",
+        "PasswordForgot": "¿Contraseña olvidada?",
+        "PasswordReset": "Restablecer contraseña",
+        "PasswordResetEmailExplanation": "Se enviará un mensaje a la dirección de correo electrónico indicada, en caso de no recibirlo, pruebe con otra dirección de correo electrónico distinta",
+        "PasswordResetEmailSent": "Se ha enviado un mensaje a {param} con los pasos a seguir para restablecer la contraseña. Compruebe también si lo ha recibido en la bandeja de Spam/Correo no deseado",
+        "Email": "Correo electrónico"
     },
     "home": {
         "Title": "Bienvenido a Peluquería Lobo",
@@ -15,8 +21,12 @@
         "Title2": "Welcome to {param}"
     },
     "generic": {
+        "Reset": "Restablecer",
         "Create": "Crear",
         "Update": "Actualizar",
         "Delete": "Eliminar"
+    },
+    "error": {
+        "AdministratorContact": "Error de red, pruebe más tarde. Si el error persiste, contacte con el administrador"
     }
   }

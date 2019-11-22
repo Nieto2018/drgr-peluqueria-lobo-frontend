@@ -11,14 +11,20 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .inner.login .content > * {
   margin-bottom: 10px;
 }
 
-.inner.login .content > a {
+.inner.login .content > a, h3, input[type=submit] {
   text-align: center;
+  align-self: center;
+}
+
+.inner.login .content > input[type=submit] {
+  width: 200px;
 }
 
 @media screen and (min-width: 340px) {

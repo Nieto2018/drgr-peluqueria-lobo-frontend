@@ -1,13 +1,23 @@
 {
-    "generic": {
-        "Create": "Create",
-        "Cpdate": "Update",
-        "Delete": "Delete"
+    "account": {
+        "SignIn": "Sign in",
+        "SignUp": "Sign up",
+        "LogIn": "Log in",
+        "Password": "Password",
+        "PasswordForgot": "Forgot password?",
+        "PasswordReset": "Reset password",
+        "Email": "Email"
     },
     "home": {
         "Title": "Welcome to Hairdresser's Lobo",
         "HairdressersName": "Hairdresser's Lobo",
         "AppointmentsList": "Appointment list",
         "Title2": "Welcome to {param}"
+    },
+    "generic": {
+        "Reset": "Reset",
+        "Create": "Create",
+        "Cpdate": "Update",
+        "Delete": "Delete"
     }
-  }
+}

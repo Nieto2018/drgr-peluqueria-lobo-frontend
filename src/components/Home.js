@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { translate } from 'react-multi-lang'
 import { withRouter } from 'react-router'
 import toast from './utils/Toast'
-import Login from './Login'
+import Login from './account/Login'
 
 import banner from '../styles/images/banner.mp4'
 
