@@ -27,6 +27,15 @@
         "Delete": "Eliminar"
     },
     "error": {
-        "AdministratorContact": "Error de red, pruebe más tarde. Si el error persiste, contacte con el administrador"
+        "Error": "Error",
+        "Errors": "Errores",
+        "AdministratorContact": "Error de red, pruebe más tarde. Si el error persiste, contacte con el administrador",
+        "FieldRequired": "El campo {param} es requerido",
+        "EnterValidEmail": "Introduce una dirección de correo electrónico válida",
+        "UidNotFoundError": "UID no encontrado",
+        "InvalidUid": "UID inválido",
+        "TokenNotFoundError": "Token no encontrado",
+        "InvalidToken": "Token inválido",
+        "PasswordNotMatch": "Los dos campos de contraseña no coinciden"
     }
   }
