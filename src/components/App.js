@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom'
+
+import {
+  RESET_PASSWORD_EMAIL_URL,
+  RESET_PASSWORD_CONFIRM_URL
+ } from '../constants'
 import Login from './account/Login'
 import ResetPassword from './account/ResetPassword'
 import Header from './Header'
@@ -10,9 +15,10 @@ import Elements from './Elements'
 import Footer from './Footer'
 
 
-
 import '../styles/assets/css/template.css';
 import '../styles/assets/css/app.css';
+import '../styles/assets/css/fontawesome.min.css';
+import '../styles/assets/css/solid.min.css';
 
 
 class App extends Component {

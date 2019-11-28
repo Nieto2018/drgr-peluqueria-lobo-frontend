@@ -31,8 +31,6 @@ function ResetPasswordConfirm(props) {
     // It is true when the Rest API to reset email is called without any error
     const [passwordChanged, setPasswordChanged] = useState(false);
 
-    // To show any error when the Rest API is called
-
     async function _confirm(e) {
         e.preventDefault()
         const form = formRef.current
