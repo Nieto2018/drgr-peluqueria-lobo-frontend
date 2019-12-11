@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 5840d240b0c1ff261c59797876779a65
+ * @relayHash f5a0cb35cc6798b956a5c7474833447b
  */
 
 /* eslint-disable */
@@ -9,7 +9,10 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type DeleteAppointmentStateSubscriptionVariables = {||};
+export type AppointmentStateActionEnum = "CREATE_APPOINTMENT_STATE" | "DELETE_APPOINTMENT_STATE" | "UPDATE_APPOINTMENT_STATE" | "%future added value";
+export type DeleteAppointmentStateSubscriptionVariables = {|
+  action: AppointmentStateActionEnum
+|};
 export type DeleteAppointmentStateSubscriptionResponse = {|
   +onAppointmentStateAction: ?{|
     +action: ?string,
@@ -27,8 +30,10 @@ export type DeleteAppointmentStateSubscription = {|
 
 
 /*
-subscription DeleteAppointmentStateSubscription {
-  onAppointmentStateAction(action: "delete") {
+subscription DeleteAppointmentStateSubscription(
+  $action: AppointmentStateActionEnum!
+) {
+  onAppointmentStateAction(action: $action) {
     action
     appointmentStateNode {
       id
@@ -41,15 +46,23 @@ subscription DeleteAppointmentStateSubscription {
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
+    "kind": "LocalArgument",
+    "name": "action",
+    "type": "AppointmentStateActionEnum!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
     "kind": "LinkedField",
     "alias": null,
     "name": "onAppointmentStateAction",
-    "storageKey": "onAppointmentStateAction(action:\"delete\")",
+    "storageKey": null,
     "args": [
       {
-        "kind": "Literal",
+        "kind": "Variable",
         "name": "action",
-        "value": "delete"
+        "variableName": "action"
       }
     ],
     "concreteType": "OnAppointmentState",
@@ -97,24 +110,24 @@ return {
     "name": "DeleteAppointmentStateSubscription",
     "type": "Subscription",
     "metadata": null,
-    "argumentDefinitions": [],
-    "selections": (v0/*: any*/)
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
   "operation": {
     "kind": "Operation",
     "name": "DeleteAppointmentStateSubscription",
-    "argumentDefinitions": [],
-    "selections": (v0/*: any*/)
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "subscription",
     "name": "DeleteAppointmentStateSubscription",
     "id": null,
-    "text": "subscription DeleteAppointmentStateSubscription {\n  onAppointmentStateAction(action: \"delete\") {\n    action\n    appointmentStateNode {\n      id\n      name\n    }\n  }\n}\n",
+    "text": "subscription DeleteAppointmentStateSubscription(\n  $action: AppointmentStateActionEnum!\n) {\n  onAppointmentStateAction(action: $action) {\n    action\n    appointmentStateNode {\n      id\n      name\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a73b190948c6a42f030f2f6f9f46541a';
+(node/*: any*/).hash = '91fbd2ab1cb34f164dc96a3520b7b97d';
 module.exports = node;

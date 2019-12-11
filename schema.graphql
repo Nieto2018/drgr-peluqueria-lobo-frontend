@@ -23,6 +23,12 @@ type AppointmentNodeEdge {
   cursor: String!
 }
 
+enum AppointmentStateActionEnum {
+  CREATE_APPOINTMENT_STATE
+  UPDATE_APPOINTMENT_STATE
+  DELETE_APPOINTMENT_STATE
+}
+
 type AppointmentStateNode implements Node {
   """The ID of the object."""
   id: ID!
@@ -81,6 +87,7 @@ scalar GenericScalar
 """The project root mutation definition"""
 type Mutation {
   createUser(email: String!, password: String!, username: String!): CreateUser
+  updateEmail(token: String!): UpdateEmail
   createAppointmentState(name: String!): CreateAppointmentState
   updateAppointmentState(id: String!, name: String!): UpdateAppointmentState
   deleteAppointmentState(id: String!): DeleteAppointmentState
@@ -123,6 +130,11 @@ type PageInfo {
 type Query {
   me: UserType
   users: [UserType]
+  sendVerificationEmail(
+    """Possible values: CREATE_USER, UPDATE_EMAIL or RESET_PASSWORD"""
+    action: UserActionEnum!
+    email: String!
+  ): SendVerificationEmail
 
   """The ID of the object"""
   relayUserInfo(id: ID!): UserInfoNode
@@ -158,13 +170,32 @@ type RevokePayload {
   clientMutationId: String
 }
 
+type SendVerificationEmail {
+  user: String
+  email: String
+  action: String
+  result: String
+}
+
 """The project root subscription definition"""
 type Subscription {
-  onAppointmentStateAction(action: String): OnAppointmentState
+  onAppointmentStateAction(action: AppointmentStateActionEnum!): OnAppointmentState
 }
 
 type UpdateAppointmentState {
   appointmentStateNode: AppointmentStateNode
+}
+
+type UpdateEmail {
+  user: String
+  email: String
+  result: String
+}
+
+enum UserActionEnum {
+  CREATE_USER
+  UPDATE_EMAIL
+  RESET_PASSWORD
 }
 
 type UserInfoNode implements Node {
