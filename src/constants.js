@@ -6,7 +6,20 @@ export const BACKEND_SERVER_WS ='ws://' + BACKEND_SERVER_DOMAIN
 export const GRAPHQL_SUBSCRIPTION_WS = BACKEND_SERVER_WS + '/subscriptions/'
 export const RESET_PASSWORD_URL = BACKEND_SERVER_URL + '/rest-auth/password/reset/'
 
-// Account constants
+// Site URLs
+export const HOME_URL = '/'
+
+// Account URLs
+export const LOGIN_URL = '/'
+export const LOG_IN_URL = '/account/log-in'
+export const SIGN_UP_URL = '/account/sign-up/'
+export const RESET_PASSWORD_EMAIL_URL = '/account/reset-password-email/'
+export const RESET_PASSWORD_CONFIRM_URL = '/account/reset-password-confirm/'
+
+
+/*
+Account constants
+*/
 export const G_USER_ID ='name'
 export const G_USER_EMAIL ='email'
 export const G_AUTH_TOKEN ='token'

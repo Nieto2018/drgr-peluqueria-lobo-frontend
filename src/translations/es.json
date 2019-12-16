@@ -5,14 +5,30 @@
     },
     "account": {
         "SignIn": "Iniciar sesión",
-        "SignUp": "Registrarte",
+        "SignUp": "Registrarse",
         "LogIn": "Entrar",
+        "Email": "Correo electrónico",
         "Password": "Contraseña",
         "PasswordForgot": "¿Contraseña olvidada?",
         "PasswordReset": "Restablecer contraseña",
         "PasswordResetEmailExplanation": "Se enviará un mensaje a la dirección de correo electrónico indicada, en caso de no recibirlo, pruebe con otra dirección de correo electrónico distinta",
         "PasswordResetEmailSent": "Se ha enviado un mensaje a {param} con los pasos a seguir para restablecer la contraseña. Compruebe también si lo ha recibido en la bandeja de Spam/Correo no deseado",
-        "Email": "Correo electrónico"
+        "PasswordNew": "Contraseña nueva",
+        "PasswordNewConfirm": "Confirmar la nueva contraseña",
+        "PasswordResetSecurityExplanation": "Seguridad de la contraseña: Usa al menos 8 caracteres. No uses una contraseña de otro sitio ni algo demasiado obvio, como el nombre de tu mascota.",
+        "PasswordUpdated": "La contraseña se ha cambiado con éxito",
+        "CreateAccount": "Crear cuenta",
+        "error": {
+            "EmailInvalidError": "Por favor, introduce una dirección de correo electrónico válida",
+            "PasswordNotMatchError": "Los dos campos de contraseña no coinciden"
+        },
+        "backendError": {
+            "UserDoesNotExistError": "El usuario no existe",
+            "EnterValidCredentialsError": "Por favor, introduce unas credenciales válidas",
+            "EnterValidEmailError": "Introduce una dirección de correo electrónico válida",
+            "WrongPasswordError": "La contraseña es incorrecta",
+            "PasswordNotMatchError": "Los dos campos de contraseña no coinciden"
+        }
     },
     "home": {
         "Title": "Bienvenido a Peluquería Lobo",
@@ -31,11 +47,7 @@
         "Errors": "Errores",
         "AdministratorContact": "Error de red, pruebe más tarde. Si el error persiste, contacte con el administrador",
         "FieldRequired": "El campo {param} es requerido",
-        "EnterValidEmail": "Introduce una dirección de correo electrónico válida",
-        "UidNotFoundError": "UID no encontrado",
-        "InvalidUid": "UID inválido",
         "TokenNotFoundError": "Token no encontrado",
-        "InvalidToken": "Token inválido",
-        "PasswordNotMatch": "Los dos campos de contraseña no coinciden"
+        "InvalidToken": "Token inválido"
     }
-  }
+}

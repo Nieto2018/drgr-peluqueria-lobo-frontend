@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash dff7a17cdfa5611d02ea2bae05d5eb1b
+ * @relayHash 417e3493ffa1095956cb47dd432709f7
  */
 
 /* eslint-disable */
@@ -9,25 +9,25 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type LoginQueryVariables = {||};
-export type LoginQueryResponse = {|
+export type LogInQueryVariables = {||};
+export type LogInQueryResponse = {|
   +me: ?{|
     +id: string,
-    +username: string,
+    +email: string,
   |}
 |};
-export type LoginQuery = {|
-  variables: LoginQueryVariables,
-  response: LoginQueryResponse,
+export type LogInQuery = {|
+  variables: LogInQueryVariables,
+  response: LogInQueryResponse,
 |};
 */
 
 
 /*
-query LoginQuery {
+query LogInQuery {
   me {
     id
-    username
+    email
   }
 }
 */
@@ -53,7 +53,7 @@ var v0 = [
       {
         "kind": "ScalarField",
         "alias": null,
-        "name": "username",
+        "name": "email",
         "args": null,
         "storageKey": null
       }
@@ -64,7 +64,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "LoginQuery",
+    "name": "LogInQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -72,19 +72,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "LoginQuery",
+    "name": "LogInQuery",
     "argumentDefinitions": [],
     "selections": (v0/*: any*/)
   },
   "params": {
     "operationKind": "query",
-    "name": "LoginQuery",
+    "name": "LogInQuery",
     "id": null,
-    "text": "query LoginQuery {\n  me {\n    id\n    username\n  }\n}\n",
+    "text": "query LogInQuery {\n  me {\n    id\n    email\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '3f41c4428df249bc08acbc379047addf';
+(node/*: any*/).hash = '310da68166278eab6243c906944e9c83';
 module.exports = node;
