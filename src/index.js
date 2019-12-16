@@ -3,8 +3,15 @@ import { BrowserRouter } from 'react-router-dom'
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-import { APP_LANGUAGE } from './constants'
 
+import { 
+    APP_LANGUAGE, 
+    G_AUTH_TOKEN
+} from './constants'
+
+/*
+Default language settings
+*/
 import { setDefaultTranslations, setDefaultLanguage } from 'react-multi-lang'
 import es from './translations/es.json'
 import en from './translations/en.json'
@@ -16,6 +23,15 @@ if (app_language != null && app_language !== 'es') {
     setDefaultLanguage(app_language)
 } else {
     setDefaultLanguage('es')
+}
+
+/*
+Default sessions settings
+*/
+const token = localStorage.getItem(G_AUTH_TOKEN)
+if(null == token){
+    // To avoid "Error decodin signature" of JWT authentication
+    localStorage.setItem(G_AUTH_TOKEN, '')
 }
 
 ReactDOM.render(
