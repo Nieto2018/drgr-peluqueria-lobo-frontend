@@ -2,11 +2,12 @@ import {
     graphql,
     requestSubscription
 } from 'react-relay'
+
 import environment from '../Environment'
 
 const onAppointmentStateAction = graphql`
-    subscription DeleteAppointmentStateSubscription{
-        onAppointmentStateAction(action: "delete"){
+    subscription DeleteAppointmentStateSubscription($action: AppointmentStateActionEnum!) {
+        onAppointmentStateAction(action: $action) {
             action
             appointmentStateNode{
                 id
@@ -20,7 +21,9 @@ export default (component) => {
 
     const subscriptionConfig = {
         subscription: onAppointmentStateAction,
-        variables: {},
+        variables: {
+            action: "Delete"
+        },
         updater: proxyStore => {
             // Delete a record
             const appointmentStateAction = proxyStore.getRootField('onAppointmentStateAction')

@@ -1,0 +1,16 @@
+{
+  "name": "Peluquería Lobo GraphQL Schema",
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:8000/graphql/",
+        "headers": {
+          "user-agent": "JS GraphQL",
+          "Authorization": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsImV4cCI6MTU3MzEzMzM1MCwib3JpZ0lhdCI6MTU3MzEzMzA1MH0.tvd27eO7BsEwjeQItcFVrlpi7f_epUeWQKsp3tc0uoI"
+        },
+        "introspect": false
+      }
+    }
+  }
+}

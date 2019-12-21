@@ -1,6 +1,7 @@
 import { execute } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws'
+import { GRAPHQL_URL, GRAPHQL_SUBSCRIPTION_WS, G_AUTH_TOKEN } from './constants'
 
 const {
   Environment,
@@ -9,14 +10,13 @@ const {
   Store,
 } = require('relay-runtime')
 
-// const store = new Store(new RecordSource())
-
 const fetchQuery = (operation, variables) => {
-  return fetch('http://localhost:8000/graphql/', {
+  return fetch(GRAPHQL_URL, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${localStorage.getItem(G_AUTH_TOKEN)}`
     },
     body: JSON.stringify({
       query: operation.text,
@@ -29,7 +29,7 @@ const fetchQuery = (operation, variables) => {
 
 
 // Subscriptions implementation reference: https://github.com/jeremy-colin/relay-examples-subscription/blob/master/js/environment.js
-const GRAPHQL_SUBSCRIPTION_ENDPOINT = 'ws://localhost:8000/subscriptions/';
+const GRAPHQL_SUBSCRIPTION_ENDPOINT = GRAPHQL_SUBSCRIPTION_WS;
 
 const subscriptionClient = new SubscriptionClient(GRAPHQL_SUBSCRIPTION_ENDPOINT, {
   reconnect: true,

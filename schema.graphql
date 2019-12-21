@@ -1,3 +1,9 @@
+type ActivateUser {
+  email: String
+  result: String
+  errors: [String]
+}
+
 type AppointmentNode implements Node {
   """The ID of the object."""
   id: ID!
@@ -7,10 +13,14 @@ type AppointmentNode implements Node {
 }
 
 type AppointmentNodeConnection {
+  """Pagination data for this connection."""
   pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
   edges: [AppointmentNodeEdge]!
 }
 
+"""A Relay edge containing a `AppointmentNode` and its cursor."""
 type AppointmentNodeEdge {
   """The item at the end of the edge"""
   node: AppointmentNode
@@ -19,18 +29,28 @@ type AppointmentNodeEdge {
   cursor: String!
 }
 
+enum AppointmentStateActionEnum {
+  CREATE_APPOINTMENT_STATE
+  UPDATE_APPOINTMENT_STATE
+  DELETE_APPOINTMENT_STATE
+}
+
 type AppointmentStateNode implements Node {
   """The ID of the object."""
   id: ID!
   name: String!
-  appointments(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection
+  appointments(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection!
 }
 
 type AppointmentStateNodeConnection {
+  """Pagination data for this connection."""
   pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
   edges: [AppointmentStateNodeEdge]!
 }
 
+"""A Relay edge containing a `AppointmentStateNode` and its cursor."""
 type AppointmentStateNodeEdge {
   """The item at the end of the edge"""
   node: AppointmentStateNode
@@ -44,7 +64,9 @@ type CreateAppointmentState {
 }
 
 type CreateUser {
-  user: UserType
+  email: String
+  result: String
+  errors: [String]
 }
 
 """
@@ -53,6 +75,12 @@ value as specified by
 [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
 """
 scalar DateTime
+
+type DeactivateUser {
+  email: String
+  result: String
+  errors: [String]
+}
 
 type DeleteAppointmentState {
   appointmentStateNode: AppointmentStateNode
@@ -67,13 +95,25 @@ scalar GenericScalar
 
 """The project root mutation definition"""
 type Mutation {
-  createUser(email: String!, password: String!, username: String!): CreateUser
+  sendVerificationEmail(
+    """Possible values: ACTIVATE_USER, UPDATE_EMAIL or RESET_PASSWORD"""
+    action: UserActionEnum
+    email: String
+  ): SendVerificationEmail
+  activateUser(token: String): ActivateUser
+  updateEmail(token: String): UpdateEmail
+  resetPassword(password1: String, password2: String, token: String): ResetPassword
+  createUser(input: UserInput): CreateUser
+  deactivateUser: DeactivateUser
   createAppointmentState(name: String!): CreateAppointmentState
   updateAppointmentState(id: String!, name: String!): UpdateAppointmentState
   deleteAppointmentState(id: String!): DeleteAppointmentState
-  tokenAuth(username: String!, password: String!): ObtainJSONWebToken
-  verifyToken(token: String!): Verify
-  refreshToken(token: String!): Refresh
+
+  """Obtain JSON Web Token mutation"""
+  tokenAuth(input: ObtainJSONWebTokenInput!): ObtainJSONWebTokenPayload
+  verifyToken(input: VerifyInput!): VerifyPayload
+  refreshToken(input: RefreshInput!): RefreshPayload
+  revokeToken(input: RevokeInput!): RevokePayload
 }
 
 """An object with an ID"""
@@ -82,9 +122,16 @@ interface Node {
   id: ID!
 }
 
+input ObtainJSONWebTokenInput {
+  clientMutationId: String
+  email: String!
+  password: String!
+}
+
 """Obtain JSON Web Token mutation"""
-type ObtainJSONWebToken {
+type ObtainJSONWebTokenPayload {
   token: String
+  clientMutationId: String
 }
 
 """Subscription triggers on a new appointment state."""
@@ -93,6 +140,9 @@ type OnAppointmentState {
   appointmentStateNode: AppointmentStateNode
 }
 
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
 type PageInfo {
   """When paginating forwards, are there more items?"""
   hasNextPage: Boolean!
@@ -113,10 +163,6 @@ type Query {
   users: [UserType]
 
   """The ID of the object"""
-  relayUserInfo(id: ID!): UserInfoNode
-  relayUserInfos(before: String, after: String, first: Int, last: Int, user: ID, user_Username: String, user_Username_Contains: String, user_Username_Istartswith: String, user_FirstName: String, user_FirstName_Contains: String, user_FirstName_Istartswith: String, user_LastName: String, user_LastName_Contains: String, user_LastName_Istartswith: String, user_Email: String, user_Email_Contains: String): UserInfoNodeConnection
-
-  """The ID of the object"""
   relayAppointmentState(id: ID!): AppointmentStateNode
   relayAppointmentStates(before: String, after: String, first: Int, last: Int, name: String, appointments: [ID]): AppointmentStateNodeConnection
 
@@ -125,38 +171,69 @@ type Query {
   relayAppointments(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection
 }
 
-type Refresh {
+input RefreshInput {
+  token: String!
+  clientMutationId: String
+}
+
+type RefreshPayload {
   token: String
   payload: GenericScalar
+  clientMutationId: String
+}
+
+type ResetPassword {
+  email: String
+  result: String
+  errors: [String]
+}
+
+input RevokeInput {
+  refreshToken: String!
+  clientMutationId: String
+}
+
+type RevokePayload {
+  revoked: Int
+  clientMutationId: String
+}
+
+type SendVerificationEmail {
+  email: String
+  action: String
+  result: String
+  errors: [String]
 }
 
 """The project root subscription definition"""
 type Subscription {
-  onAppointmentStateAction(action: String): OnAppointmentState
+  onAppointmentStateAction(action: AppointmentStateActionEnum!): OnAppointmentState
 }
 
 type UpdateAppointmentState {
   appointmentStateNode: AppointmentStateNode
 }
 
-type UserInfoNode implements Node {
-  """The ID of the object."""
-  id: ID!
-  user: UserType!
-  userManagedBy: UserType
+type UpdateEmail {
+  oldEmail: String
+  newEmail: String
+  result: String
+  errors: [String]
 }
 
-type UserInfoNodeConnection {
-  pageInfo: PageInfo!
-  edges: [UserInfoNodeEdge]!
+enum UserActionEnum {
+  ACTIVATE_USER
+  UPDATE_EMAIL
+  RESET_PASSWORD
 }
 
-type UserInfoNodeEdge {
-  """The item at the end of the edge"""
-  node: UserInfoNode
-
-  """A cursor for use in pagination"""
-  cursor: String!
+input UserInput {
+  email: String
+  password1: String
+  password2: String
+  name: String
+  surnames: String
+  phoneNumber: String
 }
 
 type UserType {
@@ -168,12 +245,8 @@ type UserType {
   Designates that this user has all permissions without explicitly assigning them.
   """
   isSuperuser: Boolean!
-
-  """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."""
-  username: String!
   firstName: String!
   lastName: String!
-  email: String!
 
   """Designates whether the user can log into this admin site."""
   isStaff: Boolean!
@@ -183,12 +256,21 @@ type UserType {
   """
   isActive: Boolean!
   dateJoined: DateTime!
-  userinfo: UserInfoNode
-  manager(before: String, after: String, first: Int, last: Int, user: ID, user_Username: String, user_Username_Contains: String, user_Username_Istartswith: String, user_FirstName: String, user_FirstName_Contains: String, user_FirstName_Istartswith: String, user_LastName: String, user_LastName_Contains: String, user_LastName_Istartswith: String, user_Email: String, user_Email_Contains: String): UserInfoNodeConnection
-  appointmentSet(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection
+  email: String!
+  phoneNumber: String
+  isVip: Boolean!
+  lastToken: String
+  isUsedLastToken: Boolean!
+  appointmentSet(before: String, after: String, first: Int, last: Int, user: ID, appointmentDate: DateTime, appointmentState: ID): AppointmentNodeConnection!
 }
 
-type Verify {
+input VerifyInput {
+  token: String!
+  clientMutationId: String
+}
+
+type VerifyPayload {
   payload: GenericScalar
+  clientMutationId: String
 }
 

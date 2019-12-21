@@ -5,8 +5,8 @@ import {
 import environment from '../Environment'
 
 const mutation = graphql`
-    mutation SigninUserMutation($email: String!, $password: String!) {
-        tokenAuth(username: $email, password: $password){
+    mutation SigninUserMutation($input: ObtainJSONWebTokenInput!) {
+        tokenAuth(input: $input) {
             token
         }
     }
@@ -14,8 +14,10 @@ const mutation = graphql`
 
 export default (email, password, callback) => {
     const variables = {
-        email,
-        password
+        "input":{
+            "email": email,
+            "password": password
+        }
     }
 
     commitMutation(
@@ -23,11 +25,17 @@ export default (email, password, callback) => {
         {
             mutation,
             variables,
-            onCompleted: (response) => {
-                const token = response.tokenAuth.token
-                callback(token)
+            onCompleted: (response, errors) => {
+                let token = ''
+                if (errors === null)
+                    token = response.tokenAuth.token
+                callback(token, errors)
             },
-            onError: err => console.error(err),
+            onError: err => {
+                console.error(err)
+                const errors = [err]
+                callback(null, errors)
+            },
         },
     )
 }

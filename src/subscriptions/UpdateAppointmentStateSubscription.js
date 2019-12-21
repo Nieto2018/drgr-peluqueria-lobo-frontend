@@ -2,11 +2,12 @@ import {
     graphql,
     requestSubscription
 } from 'react-relay'
+
 import environment from '../Environment'
 
 const onAppointmentStateAction = graphql`
-    subscription UpdateAppointmentStateSubscription{
-        onAppointmentStateAction(action: "update"){
+    subscription UpdateAppointmentStateSubscription($action: AppointmentStateActionEnum!){
+        onAppointmentStateAction(action: $action){
             action
             appointmentStateNode{
                 id
@@ -20,7 +21,9 @@ export default () => {
 
     const subscriptionConfig = {
         subscription: onAppointmentStateAction,
-        variables: {},
+        variables: {
+            action: "Update"
+        },
         updater: proxyStore => {
             // Update the value in the view with the value within the received responses 
             // everytime that receive a respomse from the server

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 7c041280ed47bd3ca61852a1deb6f311
+ * @relayHash 944f6cafe9a37d857be7c3f6045625f9
  */
 
 /* eslint-disable */
@@ -9,7 +9,10 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type CreateAppointmentStateSubscriptionVariables = {||};
+export type AppointmentStateActionEnum = "CREATE_APPOINTMENT_STATE" | "DELETE_APPOINTMENT_STATE" | "UPDATE_APPOINTMENT_STATE" | "%future added value";
+export type CreateAppointmentStateSubscriptionVariables = {|
+  action: AppointmentStateActionEnum
+|};
 export type CreateAppointmentStateSubscriptionResponse = {|
   +onAppointmentStateAction: ?{|
     +action: ?string,
@@ -27,8 +30,10 @@ export type CreateAppointmentStateSubscription = {|
 
 
 /*
-subscription CreateAppointmentStateSubscription {
-  onAppointmentStateAction(action: "create") {
+subscription CreateAppointmentStateSubscription(
+  $action: AppointmentStateActionEnum!
+) {
+  onAppointmentStateAction(action: $action) {
     action
     appointmentStateNode {
       id
@@ -41,15 +46,23 @@ subscription CreateAppointmentStateSubscription {
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
+    "kind": "LocalArgument",
+    "name": "action",
+    "type": "AppointmentStateActionEnum!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
     "kind": "LinkedField",
     "alias": null,
     "name": "onAppointmentStateAction",
-    "storageKey": "onAppointmentStateAction(action:\"create\")",
+    "storageKey": null,
     "args": [
       {
-        "kind": "Literal",
+        "kind": "Variable",
         "name": "action",
-        "value": "create"
+        "variableName": "action"
       }
     ],
     "concreteType": "OnAppointmentState",
@@ -97,24 +110,24 @@ return {
     "name": "CreateAppointmentStateSubscription",
     "type": "Subscription",
     "metadata": null,
-    "argumentDefinitions": [],
-    "selections": (v0/*: any*/)
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
   "operation": {
     "kind": "Operation",
     "name": "CreateAppointmentStateSubscription",
-    "argumentDefinitions": [],
-    "selections": (v0/*: any*/)
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "subscription",
     "name": "CreateAppointmentStateSubscription",
     "id": null,
-    "text": "subscription CreateAppointmentStateSubscription {\n  onAppointmentStateAction(action: \"create\") {\n    action\n    appointmentStateNode {\n      id\n      name\n    }\n  }\n}\n",
+    "text": "subscription CreateAppointmentStateSubscription(\n  $action: AppointmentStateActionEnum!\n) {\n  onAppointmentStateAction(action: $action) {\n    action\n    appointmentStateNode {\n      id\n      name\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '8a92d92dc7c04b74c0745f379bf6b652';
+(node/*: any*/).hash = '61688bbe6db513d6bf4ff6f8dee4a55f';
 module.exports = node;

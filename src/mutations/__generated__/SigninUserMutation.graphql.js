@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4f37f2be36db4377555e850c10795813
+ * @relayHash d64aa79b29aad9f8c02d70cd791046e3
  */
 
 /* eslint-disable */
@@ -9,9 +9,13 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type SigninUserMutationVariables = {|
+export type ObtainJSONWebTokenInput = {|
+  clientMutationId?: ?string,
   email: string,
   password: string,
+|};
+export type SigninUserMutationVariables = {|
+  input: ObtainJSONWebTokenInput
 |};
 export type SigninUserMutationResponse = {|
   +tokenAuth: ?{|
@@ -27,10 +31,9 @@ export type SigninUserMutation = {|
 
 /*
 mutation SigninUserMutation(
-  $email: String!
-  $password: String!
+  $input: ObtainJSONWebTokenInput!
 ) {
-  tokenAuth(username: $email, password: $password) {
+  tokenAuth(input: $input) {
     token
   }
 }
@@ -40,14 +43,8 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "email",
-    "type": "String!",
-    "defaultValue": null
-  },
-  {
-    "kind": "LocalArgument",
-    "name": "password",
-    "type": "String!",
+    "name": "input",
+    "type": "ObtainJSONWebTokenInput!",
     "defaultValue": null
   }
 ],
@@ -60,16 +57,11 @@ v1 = [
     "args": [
       {
         "kind": "Variable",
-        "name": "password",
-        "variableName": "password"
-      },
-      {
-        "kind": "Variable",
-        "name": "username",
-        "variableName": "email"
+        "name": "input",
+        "variableName": "input"
       }
     ],
-    "concreteType": "ObtainJSONWebToken",
+    "concreteType": "ObtainJSONWebTokenPayload",
     "plural": false,
     "selections": [
       {
@@ -102,11 +94,11 @@ return {
     "operationKind": "mutation",
     "name": "SigninUserMutation",
     "id": null,
-    "text": "mutation SigninUserMutation(\n  $email: String!\n  $password: String!\n) {\n  tokenAuth(username: $email, password: $password) {\n    token\n  }\n}\n",
+    "text": "mutation SigninUserMutation(\n  $input: ObtainJSONWebTokenInput!\n) {\n  tokenAuth(input: $input) {\n    token\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '5e92c71a03bc3478def173e3a43aec06';
+(node/*: any*/).hash = '90843e3fe29f01256162f35c8c397aa2';
 module.exports = node;
