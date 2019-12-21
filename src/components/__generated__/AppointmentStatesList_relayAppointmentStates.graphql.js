@@ -24,6 +24,7 @@ export type AppointmentStatesList_relayAppointmentStates$data = AppointmentState
 export type AppointmentStatesList_relayAppointmentStates$key = {
   +$data?: AppointmentStatesList_relayAppointmentStates$data,
   +$fragmentRefs: AppointmentStatesList_relayAppointmentStates$ref,
+  ...
 };
 */
 
