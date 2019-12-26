@@ -19,13 +19,12 @@
         "PasswordUpdated": "La contraseña se ha cambiado con éxito",
         "CreateAccount": "Crear cuenta",
         "error": {
-            "EmailInvalidError": "Por favor, introduce una dirección de correo electrónico válida",
-            "PasswordNotMatchError": "Los dos campos de contraseña no coinciden"
+            "EnterValidEmailError": "Introduce una dirección de correo electrónico válida"
         },
         "backendError": {
             "UserDoesNotExistError": "El usuario no existe",
+            "InvalidEmailError": "La dirección de correo electrónico no es válida",
             "EnterValidCredentialsError": "Por favor, introduce unas credenciales válidas",
-            "EnterValidEmailError": "Introduce una dirección de correo electrónico válida",
             "WrongPasswordError": "La contraseña es incorrecta",
             "PasswordNotMatchError": "Los dos campos de contraseña no coinciden"
         }
@@ -37,6 +36,7 @@
         "Title2": "Welcome to {param}"
     },
     "generic": {
+        "Accept": "Aceptar",
         "Reset": "Restablecer",
         "Create": "Crear",
         "Update": "Actualizar",

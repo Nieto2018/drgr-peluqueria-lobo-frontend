@@ -20,6 +20,7 @@ export type AppointmentStatesNode_appointmentStateNode$data = AppointmentStatesN
 export type AppointmentStatesNode_appointmentStateNode$key = {
   +$data?: AppointmentStatesNode_appointmentStateNode$data,
   +$fragmentRefs: AppointmentStatesNode_appointmentStateNode$ref,
+  ...
 };
 */
 

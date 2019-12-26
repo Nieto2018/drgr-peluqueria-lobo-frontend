@@ -25,6 +25,7 @@ const query = graphql`
 `
 
 function LogIn(props) {
+
     const formRef = React.createRef()
     const [validated, setValidated] = useState(false);
 
@@ -37,8 +38,6 @@ function LogIn(props) {
 
     async function _confirm(e) {
         e.preventDefault()
-        localStorage.setItem(G_USER_EMAIL, '')
-        localStorage.setItem(G_AUTH_TOKEN, '')
 
         const form = formRef.current
         const isValidForm = form.checkValidity()
@@ -140,8 +139,8 @@ function LogIn(props) {
                                 <a href={RESET_PASSWORD_EMAIL_URL}>{props.t('account.PasswordForgot')}</a>
                             </Form.Group>
 
-                            <Form.Group className="form-group-center" style={{borderTop: "grey solid thin", paddingTop: "20px" }}>
-                            <a href={SIGN_UP_URL} className="button small">{props.t('account.CreateAccount')}</a>
+                            <Form.Group className="form-group-center" style={{ borderTop: "grey solid thin", paddingTop: "20px" }}>
+                                <a href={SIGN_UP_URL} className="button small">{props.t('account.CreateAccount')}</a>
                             </Form.Group>
 
                         </Form>
