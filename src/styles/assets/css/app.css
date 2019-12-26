@@ -18,7 +18,8 @@
   margin-bottom: 10px;
 }
 
-.inner.login .content > a, h3, input[type=submit] {
+.inner.login .content > h3,
+form > .form-group-center {
   text-align: center;
   align-self: center;
 }
@@ -29,7 +30,7 @@
 
 @media screen and (min-width: 340px) {
   .inner.login {
-    width: 350px !important;
+    width: 400px !important;
   } 
 }
 
