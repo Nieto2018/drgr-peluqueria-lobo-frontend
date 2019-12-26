@@ -8,11 +8,9 @@ import { commitMutation, graphql } from 'react-relay'
 
 import environment from '../../Environment'
 import {
-    RESET_PASSWORD_EMAIL_API_URL,
     LOGIN_URL
 } from '../../constants'
 import { ListAlert } from '../utils/CustomComponents'
-import { forEach } from 'iterall';
 
 
 const mutation = graphql`
@@ -61,18 +59,20 @@ function ResetPasswordEmail(props) {
 
                         if (null != data.sendVerificationEmail) {
 
-                            if (data.sendVerificationEmail.errors && data.sendVerificationEmail.errors.length > 0) {
+                            if (data.sendVerificationEmail.errors.length > 0) {
                                 data.sendVerificationEmail.errors.forEach(error => {
-                                    if ('EmailRequired' === error) {
+                                    if ('EmailRequiredError' === error) {
                                         errorMessageList.push(props.t('error.FieldRequired', { param: props.t('account.Email') }))
-                                    } else if ('UserDoesNotExist' === error) {
-                                        errorMessageList.push(props.t('error.backendError.EnterValidEmailError'))
+                                    } else if ('UserDoesNotExistError' === error) {
+                                        errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
+                                    } else {
+                                        errorMessageList.push(props.t('error.AdministratorContact'))
                                     }
                                 })
 
                             } else {
 
-                                if ("EmailSent" === data.sendVerificationEmail.result) {
+                                if ("OK" === data.sendVerificationEmail.result) {
                                     setEmailSent(true);
                                 } else {
                                     errorMessageList.push(props.t('error.AdministratorContact'))
@@ -90,6 +90,7 @@ function ResetPasswordEmail(props) {
                         }
                     },
                     onError: err => {
+                        console.log(err)
                         let errorMessageList = [props.t('error.AdministratorContact')]
                         ReactDOM.render(
                             <ListAlert variant="danger" messagesList={errorMessageList} />,
@@ -115,7 +116,7 @@ function ResetPasswordEmail(props) {
 
                             <div id="errorsResetPasswordEmailDiv" />
 
-                            <Form ref={formRef} noValidate validated={validated} >
+                            <Form className="form-center" ref={formRef} noValidate validated={validated} >
 
                                 <Form.Group controlId="formResetPasswordEmail">
                                     <InputGroup>
@@ -131,7 +132,7 @@ function ResetPasswordEmail(props) {
                                             {props.t('account.PasswordResetEmailExplanation')}
                                         </Form.Text>
                                         <Form.Control.Feedback type="invalid">
-                                            {props.t('account.error.EmailInvalidError')}
+                                            {props.t('account.error.EnterValidEmailError')}
                                         </Form.Control.Feedback>
                                     </InputGroup>
                                 </Form.Group>
