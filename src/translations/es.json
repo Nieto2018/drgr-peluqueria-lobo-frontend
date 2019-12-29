@@ -15,7 +15,7 @@
         "PasswordResetEmailSent": "Se ha enviado un mensaje a {param} con los pasos a seguir para restablecer la contraseña. Compruebe también si lo ha recibido en la bandeja de Spam/Correo no deseado",
         "PasswordNew": "Contraseña nueva",
         "PasswordNewConfirm": "Confirmar la nueva contraseña",
-        "PasswordResetSecurityExplanation": "Seguridad de la contraseña: Usa al menos 8 caracteres. No uses una contraseña de otro sitio ni algo demasiado obvio, como el nombre de tu mascota.",
+        "PasswordResetSecurityExplanation": "Seguridad de la contraseña: Usa entre 8 y 16 caracteres. No uses una contraseña de otro sitio ni algo demasiado obvio, como el nombre de tu mascota.",
         "PasswordUpdated": "La contraseña se ha cambiado con éxito",
         "CreateAccount": "Crear cuenta",
         "error": {
@@ -26,7 +26,8 @@
             "InvalidEmailError": "La dirección de correo electrónico no es válida",
             "EnterValidCredentialsError": "Por favor, introduce unas credenciales válidas",
             "WrongPasswordError": "La contraseña es incorrecta",
-            "PasswordNotMatchError": "Los dos campos de contraseña no coinciden"
+            "PasswordRegexError": "La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula (NO puede tener otros símbolos)",
+            "PasswordsNotMatchError": "Los dos campos de contraseña no coinciden"
         }
     },
     "home": {
@@ -46,8 +47,12 @@
         "Error": "Error",
         "Errors": "Errores",
         "AdministratorContact": "Error de red, pruebe más tarde. Si el error persiste, contacte con el administrador",
-        "FieldRequired": "El campo {param} es requerido",
+        "FieldRequired": "El campo {field_name} es requerido",
+        "FieldMinLengthError": "El campo {field_name} debe tener al menos {length} caracteres",
         "TokenNotFoundError": "Token no encontrado",
+        "TokenNotMatchError": "Token no coincide",
+        "TokenExpiredError": "Token expirado",
+        "TokenUsedError": "Token usado",
         "InvalidToken": "Token inválido"
     }
 }
