@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { 
     APP_LANGUAGE, 
     G_AUTH_TOKEN
-} from './constants'
+} from './Constants'
 
 /*
 Default language settings

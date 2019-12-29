@@ -1,7 +1,7 @@
 import { execute } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws'
-import { GRAPHQL_URL, GRAPHQL_SUBSCRIPTION_WS, G_AUTH_TOKEN } from './constants'
+import { GRAPHQL_URL, GRAPHQL_SUBSCRIPTION_WS, G_AUTH_TOKEN } from './Constants'
 
 const {
   Environment,

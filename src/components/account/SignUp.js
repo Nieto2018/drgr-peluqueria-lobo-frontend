@@ -10,7 +10,7 @@ import {
     G_USER_EMAIL,
     G_AUTH_TOKEN,
     RESET_PASSWORD_EMAIL_URL
-} from '../../constants'
+} from '../../Constants'
 import SigninUserMutation from '../../mutations/SigninUserMutation'
 import { ListAlert } from '../utils/CustomComponents'
 

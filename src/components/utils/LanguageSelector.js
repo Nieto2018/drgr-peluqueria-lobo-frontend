@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactCountryFlag from "react-country-flag"
 import { translate, setLanguage, getLanguage } from 'react-multi-lang'
-import { APP_LANGUAGE } from '../../constants'
+import { APP_LANGUAGE } from '../../Constants'
 
 class LanguageSelector extends Component {
 
