@@ -17,13 +17,17 @@
         "PasswordNewConfirm": "Confirmar la nueva contraseña",
         "PasswordResetSecurityExplanation": "Seguridad de la contraseña: Usa entre 8 y 16 caracteres. No uses una contraseña de otro sitio ni algo demasiado obvio, como el nombre de tu mascota.",
         "PasswordUpdated": "La contraseña se ha cambiado con éxito",
+        "RegisterUser": "Registrar usuario",
+        "Name": "Nombre",
+        "Surnames": "Apellidos",
         "CreateAccount": "Crear cuenta",
         "error": {
             "EnterValidEmailError": "Introduce una dirección de correo electrónico válida"
         },
         "backendError": {
-            "UserDoesNotExistError": "El usuario no existe",
+            "UserDoesNotExistError": "La dirección de correo electrónico no está registrada",
             "InvalidEmailError": "La dirección de correo electrónico no es válida",
+            "EmailAlreadyRegisteredError": "La dirección de correo electrónico ya está registrada",
             "EnterValidCredentialsError": "Por favor, introduce unas credenciales válidas",
             "WrongPasswordError": "La contraseña es incorrecta",
             "PasswordRegexError": "La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula (NO puede tener otros símbolos)",

@@ -42,8 +42,9 @@ function App(props) {
         {/* <Route exact path='/aslp' component={AppointmentStatesListPage} /> */}
         <Route exact path='/elements' component={Elements} />
         <Route exact path='/generic' component={Generic} />
-        <Route exact path="/" component={LogIn} />
+        {/* <Route exact path="/" component={LogIn} /> */}
         {/* <Route exact path={LOG_IN_URL} component={LogIn} /> */}
+        <Route exact path="/" component={SignUp} />
         {/* <Route exact path={SIGN_UP_URL} component={SignUp} /> */}
         {/* <Route exact path="/" component={ResetPasswordEmail} /> */}
         <Route exact path={RESET_PASSWORD_EMAIL_URL} component={ResetPasswordEmail} />
