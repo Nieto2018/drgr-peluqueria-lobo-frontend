@@ -3,18 +3,15 @@ import ReactDOM from 'react-dom';
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
-
 import { commitMutation, graphql } from 'react-relay'
 
-import environment from '../../Environment'
-import {
-    LOGIN_URL
-} from '../../constants'
+import { LOGIN_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
+import environment from '../../Environment'
 
 
 const mutation = graphql`
-    mutation ResetPasswordEmailQuery($email: String, $action: UserActionEnum) {
+    mutation ResetPasswordEmailMutation($email: String, $action: UserActionEnum) {
         sendVerificationEmail(email: $email, action: $action) {
             email
             action
@@ -61,8 +58,10 @@ function ResetPasswordEmail(props) {
 
                             if (data.sendVerificationEmail.errors.length > 0) {
                                 data.sendVerificationEmail.errors.forEach(error => {
+                                    console.error(error)
+
                                     if ('EmailRequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { param: props.t('account.Email') }))
+                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Email') }))
                                     } else if ('UserDoesNotExistError' === error) {
                                         errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
                                     } else {
