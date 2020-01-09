@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { QueryRenderer, graphql } from 'react-relay'
 import environment from '../Environment'
 import AppointmentStatesList from './AppointmentStatesList'
-import { ITEMS_PER_PAGE } from '../constants'
+import { ITEMS_PER_PAGE } from '../Constants'
 
 
 const AppointmentStatesListPageQuery = graphql`

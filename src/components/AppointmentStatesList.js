@@ -6,9 +6,9 @@ import Table from 'react-bootstrap/Table'
 
 import AppointmentStatesNode from './AppointmentStatesNode'
 import CreateAppointmentState from './CreateAppointmentState'
-// import CreateAppointmentStateSubscription from '../subscriptions/CreateAppointmentStateSubscription'
+import CreateAppointmentStateSubscription from '../subscriptions/CreateAppointmentStateSubscription'
 import UpdateAppointmentStateSubscription from '../subscriptions/UpdateAppointmentStateSubscription'
-// import DeleteAppointmentStateSubscription from '../subscriptions/DeleteAppointmentStateSubscription'
+import DeleteAppointmentStateSubscription from '../subscriptions/DeleteAppointmentStateSubscription'
 
 class AppointmentStatesList extends Component {
 
@@ -46,9 +46,9 @@ class AppointmentStatesList extends Component {
   }
 
   componentDidMount() {
-    // CreateAppointmentStateSubscription(this)
+    CreateAppointmentStateSubscription()
     UpdateAppointmentStateSubscription()
-    // DeleteAppointmentStateSubscription(this)
+    DeleteAppointmentStateSubscription()
   }
 
 }
