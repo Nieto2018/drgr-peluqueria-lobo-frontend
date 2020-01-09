@@ -36,7 +36,8 @@ export default () => {
                     if (null != errors){
                         console.error(errors[0])
                         localStorage.removeItem(G_USER_EMAIL)
-                        localStorage.removeItem(G_AUTH_TOKEN)
+                        // localStorage.removeItem(G_AUTH_TOKEN) // It throws "graphql.error.located_error.GraphQLLocatedError: Error decoding signature" in backend
+                        localStorage.setItem(G_AUTH_TOKEN, '')
                     }else{
                         RefreshTokenMutation()
                     }
@@ -44,9 +45,12 @@ export default () => {
                 onError: err => {
                     console.error(err)
                     localStorage.removeItem(G_USER_EMAIL)
-                    localStorage.removeItem(G_AUTH_TOKEN)
+                    localStorage.setItem(G_AUTH_TOKEN, '')
                 },
             },
         )
+    } else {
+        localStorage.removeItem(G_USER_EMAIL)
+        localStorage.setItem(G_AUTH_TOKEN, '')
     }
 }

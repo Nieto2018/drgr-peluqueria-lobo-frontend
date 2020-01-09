@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1e0a6a303f67d121f218847227c76220
+ * @relayHash 2a0b75f4c32a8bb72ce6319c8e5517f6
  */
 
 /* eslint-disable */
@@ -9,36 +9,28 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type UserInput = {|
-  email?: ?string,
-  password1?: ?string,
-  password2?: ?string,
-  name?: ?string,
-  surnames?: ?string,
-  phoneNumber?: ?string,
+export type ActivateAccountMutationVariables = {|
+  token?: ?string
 |};
-export type SignUpMutationVariables = {|
-  input: UserInput
-|};
-export type SignUpMutationResponse = {|
-  +createAccount: ?{|
+export type ActivateAccountMutationResponse = {|
+  +activateAccount: ?{|
     +email: ?string,
     +result: ?string,
     +errors: ?$ReadOnlyArray<?string>,
   |}
 |};
-export type SignUpMutation = {|
-  variables: SignUpMutationVariables,
-  response: SignUpMutationResponse,
+export type ActivateAccountMutation = {|
+  variables: ActivateAccountMutationVariables,
+  response: ActivateAccountMutationResponse,
 |};
 */
 
 
 /*
-mutation SignUpMutation(
-  $input: UserInput!
+mutation ActivateAccountMutation(
+  $token: String
 ) {
-  createAccount(input: $input) {
+  activateAccount(token: $token) {
     email
     result
     errors
@@ -50,8 +42,8 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "UserInput!",
+    "name": "token",
+    "type": "String",
     "defaultValue": null
   }
 ],
@@ -59,16 +51,16 @@ v1 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "createAccount",
+    "name": "activateAccount",
     "storageKey": null,
     "args": [
       {
         "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
+        "name": "token",
+        "variableName": "token"
       }
     ],
-    "concreteType": "CreateAccount",
+    "concreteType": "ActivateAccount",
     "plural": false,
     "selections": [
       {
@@ -99,7 +91,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "SignUpMutation",
+    "name": "ActivateAccountMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -107,19 +99,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "SignUpMutation",
+    "name": "ActivateAccountMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
-    "name": "SignUpMutation",
+    "name": "ActivateAccountMutation",
     "id": null,
-    "text": "mutation SignUpMutation(\n  $input: UserInput!\n) {\n  createAccount(input: $input) {\n    email\n    result\n    errors\n  }\n}\n",
+    "text": "mutation ActivateAccountMutation(\n  $token: String\n) {\n  activateAccount(token: $token) {\n    email\n    result\n    errors\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '72461d3e5026a5c74a374603a2920727';
+(node/*: any*/).hash = 'cc2cfc1a90a8f434b734e3a2b71c1def';
 module.exports = node;

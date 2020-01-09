@@ -83,10 +83,10 @@ function ResetPasswordConfirm(props) {
                                         errorMessageList.push(props.t('account.backendError.PasswordsNotMatchError'))
                                     } else if ('PasswordRegexError' === error) {
                                         errorMessageList.push(props.t('account.backendError.PasswordRegexError'))
-                                    } else if ('UserDoesNotExistError' === error) {
+                                    } else if ('AccountDoesNotExistError' === error) {
                                         errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
-                                    } else if ('UserInactiveError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.UserInactiveError'))
+                                    } else if ('AccountInactiveError' === error) {
+                                        errorMessageList.push(props.t('account.backendError.AccountInactiveError'))
                                     } else {
                                         errorMessageList.push(props.t('error.AdministratorContact'))
                                     }

@@ -5,7 +5,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
 import { commitMutation, graphql } from 'react-relay'
 
-import { LOGIN_URL } from '../../Constants'
+import { LOG_IN_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
 import environment from '../../Environment'
 
@@ -62,7 +62,7 @@ function ResetPasswordEmail(props) {
 
                                     if ('EmailRequiredError' === error) {
                                         errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Email') }))
-                                    } else if ('UserDoesNotExistError' === error) {
+                                    } else if ('AccountDoesNotExistError' === error) {
                                         errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
                                     } else {
                                         errorMessageList.push(props.t('error.AdministratorContact'))
@@ -141,7 +141,7 @@ function ResetPasswordEmail(props) {
                                 </Form.Group>
 
                                 <Form.Group className="form-group-center">
-                                    <a href={LOGIN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('account.SignIn') })}</a>
+                                    <a href={LOG_IN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('account.SignIn') })}</a>
                                 </Form.Group>
                             </Form>
 
@@ -152,7 +152,7 @@ function ResetPasswordEmail(props) {
                             <h3>{props.t('account.PasswordReset')}</h3>
 
                             <p>{props.t('account.PasswordResetEmailSent', { param: email })}</p>
-                            <a href={LOGIN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
+                            <a href={LOG_IN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
                         </div>
 
                     }
