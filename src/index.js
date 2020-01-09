@@ -6,8 +6,8 @@ import * as serviceWorker from './serviceWorker';
 
 import { 
     APP_LANGUAGE, 
-    G_AUTH_TOKEN
-} from './constants'
+    // G_AUTH_TOKEN
+} from './Constants'
 
 /*
 Default language settings
@@ -28,11 +28,11 @@ if (app_language != null && app_language !== 'es') {
 /*
 Default sessions settings
 */
-const token = localStorage.getItem(G_AUTH_TOKEN)
-if(null == token){
-    // To avoid "Error decodin signature" of JWT authentication
-    localStorage.setItem(G_AUTH_TOKEN, '')
-}
+// const token = localStorage.getItem(G_AUTH_TOKEN)
+// if(null == token){
+//     // To avoid "Error decodin signature" of JWT authentication
+//     localStorage.setItem(G_AUTH_TOKEN, '')
+// }
 
 ReactDOM.render(
     <BrowserRouter>

@@ -3,19 +3,15 @@ import ReactDOM from 'react-dom';
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
-
 import { commitMutation, graphql } from 'react-relay'
 
-import environment from '../../Environment'
-import {
-    LOGIN_URL
-} from '../../constants'
+import { LOG_IN_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
-import { forEach } from 'iterall';
+import environment from '../../Environment'
 
 
 const mutation = graphql`
-    mutation ResetPasswordEmailQuery($email: String, $action: UserActionEnum) {
+    mutation ResetPasswordEmailMutation($email: String, $action: UserActionEnum) {
         sendVerificationEmail(email: $email, action: $action) {
             email
             action
@@ -62,9 +58,11 @@ function ResetPasswordEmail(props) {
 
                             if (data.sendVerificationEmail.errors.length > 0) {
                                 data.sendVerificationEmail.errors.forEach(error => {
+                                    console.error(error)
+
                                     if ('EmailRequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { param: props.t('account.Email') }))
-                                    } else if ('UserDoesNotExistError' === error) {
+                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Email') }))
+                                    } else if ('AccountDoesNotExistError' === error) {
                                         errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
                                     } else {
                                         errorMessageList.push(props.t('error.AdministratorContact'))
@@ -143,7 +141,7 @@ function ResetPasswordEmail(props) {
                                 </Form.Group>
 
                                 <Form.Group className="form-group-center">
-                                    <a href={LOGIN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('account.SignIn') })}</a>
+                                    <a href={LOG_IN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('account.SignIn') })}</a>
                                 </Form.Group>
                             </Form>
 
@@ -154,7 +152,7 @@ function ResetPasswordEmail(props) {
                             <h3>{props.t('account.PasswordReset')}</h3>
 
                             <p>{props.t('account.PasswordResetEmailSent', { param: email })}</p>
-                            <a href={LOGIN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
+                            <a href={LOG_IN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
                         </div>
 
                     }

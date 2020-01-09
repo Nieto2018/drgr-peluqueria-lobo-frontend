@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d5b1d1d641881c6d929e44830b8840a3
+ * @relayHash 74769d6ddef3ea797aa507dd85d8812d
  */
 
 /* eslint-disable */
@@ -10,11 +10,11 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type UserActionEnum = "ACTIVATE_USER" | "RESET_PASSWORD" | "UPDATE_EMAIL" | "%future added value";
-export type ResetPasswordEmailQueryVariables = {|
+export type ResetPasswordEmailMutationVariables = {|
   email?: ?string,
   action?: ?UserActionEnum,
 |};
-export type ResetPasswordEmailQueryResponse = {|
+export type ResetPasswordEmailMutationResponse = {|
   +sendVerificationEmail: ?{|
     +email: ?string,
     +action: ?string,
@@ -22,15 +22,15 @@ export type ResetPasswordEmailQueryResponse = {|
     +errors: ?$ReadOnlyArray<?string>,
   |}
 |};
-export type ResetPasswordEmailQuery = {|
-  variables: ResetPasswordEmailQueryVariables,
-  response: ResetPasswordEmailQueryResponse,
+export type ResetPasswordEmailMutation = {|
+  variables: ResetPasswordEmailMutationVariables,
+  response: ResetPasswordEmailMutationResponse,
 |};
 */
 
 
 /*
-mutation ResetPasswordEmailQuery(
+mutation ResetPasswordEmailMutation(
   $email: String
   $action: UserActionEnum
 ) {
@@ -114,7 +114,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "ResetPasswordEmailQuery",
+    "name": "ResetPasswordEmailMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -122,19 +122,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "ResetPasswordEmailQuery",
+    "name": "ResetPasswordEmailMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
-    "name": "ResetPasswordEmailQuery",
+    "name": "ResetPasswordEmailMutation",
     "id": null,
-    "text": "mutation ResetPasswordEmailQuery(\n  $email: String\n  $action: UserActionEnum\n) {\n  sendVerificationEmail(email: $email, action: $action) {\n    email\n    action\n    result\n    errors\n  }\n}\n",
+    "text": "mutation ResetPasswordEmailMutation(\n  $email: String\n  $action: UserActionEnum\n) {\n  sendVerificationEmail(email: $email, action: $action) {\n    email\n    action\n    result\n    errors\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd41a3e8054678198dd7d44353f86e2ce';
+(node/*: any*/).hash = '1f65d58524ae341f6ba63295666fe51b';
 module.exports = node;

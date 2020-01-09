@@ -5,15 +5,15 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
 import { fetchQuery, graphql } from 'relay-runtime';
 
-import environment from '../../Environment'
 import {
     G_USER_EMAIL,
     G_AUTH_TOKEN,
     SIGN_UP_URL,
     RESET_PASSWORD_EMAIL_URL
-} from '../../constants'
-import SigninUserMutation from '../../mutations/SigninUserMutation'
+} from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
+import environment from '../../Environment'
+import SigninUserMutation from '../../mutations/SigninUserMutation'
 
 const query = graphql`
     query LogInQuery{
@@ -34,7 +34,7 @@ function LogIn(props) {
     const [showPassword, setShowPassword] = useState(false);
 
     const [idMe, setIdMe] = useState('');
-    const [nombreMe, setNombreMe] = useState('');
+    const [emailMe, setEmailMe] = useState('');
 
     async function _confirm(e) {
         e.preventDefault()
@@ -68,7 +68,7 @@ function LogIn(props) {
                     fetchQuery(environment, query, variables)
                         .then(data => {
                             setIdMe(data.me.id)
-                            setNombreMe(data.me.username)
+                            setEmailMe(data.me.email)
                         });
                 }
             })
@@ -104,7 +104,7 @@ function LogIn(props) {
                                         onChange={(e) => setEmail(e.target.value)}
                                         required />
                                     <Form.Control.Feedback type="invalid">
-                                        {props.t('account.error.EmailInvalidError')}
+                                        {props.t('account.error.EnterValidEmailError')}
                                     </Form.Control.Feedback>
                                 </InputGroup>
                             </Form.Group>
@@ -125,7 +125,7 @@ function LogIn(props) {
                                         </InputGroup.Text>
                                     </InputGroup.Append>
                                     <Form.Control.Feedback type="invalid">
-                                        {props.t('error.FieldRequired', { param: props.t('account.Password') })}
+                                        {props.t('error.FieldRequired', { field_name: props.t('account.Password') })}
                                     </Form.Control.Feedback>
                                 </InputGroup>
 
@@ -156,7 +156,7 @@ function LogIn(props) {
 
                 <div>
                     id_me: {idMe}<br />
-                    nombre_me: {nombreMe}<br />
+                    nombre_me: {emailMe}<br />
                 </div>
             </section>
 

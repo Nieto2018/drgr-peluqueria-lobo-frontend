@@ -10,11 +10,12 @@ export const RESET_PASSWORD_URL = BACKEND_SERVER_URL + '/rest-auth/password/rese
 export const HOME_URL = '/'
 
 // Account URLs
-export const LOGIN_URL = '/'
-export const LOG_IN_URL = '/account/log-in'
+// export const LOG_IN_URL = '/'
+export const LOG_IN_URL = '/account/log-in/'
 export const SIGN_UP_URL = '/account/sign-up/'
 export const RESET_PASSWORD_EMAIL_URL = '/account/reset-password-email/'
 export const RESET_PASSWORD_CONFIRM_URL = '/account/reset-password-confirm/'
+export const ACTIVATE_ACCOUNT_URL = '/account/activate-account/'
 
 
 /*
