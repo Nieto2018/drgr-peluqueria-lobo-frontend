@@ -1,4 +1,4 @@
-type ActivateUser {
+type ActivateAccount {
   email: String
   result: String
   errors: [String]
@@ -59,14 +59,14 @@ type AppointmentStateNodeEdge {
   cursor: String!
 }
 
-type CreateAppointmentState {
-  appointmentStateNode: AppointmentStateNode
-}
-
-type CreateUser {
+type CreateAccount {
   email: String
   result: String
   errors: [String]
+}
+
+type CreateAppointmentState {
+  appointmentStateNode: AppointmentStateNode
 }
 
 """
@@ -76,7 +76,7 @@ value as specified by
 """
 scalar DateTime
 
-type DeactivateUser {
+type DeactivateAccount {
   email: String
   result: String
   errors: [String]
@@ -100,11 +100,11 @@ type Mutation {
     action: UserActionEnum
     email: String
   ): SendVerificationEmail
-  activateUser(token: String): ActivateUser
+  createAccount(input: UserInput): CreateAccount
+  activateAccount(token: String): ActivateAccount
+  deactivateAccount: DeactivateAccount
   updateEmail(token: String): UpdateEmail
   resetPassword(password1: String, password2: String, token: String): ResetPassword
-  createUser(input: UserInput): CreateUser
-  deactivateUser: DeactivateUser
   createAppointmentState(name: String!): CreateAppointmentState
   updateAppointmentState(id: String!, name: String!): UpdateAppointmentState
   deleteAppointmentState(id: String!): DeleteAppointmentState

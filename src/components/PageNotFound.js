@@ -1,9 +1,9 @@
 import React from 'react'
 import { translate } from 'react-multi-lang'
 import { withRouter } from 'react-router'
-import toast from './utils/Toast'
+// import toast from './utils/Toast'
 
-import banner from '../styles/images/banner.mp4'
+// import banner from '../styles/images/banner.mp4'
 
 
 function PageNotFound(props) {

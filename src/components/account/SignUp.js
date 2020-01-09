@@ -8,10 +8,11 @@ import { commitMutation, graphql } from 'react-relay'
 import { HOME_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
 import environment from '../../Environment'
+import SendVerificationEmailMutation from '../../mutations/SendVerificationEmailMutation'
 
 const mutation = graphql`
     mutation SignUpMutation($input: UserInput!) {
-        createUser(input: $input){
+        createAccount(input: $input){
             email
             result
             errors
@@ -63,12 +64,12 @@ function SignUp(props) {
                     onCompleted: data => {
                         let errorMessageList = []
 
-                        if (null != data.createUser) {
+                        if (null != data.createAccount) {
 
-                            if (data.createUser.errors.length > 0) {
-                                data.createUser.errors.forEach(error => {
+                            if (data.createAccount.errors.length > 0) {
+                                data.createAccount.errors.forEach(error => {
                                     console.error(error)
-                                    
+
                                     if ('EmailRequiredError' === error) {
                                         errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Email') }))
                                     } else if ('EmailRegexError' === error) {
@@ -94,7 +95,8 @@ function SignUp(props) {
 
                             } else {
 
-                                if ("OK" === data.createUser.result) {
+                                if ("OK" === data.createAccount.result) {
+                                    SendVerificationEmailMutation(email, "ACTIVATE_USER")
                                     setUserCreated(true);
                                 } else {
                                     errorMessageList.push(props.t('error.AdministratorContact'))
@@ -108,7 +110,9 @@ function SignUp(props) {
                         if (errorMessageList.length > 0) {
                             ReactDOM.render(
                                 <ListAlert variant="danger" messagesList={errorMessageList} />,
-                                document.getElementById('errorsCreateUserConfirmDiv'))
+                                document.getElementById('errorsCreateAccountConfirmDiv'))
+                        } else {
+                            
                         }
                     },
                     onError: err => {
@@ -116,7 +120,7 @@ function SignUp(props) {
                         let errorMessageList = [props.t('error.AdministratorContact')]
                         ReactDOM.render(
                             <ListAlert variant="danger" messagesList={errorMessageList} />,
-                            document.getElementById('errorsCreateUserConfirmDiv')
+                            document.getElementById('errorsCreateAccountConfirmDiv')
                         )
                     },
                 },
@@ -133,20 +137,93 @@ function SignUp(props) {
                     {!userCreated ?
                         <div className="content">
 
-                            <h3>{props.t('account.RegisterUser')}</h3>
+                            <h3>{props.t('account.CreateAccount')}</h3>
 
-                            <div id="errorsCreateUserConfirmDiv" />
+                            <div id="errorsCreateAccountConfirmDiv" />
 
                             <Form ref={formRef} noValidate validated={validated} >
+
+                                {/* Email */}
+                                <Form.Group controlId="formResetEmail">
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrependEmail" className="text-icon"><i className="fas fa-at" /></InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder={props.t('account.Email')}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            required />
+                                        <Form.Control.Feedback type="invalid">
+                                            {props.t('account.error.EnterValidEmailError')}
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Form.Group>
+
+                                {/* User data */}
+                                <Form.Group>
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrependName">{props.t('account.Name')}</InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder={props.t('account.Name')}
+                                            onChange={(e) => setName(e.target.value)}
+                                            required
+                                            maxLength="30"
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {props.t('error.FieldRequired', { field_name: props.t('account.Name') })}
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Form.Group>
 
                                 <Form.Group>
                                     <InputGroup>
                                         <InputGroup.Prepend>
-                                            <InputGroup.Text id="inputGroupPrepend"><i className="fas fa-unlock-alt" /></InputGroup.Text>
+                                            <InputGroup.Text id="inputGroupPrependSurnames">{props.t('account.Surnames')}</InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder={props.t('account.Surnames')}
+                                            onChange={(e) => setSurnames(e.target.value)}
+                                            required
+                                            maxLength="150"
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {props.t('error.FieldRequired', { field_name: props.t('account.Surnames') })}
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Form.Group>
+
+                                <Form.Group>
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrependPhoneNumber"><i class="fas fa-mobile-alt"></i></InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type="tel"
+                                            placeholder={props.t('account.PhoneNumber')}
+                                            onChange={(e) => setPhoneNumber(e.target.value)}
+                                            pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"
+                                            maxLength="15"
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {props.t('error.FieldInvalidError', { field_name: props.t('account.PhoneNumber') })}
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Form.Group>
+
+                                {/* Password */}
+                                <Form.Group>
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrependPassword1"><i className="fas fa-unlock-alt" /></InputGroup.Text>
                                         </InputGroup.Prepend>
                                         <Form.Control
                                             type={showPassword ? "text" : "password"}
-                                            placeholder={props.t('account.PasswordNew')}
+                                            placeholder={props.t('account.Password')}
                                             onChange={(e) => setPassword1(e.target.value)}
                                             required
                                             autoComplete="new-password"
@@ -170,11 +247,11 @@ function SignUp(props) {
                                 <Form.Group>
                                     <InputGroup>
                                         <InputGroup.Prepend>
-                                            <InputGroup.Text id="inputGroupPrepend"><i className="fas fa-unlock-alt" /></InputGroup.Text>
+                                            <InputGroup.Text id="inputGroupPrependPassword2"><i className="fas fa-unlock-alt" /></InputGroup.Text>
                                         </InputGroup.Prepend>
                                         <Form.Control
                                             type={showPassword ? "text" : "password"}
-                                            placeholder={props.t('account.PasswordNewConfirm')}
+                                            placeholder={props.t('account.PasswordConfirm')}
                                             onChange={(e) => setPassword2(e.target.value)}
                                             required
                                             minLength="8"
@@ -199,9 +276,9 @@ function SignUp(props) {
                         :
                         <div className="content">
 
-                            <h3>{props.t('account.CreateUser')}</h3>
+                            <h3>{props.t('account.CreateAccount')}</h3>
 
-                            <p>{props.t('account.PasswordUpdated')}</p>
+                            <p>{props.t('account.CreateAccountEmailSent', { email_address: email })}</p>
                             <a href={HOME_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
                         </div>
 
