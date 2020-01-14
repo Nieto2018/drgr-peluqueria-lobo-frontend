@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom';
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom';
 import { translate } from 'react-multi-lang'
+import {
+    useHistory,
+    useLocation
+} from "react-router-dom";
 import { fetchQuery, graphql } from 'relay-runtime';
 
 import {
     G_USER_EMAIL,
     G_AUTH_TOKEN,
+    G_AUTH_TOKEN_VERIFIED,
     SIGN_UP_URL,
     RESET_PASSWORD_EMAIL_URL
 } from '../../Constants'
@@ -26,6 +31,9 @@ const query = graphql`
 
 function LogIn(props) {
 
+    let history = useHistory();
+    let location = useLocation();
+
     const formRef = React.createRef()
     const [validated, setValidated] = useState(false);
 
@@ -33,6 +41,7 @@ function LogIn(props) {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    const [toke, setToke] = useState(localStorage.getItem(G_AUTH_TOKEN));
     const [idMe, setIdMe] = useState('');
     const [emailMe, setEmailMe] = useState('');
 
@@ -61,15 +70,20 @@ function LogIn(props) {
 
                 } else {
                     _saveUserData(token)
-                    // props.history.push('/')
 
-                    const variables = {};
+                    // TODO delete
+                    setToke(localStorage.getItem(G_AUTH_TOKEN))
+                    const variables = {}
 
                     fetchQuery(environment, query, variables)
                         .then(data => {
                             setIdMe(data.me.id)
                             setEmailMe(data.me.email)
                         });
+                    // TODO end delete
+
+                    let { from } = location.state || { from: { pathname: "/" } };
+                    history.replace(from);
                 }
             })
         }
@@ -78,6 +92,7 @@ function LogIn(props) {
     function _saveUserData(token) {
         localStorage.setItem(G_USER_EMAIL, email)
         localStorage.setItem(G_AUTH_TOKEN, token)
+        localStorage.setItem(G_AUTH_TOKEN_VERIFIED, true)
     }
 
     return (
@@ -151,7 +166,7 @@ function LogIn(props) {
 
                 <div>
                     G_USER_EMAIL: {localStorage.getItem(G_USER_EMAIL)}<br />
-                    G_AUTH_TOKEN: {localStorage.getItem(G_AUTH_TOKEN)}<br />
+                    G_AUTH_TOKEN: {toke}<br />
                 </div>
 
                 <div>

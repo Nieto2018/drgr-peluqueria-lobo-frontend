@@ -27,15 +27,14 @@ export const LOG_IN_URL = '/account/log-in/'
 export const SIGN_UP_URL = '/account/sign-up/'
 export const RESET_PASSWORD_EMAIL_URL = '/account/reset-password-email/'
 export const RESET_PASSWORD_CONFIRM_URL = '/account/reset-password-confirm/'
-export const ACTIVATE_ACCOUNT_URL = '/account/activate-account/'
 
 
 /*
 Account constants
 */
-export const G_USER_ID = 'name'
 export const G_USER_EMAIL = 'email'
 export const G_AUTH_TOKEN = 'token'
+export const G_AUTH_TOKEN_VERIFIED = 'token-verified'
 export const ITEMS_PER_PAGE = 1 // setting this only to one so you can easily test your pagination implementation
 
 export const APP_LANGUAGE = 'app-language'

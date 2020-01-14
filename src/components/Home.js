@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import { translate } from 'react-multi-lang'
 import { withRouter } from 'react-router'
+import { Link } from "react-router-dom";
 import toast from './utils/Toast'
-import Login from './account/Login'
+// import LogIn from './account/LogIn'
 
 import banner from '../styles/images/banner.mp4'
+
+import {
+  LOG_IN_URL
+} from '../Constants'
 
 
 class Home extends Component {
@@ -28,10 +33,14 @@ class Home extends Component {
               {/* CONTENT */}
 
               {this.props.t('home.Title', { param: 'react' })}
-
+              <br />
               <button onClick={() => toast(<a href="http://www.google.es">www.google.es <span role="img" aria-label="emoji">🦄</span></a>)}>Notify OK!</button>
+              <br />
 
-              <Login />
+              {/* <LogIn /> */}
+              <Link to={LOG_IN_URL} >Log In</Link>
+              <br />
+              <Link to='/Protected' >Protected</Link>
 
             </div>
           </div>
