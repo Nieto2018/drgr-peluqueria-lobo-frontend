@@ -48,6 +48,7 @@
         "Title2": "Welcome to {param}"
     },
     "generic": {
+        "Loading": "Cargando",
         "Accept": "Aceptar",
         "Reset": "Restablecer",
         "Create": "Crear",

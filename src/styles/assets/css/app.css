@@ -7,7 +7,8 @@
 /* React Toast Notifications - End */
 
 /* Login - Beginning */
-.inner.login .content {
+.inner.login .content,
+.inner.loading .content {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -19,6 +20,7 @@
 }
 
 .inner.login .content > h3,
+.inner.loading .content > *,
 form > .form-group-center {
   text-align: center;
   align-self: center;
@@ -29,9 +31,19 @@ form > .form-group-center {
 }
 
 @media screen and (min-width: 340px) {
-  .inner.login {
+  .inner.login,
+  .inner.loading {
     width: 400px !important;
   } 
 }
 
 /* Login - End */
+
+/* Spinner - Beginning */
+
+.spinner-border {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Spinner - End */

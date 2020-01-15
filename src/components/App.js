@@ -10,6 +10,7 @@ import {
   RESET_PASSWORD_EMAIL_URL,
   RESET_PASSWORD_CONFIRM_URL
 } from '../Constants'
+import { Loading } from './utils/CustomComponents'
 import Elements from './Elements'
 import Footer from './Footer'
 import Generic from './Generic';
@@ -75,7 +76,7 @@ class App extends React.Component {
         </div>
       )
     } else {
-      return (<h3>Loading...</h3>)
+      return (<Loading />)
     }
   }
 
