@@ -3,9 +3,11 @@ import {
     graphql
 } from 'react-relay'
 
-import { G_USER_EMAIL, G_AUTH_TOKEN } from '../Constants'
+import { G_AUTH_TOKEN, G_AUTH_TOKEN_VERIFIED } from '../Constants'
+// import { G_AUTH_TOKEN } from '../Constants'
 import environment from '../Environment'
-import RefreshTokenMutation from './RefreshTokenMutation'
+// import RefreshTokenMutation from './RefreshTokenMutation'
+import { Session } from '../components/account/Session'
 
 const mutation = graphql`
     mutation VerifyTokenMutation($input: VerifyInput!){
@@ -16,41 +18,49 @@ const mutation = graphql`
     }
   `
 
-export default () => {
-    const token = localStorage.token
+export default async (callback) => {
+    const token = localStorage.getItem(G_AUTH_TOKEN)
+    let isLoggedIn = false
 
-    if (token) {
-        const variables = {
-            "input": {
-                "token": token,
-                "clientMutationId": ""
+    if (token && token.length > 0) {
+
+        // About async and await: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Operadores/await
+        isLoggedIn = await new Promise(resolve => {
+
+            const variables = {
+                "input": {
+                    "token": token,
+                    "clientMutationId": ""
+                }
             }
-        }
 
-        commitMutation(
-            environment,
-            {
-                mutation,
-                variables,
-                onCompleted: (response, errors) => {
-                    if (null != errors){
-                        console.error(errors[0])
-                        localStorage.removeItem(G_USER_EMAIL)
-                        // localStorage.removeItem(G_AUTH_TOKEN) // It throws "graphql.error.located_error.GraphQLLocatedError: Error decoding signature" in backend
-                        localStorage.setItem(G_AUTH_TOKEN, '')
-                    }else{
-                        RefreshTokenMutation()
-                    }
+            commitMutation(
+                environment,
+                {
+                    mutation,
+                    variables,
+                    onCompleted: (response, errors) => {
+
+                        if (null != errors) {
+                            console.error(errors[0])
+                            Session.signout()
+                        } else {
+                            resolve(true) // This command notify that the promise has finished)
+                        }
+                        resolve(false) // This command notify that the promise has finished)
+                    },
+                    onError: err => {
+                        console.error(err)
+                        Session.signout()
+                        resolve(false) // This command notify that the promise has finished)
+                    },
                 },
-                onError: err => {
-                    console.error(err)
-                    localStorage.removeItem(G_USER_EMAIL)
-                    localStorage.setItem(G_AUTH_TOKEN, '')
-                },
-            },
-        )
+            )
+        })
     } else {
-        localStorage.removeItem(G_USER_EMAIL)
-        localStorage.setItem(G_AUTH_TOKEN, '')
+        Session.signout()
     }
+    // Execution continues here when the promise notify that it has finished
+    localStorage.setItem(G_AUTH_TOKEN_VERIFIED, isLoggedIn)
+    callback()
 }

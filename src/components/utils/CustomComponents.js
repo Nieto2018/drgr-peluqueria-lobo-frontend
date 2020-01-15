@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
 import Alert from 'react-bootstrap/Alert'
+import Spinner from 'react-bootstrap/Spinner'
+import React, { useState } from 'react'
+import { translate } from 'react-multi-lang'
 
 export function ListAlert(props) {
     const header = props.header
@@ -25,5 +27,23 @@ export function ListAlert(props) {
             </Alert>
         )
     }
-
 }
+
+function LoadingComponent(props) {
+    return (
+        <div>
+            <section id="main" className="wrapper">
+                <div className="inner loading">
+                    <div className="content">
+                        <h2>{props.t('home.HairdressersName')}</h2>
+                        <br />
+                        <Spinner animation="border" variant="danger" />
+                        <h3>{props.t('generic.Loading')}...</h3>
+                    </div>
+                </div>
+            </section>
+        </div>
+    )
+}
+
+export const Loading = translate(LoadingComponent)

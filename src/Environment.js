@@ -12,12 +12,18 @@ const {
 } = require('relay-runtime')
 
 const fetchQuery = (operation, variables) => {
+  
+  // The Authorization headers param's value must be a string
+  // to avoid errors
+  let token = localStorage.getItem(G_AUTH_TOKEN)
+  token = token ? token : ''
+
   return fetch(GRAPHQL_URL, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': `JWT ${localStorage.getItem(G_AUTH_TOKEN)}`
+      'Authorization': `JWT ${token}`
     },
     body: JSON.stringify({
       query: operation.text,
