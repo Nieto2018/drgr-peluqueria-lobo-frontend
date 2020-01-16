@@ -1,47 +1,36 @@
-import React, { Component } from 'react'
+import Image from 'react-bootstrap/Image'
+import React from 'react'
 import { withRouter } from 'react-router'
-import DropdownButton from 'react-bootstrap/DropdownButton'
-import Dropdown from 'react-bootstrap/Dropdown'
+import { useHistory } from "react-router-dom"
+
+import { HOME_URL } from '../Constants'
 import LanguageSelector from './utils/LanguageSelector'
+import UserInfo from './account/UserInfo'
+import wolf from '../styles/images/wolf.png'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+function Header(props) {
+    let history = useHistory()
 
+    return (
+        <div>
+            {/* <!-- Header --> */}
+            <header id="header" className="header">
+                <div className="logo-url" onClick={() => history.push(HOME_URL)}>
+                    <Image className="logo-image" src={wolf}
+                        alt='Icons made by https://www.flaticon.com/authors/freepik from https://www.flaticon.es' />
+                    <p className="logo-name">Peluquería Lobo</p>
+                </div>
 
-class Header extends Component {
+                {/* <!-- Language settings --> */}
+                <LanguageSelector />
 
-    render() {
+                {/* <!-- Menu --> */}
+                <UserInfo />
 
-        return (
-            <div>
-                {/* <!-- Header --> */}
-                <header id="header">
-                    <a className="logo" href="/">Peluquería Lobo</a>
+            </header >
 
-                    <div>
-                        {/* <!-- Language settings --> */}
-                        <div style={{ float: 'left' }} >
-                            <LanguageSelector />
-                        </div>
-                        {/* <!-- Menu --> */}
-                        <div style={{ float: 'right' }} >
-                            <DropdownButton
-                                alignRight
-                                title="Menú"
-                                id="dropdown-menu-header"
-                                variant="dark" >
-                                {/* TODO */}
-                                <Dropdown.Item href="/">Inicio</Dropdown.Item>
-                                <Dropdown.Item href="/aslp">Administración</Dropdown.Item>
-                                <Dropdown.Item href="/elements">Elementos</Dropdown.Item>
-                                <Dropdown.Item href="/generic">Genérico</Dropdown.Item>
-                            </DropdownButton>
-                        </div>
-                    </div>
-                </header >
-
-            </div >
-        )
-    }
+        </div >
+    )
 
 }
 

@@ -274,17 +274,6 @@ button,
   text-align: center;
   text-decoration: none;
   white-space: nowrap; }
-  /* Begin added manually */
-  #dropdown-menu-header {
-    color: white !important;
-    line-height: 2rem !important;
-    position: relative;
-    top: -2px
-  }
-  #toast-header .close {
-    height: 20px !important;
-  }
-  /* End added manually */
   input[type="submit"].small,
   input[type="reset"].small,
   input[type="button"].small,
@@ -341,11 +330,6 @@ button,
   background-color: transparent;
   box-shadow: inset 0 0 0 1px #555555;
   color: #555555 !important; }
-  /* Begin added manually */
-  #dropdown-menu-header:hover {
-    color: #ce1b28 !important;
-  }
-  /* End added manually */
   input[type="submit"]:hover,
   input[type="reset"]:hover,
   input[type="button"]:hover,
@@ -1733,6 +1717,8 @@ ul.actions {
       .row.gtr-200.gtr-uniform > * {
         padding-top: 2.5rem; } }
 /* Icon */
+
+/* TODO comment */
 .icon {
   text-decoration: none;
   border-bottom: none;

@@ -1,5 +1,7 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react';
 import { Switch, Route } from 'react-router-dom'
+import 'semantic-ui-css/semantic.min.css'
 
 // import AppointmentStatesListPage from './AppointmentStatesListPage'
 import ActivateAccount from './account/ActivateAccount'
@@ -21,14 +23,13 @@ import PageNotFound from './PageNotFound'
 import Protected from './Protected'
 import ResetPasswordConfirm from './account/ResetPasswordConfirm'
 import ResetPasswordEmail from './account/ResetPasswordEmail'
-import { PrivateRoute, Session } from './account/Session'
+import Session, { PrivateRoute } from './account/Session'
 import SignUp from './account/SignUp'
-
-
-import '../styles/assets/css/template.css';
 import '../styles/assets/css/app.css';
 import '../styles/assets/css/fontawesome.min.css';
 import '../styles/assets/css/solid.min.css';
+import '../styles/assets/css/template.css';
+
 
 class App extends React.Component {
   constructor(props) {

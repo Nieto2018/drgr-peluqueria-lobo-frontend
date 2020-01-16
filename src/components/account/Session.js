@@ -7,7 +7,8 @@ import {
 } from '../../Constants'
 import VerifyTokenMutation from '../../mutations/VerifyTokenMutation'
 
-export const Session = {
+const Session = {
+
     verifyToken(callback) {
         VerifyTokenMutation(callback)
     },
@@ -21,11 +22,16 @@ export const Session = {
         }
         return isAuthenticated
     },
-    signout() {
+    signout(callback) {
         localStorage.clear()
+        if (callback) {
+            callback()
+        }
     }
 
 }
+
+export default Session
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.

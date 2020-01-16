@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { translate } from 'react-multi-lang'
 import { withRouter } from 'react-router'
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 import toast from './utils/Toast'
 // import LogIn from './account/LogIn'
 
