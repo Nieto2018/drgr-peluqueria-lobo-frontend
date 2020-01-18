@@ -1,3 +1,9 @@
+enum AccountActionEnum {
+  ACTIVATE_ACCOUNT
+  UPDATE_EMAIL
+  RESET_PASSWORD
+}
+
 type ActivateAccount {
   email: String
   result: String
@@ -96,8 +102,8 @@ scalar GenericScalar
 """The project root mutation definition"""
 type Mutation {
   sendVerificationEmail(
-    """Possible values: ACTIVATE_USER, UPDATE_EMAIL or RESET_PASSWORD"""
-    action: UserActionEnum
+    """Possible values: ACTIVATE_ACCOUNT, UPDATE_EMAIL or RESET_PASSWORD"""
+    action: AccountActionEnum
     email: String
   ): SendVerificationEmail
   createAccount(input: UserInput): CreateAccount
@@ -219,12 +225,6 @@ type UpdateEmail {
   newEmail: String
   result: String
   errors: [String]
-}
-
-enum UserActionEnum {
-  ACTIVATE_USER
-  UPDATE_EMAIL
-  RESET_PASSWORD
 }
 
 input UserInput {

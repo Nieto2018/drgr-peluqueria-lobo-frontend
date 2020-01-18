@@ -96,7 +96,7 @@ function SignUp(props) {
                             } else {
 
                                 if ("OK" === data.createAccount.result) {
-                                    SendVerificationEmailMutation(email, "ACTIVATE_USER")
+                                    SendVerificationEmailMutation(email, "ACTIVATE_ACCOUNT")
                                     setUserCreated(true);
                                 } else {
                                     errorMessageList.push(props.t('error.AdministratorContact'))
@@ -200,7 +200,7 @@ function SignUp(props) {
                                 <Form.Group>
                                     <InputGroup>
                                         <InputGroup.Prepend>
-                                            <InputGroup.Text id="inputGroupPrependPhoneNumber"><i class="fas fa-mobile-alt"></i></InputGroup.Text>
+                                            <InputGroup.Text id="inputGroupPrependPhoneNumber"><i className="fas fa-mobile-alt"></i></InputGroup.Text>
                                         </InputGroup.Prepend>
                                         <Form.Control
                                             type="tel"

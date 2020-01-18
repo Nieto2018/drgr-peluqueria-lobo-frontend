@@ -11,7 +11,7 @@ import environment from '../../Environment'
 
 
 const mutation = graphql`
-    mutation ResetPasswordEmailMutation($email: String, $action: UserActionEnum) {
+    mutation ResetPasswordEmailMutation($email: String, $action: AccountActionEnum) {
         sendVerificationEmail(email: $email, action: $action) {
             email
             action
