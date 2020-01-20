@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
+import { isValidPhoneNumber } from 'react-phone-number-input'
 import { commitMutation, graphql } from 'react-relay'
 
 import { HOME_URL } from '../../Constants'
-import { ListAlert } from '../utils/CustomComponents'
+import {
+    ListAlert, PhoneInput
+} from '../utils/CustomComponents'
 import environment from '../../Environment'
 import SendVerificationEmailMutation from '../../mutations/SendVerificationEmailMutation'
 
@@ -33,6 +36,7 @@ function SignUp(props) {
     const [name, setName] = useState('')
     const [surnames, setSurnames] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
+    const [showPhoneNumberInvalid, setShowPhoneNumberInvalid] = useState(false)
 
 
     // It is true when the Rest API to create user is called without any error
@@ -42,6 +46,7 @@ function SignUp(props) {
         e.preventDefault()
         const form = formRef.current
         const isValidForm = form.checkValidity()
+        setShowPhoneNumberInvalid(!isValidPhoneNumber(phoneNumber))
         setValidated(true);
 
         if (isValidForm) {
@@ -88,6 +93,11 @@ function SignUp(props) {
                                         errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Name') }))
                                     } else if ('SurnamesRequiredError' === error) {
                                         errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Surnames') }))
+                                    } else if ('PhoneNumberRequiredError' === error) {
+                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.PhoneNumber') }))
+                                    } else if ('PhoneNumberNotValidError' === error) {
+                                        errorMessageList.push(props.t('error.FieldInvalidError', { field_name: props.t('account.PhoneNumber') }))
+                                        setShowPhoneNumberInvalid(true)
                                     } else {
                                         errorMessageList.push(props.t('error.AdministratorContact'))
                                     }
@@ -111,8 +121,6 @@ function SignUp(props) {
                             ReactDOM.render(
                                 <ListAlert variant="danger" messagesList={errorMessageList} />,
                                 document.getElementById('errorsCreateAccountConfirmDiv'))
-                        } else {
-                            
                         }
                     },
                     onError: err => {
@@ -156,61 +164,6 @@ function SignUp(props) {
                                             required />
                                         <Form.Control.Feedback type="invalid">
                                             {props.t('account.error.EnterValidEmailError')}
-                                        </Form.Control.Feedback>
-                                    </InputGroup>
-                                </Form.Group>
-
-                                {/* User data */}
-                                <Form.Group>
-                                    <InputGroup>
-                                        <InputGroup.Prepend>
-                                            <InputGroup.Text id="inputGroupPrependName">{props.t('account.Name')}</InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder={props.t('account.Name')}
-                                            onChange={(e) => setName(e.target.value)}
-                                            required
-                                            maxLength="30"
-                                        />
-                                        <Form.Control.Feedback type="invalid">
-                                            {props.t('error.FieldRequired', { field_name: props.t('account.Name') })}
-                                        </Form.Control.Feedback>
-                                    </InputGroup>
-                                </Form.Group>
-
-                                <Form.Group>
-                                    <InputGroup>
-                                        <InputGroup.Prepend>
-                                            <InputGroup.Text id="inputGroupPrependSurnames">{props.t('account.Surnames')}</InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder={props.t('account.Surnames')}
-                                            onChange={(e) => setSurnames(e.target.value)}
-                                            required
-                                            maxLength="150"
-                                        />
-                                        <Form.Control.Feedback type="invalid">
-                                            {props.t('error.FieldRequired', { field_name: props.t('account.Surnames') })}
-                                        </Form.Control.Feedback>
-                                    </InputGroup>
-                                </Form.Group>
-
-                                <Form.Group>
-                                    <InputGroup>
-                                        <InputGroup.Prepend>
-                                            <InputGroup.Text id="inputGroupPrependPhoneNumber"><i className="fas fa-mobile-alt"></i></InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <Form.Control
-                                            type="tel"
-                                            placeholder={props.t('account.PhoneNumber')}
-                                            onChange={(e) => setPhoneNumber(e.target.value)}
-                                            pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"
-                                            maxLength="15"
-                                        />
-                                        <Form.Control.Feedback type="invalid">
-                                            {props.t('error.FieldInvalidError', { field_name: props.t('account.PhoneNumber') })}
                                         </Form.Control.Feedback>
                                     </InputGroup>
                                 </Form.Group>
@@ -263,14 +216,72 @@ function SignUp(props) {
                                     </InputGroup>
                                 </Form.Group>
 
-                                <Form.Group className="form-group-center">
-                                    <input type="submit" value={props.t('generic.Accept')} className="primary" onClick={_confirm} />
+                                {/* User data */}
+                                <Form.Group>
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrependName">{props.t('account.Name')}</InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder={props.t('account.Name')}
+                                            onChange={(e) => setName(e.target.value)}
+                                            required
+                                            maxLength="30"
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {props.t('error.FieldRequired', { field_name: props.t('account.Name') })}
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
                                 </Form.Group>
 
-                                <Form.Group className="form-group-center">
-                                    <a href={HOME_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
+                                <Form.Group>
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrependSurnames">{props.t('account.Surnames')}</InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder={props.t('account.Surnames')}
+                                            onChange={(e) => setSurnames(e.target.value)}
+                                            required
+                                            maxLength="150"
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {props.t('error.FieldRequired', { field_name: props.t('account.Surnames') })}
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
                                 </Form.Group>
+
                             </Form>
+
+                            {/* Phone number */}
+                            <div className="margin-bottom-20px">
+                                <Form.Group>
+                                    <InputGroup className="align-center-content">
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="inputGroupPrependPhoneNumber"><i className="fas fa-mobile-alt"></i></InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder={props.t('account.PhoneNumber')}
+                                            disabled />
+                                        <PhoneInput
+                                            value={phoneNumber}
+                                            onChange={setPhoneNumber}
+                                            showPhoneNumberInvalid={showPhoneNumberInvalid}
+                                            setShowPhoneNumberInvalid={setShowPhoneNumberInvalid} />
+                                    </InputGroup>
+                                </Form.Group>
+                            </div>
+
+                            <div className="align-center-content margin-bottom-20px">
+                                <input type="submit" value={props.t('generic.Accept')} className="primary" onClick={_confirm} />
+                            </div>
+                            <div className="align-center-content">
+                                <a href={HOME_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
+                            </div>
+
 
                         </div>
                         :

@@ -50,7 +50,6 @@
   text-decoration: none;
 }
 
-
 .logo-name {
   color: #ffffff;
   font-size: 1rem;
@@ -130,7 +129,7 @@ form > .form-group-center {
 
 /* Login - End */
 
-/* Begin added manually */
+/* Begin dropdown-menu-header */
 #dropdown-menu-header {
   color: white !important;
   line-height: 2rem !important;
@@ -139,8 +138,47 @@ form > .form-group-center {
   height: 100% !important;
 }
 
-/* Begin added manually */
 #dropdown-menu-header:hover {
   color: #ce1b28 !important;
 }
-/* End added manually */
+/* End dropdown-menu-header */
+
+/* Begin react-phone-input-2 */
+
+.phone-input-container {
+  width: 100%;
+}
+
+.flag-dropdown {
+  background-color: #e9ecef !important;
+  border-right-color: #9b9fa4 !important;
+}
+
+.react-phone-input.form-control {
+  height: 3.25rem;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.075);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.invalid-feedback-visible {
+  display: block;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: 
+  #dc3545;
+}
+
+/* End react-phone-input-2 */
+
+/* General */
+
+.align-center-content{
+  align-self: center;
+}
+
+.margin-bottom-1rem{
+  margin-bottom: 1rem !important;
+}
