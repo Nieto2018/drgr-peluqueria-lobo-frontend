@@ -5,8 +5,8 @@ import { useHistory } from "react-router-dom"
 
 import { HOME_URL } from '../Constants'
 import LanguageSelector from './utils/LanguageSelector'
+import LoboLogo from '../styles/images/Lobo-logo.jpg'
 import UserInfo from './account/UserInfo'
-import wolf from '../styles/images/wolf.png'
 
 function Header(props) {
     let history = useHistory()
@@ -16,8 +16,7 @@ function Header(props) {
             {/* <!-- Header --> */}
             <header id="header" className="header">
                 <div className="logo-url" onClick={() => history.push(HOME_URL)}>
-                    <Image className="logo-image" src={wolf}
-                        alt='Icons made by https://www.flaticon.com/authors/freepik from https://www.flaticon.es' />
+                    <Image className="logo-image" alt="Lobo-lobo" src={LoboLogo} roundedCircle />
                     <p className="logo-name">Peluquería Lobo</p>
                 </div>
 
