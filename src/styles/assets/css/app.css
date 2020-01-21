@@ -123,7 +123,7 @@ form > .form-group-center {
 @media screen and (min-width: 340px) {
   .inner.login,
   .inner.loading {
-    width: 400px !important;
+    width: 450px !important;
   }
 }
 
