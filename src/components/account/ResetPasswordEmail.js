@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
 import { commitMutation, graphql } from 'react-relay'
+import { Link } from "react-router-dom"
 
 import { LOG_IN_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
@@ -11,7 +12,7 @@ import environment from '../../Environment'
 
 
 const mutation = graphql`
-    mutation ResetPasswordEmailMutation($email: String, $action: UserActionEnum) {
+    mutation ResetPasswordEmailMutation($email: String, $action: AccountActionEnum) {
         sendVerificationEmail(email: $email, action: $action) {
             email
             action
@@ -141,7 +142,7 @@ function ResetPasswordEmail(props) {
                                 </Form.Group>
 
                                 <Form.Group className="form-group-center">
-                                    <a href={LOG_IN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('account.SignIn') })}</a>
+                                    <Link to={LOG_IN_URL} >{props.t('link.GoTo', { param: props.t('account.SignIn') })}</Link>
                                 </Form.Group>
                             </Form>
 
@@ -152,7 +153,7 @@ function ResetPasswordEmail(props) {
                             <h3>{props.t('account.PasswordReset')}</h3>
 
                             <p>{props.t('account.PasswordResetEmailSent', { param: email })}</p>
-                            <a href={LOG_IN_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
+                            <Link to={LOG_IN_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
                         </div>
 
                     }

@@ -6,6 +6,96 @@
 
 /* React Toast Notifications - End */
 
+/* Spinner - Beginning */
+
+.spinner-border {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Spinner - End */
+
+/* Header - Beginning */
+
+.header,
+.logo-url,
+.language-selector,
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-url,
+.logo-image {
+  height: 100%;
+}
+
+.logo-url {
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.logo-image {
+  padding: 5px;
+}
+
+.logo-name {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  height: inherit;
+  line-height: inherit;
+  padding: 0 1.25rem;
+  text-decoration: none;
+}
+
+.logo-name {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  height: inherit;
+  line-height: inherit;
+  padding: 0 1.25rem;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 340px) {
+  .logo-name,
+  .user-info-name {
+    display: none;
+  }
+}
+
+/* Header - End */
+
+/* LanguageSelector - Beginning */
+
+.language-selector {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 70px;
+}
+
+.inactive-flag{
+  cursor: pointer;
+}
+
+/* LanguageSelector - End */
+
+/* UserInfo - Beginning */
+
+.user-info {
+  height: 100%;
+  margin-right: 10px;
+}
+
+.user-info-name {
+  color: white;
+}
+
+/* UserInfo - End */
+
 /* Login - Beginning */
 .inner.login .content,
 .inner.loading .content {
@@ -17,6 +107,10 @@
 
 .inner.login .content > * {
   margin-bottom: 10px;
+}
+
+.inner.login .content > a {
+  text-align: center;
 }
 
 .inner.login .content > h3,
@@ -33,17 +127,62 @@ form > .form-group-center {
 @media screen and (min-width: 340px) {
   .inner.login,
   .inner.loading {
-    width: 400px !important;
-  } 
+    width: 450px !important;
+  }
 }
 
 /* Login - End */
 
-/* Spinner - Beginning */
-
-.spinner-border {
-  margin-top: 20px;
-  margin-bottom: 10px;
+/* Begin dropdown-menu-header */
+#dropdown-menu-header {
+  color: white !important;
+  line-height: 2rem !important;
+  position: relative;
+  top: -1px;
+  height: 100% !important;
 }
 
-/* Spinner - End */
+#dropdown-menu-header:hover {
+  color: #ce1b28 !important;
+}
+/* End dropdown-menu-header */
+
+/* Begin react-phone-input-2 */
+
+.phone-input-container {
+  width: 100%;
+}
+
+.flag-dropdown {
+  background-color: #e9ecef !important;
+  border-right-color: #9b9fa4 !important;
+}
+
+.react-phone-input.form-control {
+  height: 3.25rem;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.075);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.invalid-feedback-visible {
+  display: block;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: 
+  #dc3545;
+}
+
+/* End react-phone-input-2 */
+
+/* General */
+
+.align-center-content{
+  align-self: center;
+}
+
+.margin-bottom-1rem{
+  margin-bottom: 1rem !important;
+}

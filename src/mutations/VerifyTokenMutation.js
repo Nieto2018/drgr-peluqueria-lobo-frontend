@@ -7,7 +7,7 @@ import { G_AUTH_TOKEN, G_AUTH_TOKEN_VERIFIED } from '../Constants'
 // import { G_AUTH_TOKEN } from '../Constants'
 import environment from '../Environment'
 // import RefreshTokenMutation from './RefreshTokenMutation'
-import { Session } from '../components/account/Session'
+import Session from '../components/account/Session'
 
 const mutation = graphql`
     mutation VerifyTokenMutation($input: VerifyInput!){
@@ -43,7 +43,7 @@ export default async (callback) => {
 
                         if (null != errors) {
                             console.error(errors[0])
-                            Session.signout()
+                            Session.signout(null)
                         } else {
                             resolve(true) // This command notify that the promise has finished)
                         }
@@ -51,14 +51,14 @@ export default async (callback) => {
                     },
                     onError: err => {
                         console.error(err)
-                        Session.signout()
+                        Session.signout(null)
                         resolve(false) // This command notify that the promise has finished)
                     },
                 },
             )
         })
     } else {
-        Session.signout()
+        Session.signout(null)
     }
     // Execution continues here when the promise notify that it has finished
     localStorage.setItem(G_AUTH_TOKEN_VERIFIED, isLoggedIn)

@@ -4,9 +4,12 @@
         "GoTo": "Ir a {param}"
     },
     "account": {
+        "Account": "Cuenta",
         "SignIn": "Iniciar sesión",
+        "SignOut": "Cerrar sesión",
         "SignUp": "Registrarse",
         "LogIn": "Entrar",
+        "Welcome": "Bienvenido",
         "Email": "Correo electrónico",
         "Password": "Contraseña",
         "PasswordForgot": "¿Contraseña olvidada?",
@@ -49,6 +52,7 @@
     },
     "generic": {
         "Loading": "Cargando",
+        "Settings": "Configuración",
         "Accept": "Aceptar",
         "Reset": "Restablecer",
         "Create": "Crear",

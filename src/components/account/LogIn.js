@@ -4,30 +4,23 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom';
 import { translate } from 'react-multi-lang'
 import {
+    Link,
     useHistory,
     useLocation
 } from "react-router-dom";
-import { fetchQuery, graphql } from 'relay-runtime';
 
 import {
     G_USER_EMAIL,
     G_AUTH_TOKEN,
     G_AUTH_TOKEN_VERIFIED,
     SIGN_UP_URL,
-    RESET_PASSWORD_EMAIL_URL
+    RESET_PASSWORD_EMAIL_URL,
+    G_USER_NAME
 } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
-import environment from '../../Environment'
 import SigninUserMutation from '../../mutations/SigninUserMutation'
+import MeQuery from '../../queries/MeQuery'
 
-const query = graphql`
-    query LogInQuery{
-      me{
-          id
-          email
-        }
-    }
-`
 
 function LogIn(props) {
 
@@ -40,10 +33,6 @@ function LogIn(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-
-    const [toke, setToke] = useState(localStorage.getItem(G_AUTH_TOKEN));
-    const [idMe, setIdMe] = useState('');
-    const [emailMe, setEmailMe] = useState('');
 
     async function _confirm(e) {
         e.preventDefault()
@@ -70,20 +59,6 @@ function LogIn(props) {
 
                 } else {
                     _saveUserData(token)
-
-                    // TODO delete
-                    setToke(localStorage.getItem(G_AUTH_TOKEN))
-                    const variables = {}
-
-                    fetchQuery(environment, query, variables)
-                        .then(data => {
-                            setIdMe(data.me.id)
-                            setEmailMe(data.me.email)
-                        });
-                    // TODO end delete
-
-                    let { from } = location.state || { from: { pathname: "/" } };
-                    history.replace(from);
                 }
             })
         }
@@ -93,6 +68,17 @@ function LogIn(props) {
         localStorage.setItem(G_USER_EMAIL, email)
         localStorage.setItem(G_AUTH_TOKEN, token)
         localStorage.setItem(G_AUTH_TOKEN_VERIFIED, true)
+
+        MeQuery((data) => {
+            let username = ''
+            if (data) {
+                username = data.me.firstName
+            }
+            localStorage.setItem(G_USER_NAME, username)
+
+            let { from } = location.state || { from: { pathname: "/" } };
+            history.replace(from);
+        })
     }
 
     return (
@@ -151,11 +137,11 @@ function LogIn(props) {
                             </Form.Group>
 
                             <Form.Group className="form-group-center">
-                                <a href={RESET_PASSWORD_EMAIL_URL}>{props.t('account.PasswordForgot')}</a>
+                                <Link to={RESET_PASSWORD_EMAIL_URL}>{props.t('account.PasswordForgot')}</Link>
                             </Form.Group>
 
                             <Form.Group className="form-group-center" style={{ borderTop: "grey solid thin", paddingTop: "20px" }}>
-                                <a href={SIGN_UP_URL} className="button small">{props.t('account.CreateAccount')}</a>
+                                <Link to={SIGN_UP_URL} className="button small">{props.t('account.CreateAccount')}</Link>
                             </Form.Group>
 
                         </Form>
@@ -164,15 +150,6 @@ function LogIn(props) {
 
                 </div>
 
-                <div>
-                    G_USER_EMAIL: {localStorage.getItem(G_USER_EMAIL)}<br />
-                    G_AUTH_TOKEN: {toke}<br />
-                </div>
-
-                <div>
-                    id_me: {idMe}<br />
-                    nombre_me: {emailMe}<br />
-                </div>
             </section>
 
         </div>

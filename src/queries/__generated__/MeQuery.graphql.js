@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 417e3493ffa1095956cb47dd432709f7
+ * @relayHash 5d12b818dab5186d47c1d082f9688f57
  */
 
 /* eslint-disable */
@@ -9,25 +9,29 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type LogInQueryVariables = {||};
-export type LogInQueryResponse = {|
+export type MeQueryVariables = {||};
+export type MeQueryResponse = {|
   +me: ?{|
     +id: string,
     +email: string,
+    +firstName: string,
+    +isStaff: boolean,
   |}
 |};
-export type LogInQuery = {|
-  variables: LogInQueryVariables,
-  response: LogInQueryResponse,
+export type MeQuery = {|
+  variables: MeQueryVariables,
+  response: MeQueryResponse,
 |};
 */
 
 
 /*
-query LogInQuery {
+query MeQuery {
   me {
     id
     email
+    firstName
+    isStaff
   }
 }
 */
@@ -56,6 +60,20 @@ var v0 = [
         "name": "email",
         "args": null,
         "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "firstName",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "isStaff",
+        "args": null,
+        "storageKey": null
       }
     ]
   }
@@ -64,7 +82,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "LogInQuery",
+    "name": "MeQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -72,19 +90,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "LogInQuery",
+    "name": "MeQuery",
     "argumentDefinitions": [],
     "selections": (v0/*: any*/)
   },
   "params": {
     "operationKind": "query",
-    "name": "LogInQuery",
+    "name": "MeQuery",
     "id": null,
-    "text": "query LogInQuery {\n  me {\n    id\n    email\n  }\n}\n",
+    "text": "query MeQuery {\n  me {\n    id\n    email\n    firstName\n    isStaff\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '310da68166278eab6243c906944e9c83';
+(node/*: any*/).hash = '0844277746d18b8cdeb3691f6f4b83cb';
 module.exports = node;

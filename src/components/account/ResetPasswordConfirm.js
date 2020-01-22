@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
 import { commitMutation, graphql } from 'react-relay'
+import { Link } from "react-router-dom"
 import queryString from 'query-string'
 
 import { HOME_URL } from '../../Constants'
@@ -191,7 +192,7 @@ function ResetPasswordConfirm(props) {
                                 </Form.Group>
 
                                 <Form.Group className="form-group-center">
-                                    <a href={HOME_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
+                                    <Link to={HOME_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
                                 </Form.Group>
                             </Form>
 
@@ -202,7 +203,7 @@ function ResetPasswordConfirm(props) {
                             <h3>{props.t('account.PasswordReset')}</h3>
 
                             <p>{props.t('account.PasswordUpdated')}</p>
-                            <a href={HOME_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
+                            <Link to={HOME_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
                         </div>
 
                     }

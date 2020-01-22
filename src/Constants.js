@@ -32,9 +32,10 @@ export const RESET_PASSWORD_CONFIRM_URL = '/account/reset-password-confirm/'
 /*
 Account constants
 */
-export const G_USER_EMAIL = 'email'
 export const G_AUTH_TOKEN = 'token'
 export const G_AUTH_TOKEN_VERIFIED = 'token-verified'
+export const G_USER_EMAIL = 'email'
+export const G_USER_NAME = 'username'
 export const ITEMS_PER_PAGE = 1 // setting this only to one so you can easily test your pagination implementation
 
 export const APP_LANGUAGE = 'app-language'

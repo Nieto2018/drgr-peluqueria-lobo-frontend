@@ -12,20 +12,22 @@ class LanguageSelector extends Component {
 
     render() {
         return (
-            <div>
-                <div style={{float: 'left', marginRight: '10px'}} onClick={() => this.changeLang('es')}>
+            <div className="language-selector">
+                <div onClick={() => this.changeLang('es')}>
                     {getLanguage() === 'es' ? (
                         <ReactCountryFlag code="es" svg />
                     ) : (
-                            <ReactCountryFlag code="es" />
-                        )}
+                            <ReactCountryFlag code="es" className="inactive-flag" />
+                        )
+                    }
                 </div>
-                <div style={{float: 'right', marginRight: '10px'}} onClick={() => this.changeLang('en')} >
+                <div onClick={() => this.changeLang('en')} >
                     {getLanguage() === 'en' ? (
                         <ReactCountryFlag code="gb" svg />
                     ) : (
-                        <ReactCountryFlag code="gb" />
-                    )}
+                            <ReactCountryFlag code="gb" className="inactive-flag" />
+                        )
+                    }
                 </div>
             </div >
         )
