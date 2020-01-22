@@ -5,6 +5,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import { commitMutation, graphql } from 'react-relay'
+import { Link } from "react-router-dom"
 
 import { HOME_URL } from '../../Constants'
 import {
@@ -279,7 +280,7 @@ function SignUp(props) {
                                 <input type="submit" value={props.t('generic.Accept')} className="primary" onClick={_confirm} />
                             </div>
                             <div className="align-center-content">
-                                <a href={HOME_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
+                                <Link to={HOME_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
                             </div>
 
 
@@ -290,7 +291,7 @@ function SignUp(props) {
                             <h3>{props.t('account.CreateAccount')}</h3>
 
                             <p>{props.t('account.CreateAccountEmailSent', { email_address: email })}</p>
-                            <a href={HOME_URL} style={{ display: 'block', textAlign: 'center' }} >{props.t('link.GoTo', { param: props.t('link.Home') })}</a>
+                            <Link to={HOME_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
                         </div>
 
                     }

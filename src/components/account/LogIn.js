@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom';
 import { translate } from 'react-multi-lang'
 import {
+    Link,
     useHistory,
     useLocation
 } from "react-router-dom";
@@ -136,11 +137,11 @@ function LogIn(props) {
                             </Form.Group>
 
                             <Form.Group className="form-group-center">
-                                <a href={RESET_PASSWORD_EMAIL_URL}>{props.t('account.PasswordForgot')}</a>
+                                <Link to={RESET_PASSWORD_EMAIL_URL}>{props.t('account.PasswordForgot')}</Link>
                             </Form.Group>
 
                             <Form.Group className="form-group-center" style={{ borderTop: "grey solid thin", paddingTop: "20px" }}>
-                                <a href={SIGN_UP_URL} className="button small">{props.t('account.CreateAccount')}</a>
+                                <Link to={SIGN_UP_URL} className="button small">{props.t('account.CreateAccount')}</Link>
                             </Form.Group>
 
                         </Form>

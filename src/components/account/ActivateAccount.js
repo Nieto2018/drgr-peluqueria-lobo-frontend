@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 import { translate } from 'react-multi-lang'
 import { commitMutation, graphql } from 'react-relay'
+import { Link } from "react-router-dom"
 import queryString from 'query-string'
 
 import { HOME_URL } from '../../Constants'
@@ -127,7 +128,7 @@ class ActivateAccount extends React.Component {
                                 :
                                 <p>{this.props.t('account.AccountActivated')}</p>
                             }
-                            <a href={HOME_URL} style={{ display: 'block', textAlign: 'center' }} >{this.props.t('link.GoTo', { param: this.props.t('link.Home') })}</a>
+                            <Link to={HOME_URL}>{this.props.t('link.GoTo', { param: this.props.t('link.Home') })}</Link>
                         </div>
 
                     </div>

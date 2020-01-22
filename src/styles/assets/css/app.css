@@ -109,6 +109,10 @@
   margin-bottom: 10px;
 }
 
+.inner.login .content > a {
+  text-align: center;
+}
+
 .inner.login .content > h3,
 .inner.loading .content > *,
 form > .form-group-center {
