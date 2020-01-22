@@ -1,12 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css'
 
 // import AppointmentStatesListPage from './AppointmentStatesListPage'
 import ActivateAccount from './account/ActivateAccount'
 import {
   ACTIVATE_ACCOUNT_URL,
+  HOME_URL,
   LOG_IN_URL,
   SIGN_UP_URL,
   RESET_PASSWORD_EMAIL_URL,
@@ -23,7 +24,7 @@ import PageNotFound from './PageNotFound'
 import Protected from './Protected'
 import ResetPasswordConfirm from './account/ResetPasswordConfirm'
 import ResetPasswordEmail from './account/ResetPasswordEmail'
-import Session, { PrivateRoute } from './account/Session'
+import Session, { LogInRoute, PrivateRoute } from './account/Session'
 import SignUp from './account/SignUp'
 import '../styles/assets/css/app.css';
 import '../styles/assets/css/fontawesome.min.css';
@@ -51,12 +52,14 @@ class App extends React.Component {
         <div>
           <Header />
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path={HOME_URL} component={Home} />
             {/* <Route exact path='/' component={AppointmentStatesListPage} /> */}
             {/* <Route exact path='/aslp' component={AppointmentStatesListPage} /> */}
             <Route exact path='/elements' component={Elements} />
             <Route exact path='/generic' component={Generic} />
-            <Route exact path={LOG_IN_URL} component={LogIn} />
+            <LogInRoute exact path={LOG_IN_URL}>
+              <LogIn />
+            </LogInRoute>
             <Route exact path={SIGN_UP_URL} component={SignUp} />
             <Route exact path={ACTIVATE_ACCOUNT_URL} component={ActivateAccount} />
             <Route exact path={RESET_PASSWORD_EMAIL_URL} component={ResetPasswordEmail} />
