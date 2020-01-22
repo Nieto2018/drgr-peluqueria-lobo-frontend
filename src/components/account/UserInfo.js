@@ -36,6 +36,9 @@ function UserInfo(props) {
         },
         { key: 'user', text: props.t('account.Account'), icon: 'user', onClick: () => alert("user") },
         { key: 'settings', text: props.t('generic.Settings'), icon: 'settings', onClick: () => alert("settings") },
+        // TODO deleting
+        { key: 'elements', text: 'Elements', icon: 'settings', onClick: () => history.push('/elements') },
+        { key: 'generic', text: 'Generic', icon: 'settings', onClick: () => history.push('/generic') },
         { key: 'sign-out', text: props.t('account.SignOut'), icon: 'lock', onClick: () => Session.signout(() => history.push(HOME_URL)) },
     ]
 
