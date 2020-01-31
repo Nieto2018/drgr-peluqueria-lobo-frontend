@@ -4,25 +4,15 @@ import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
 import { isValidPhoneNumber } from 'react-phone-number-input'
-import { commitMutation, graphql } from 'react-relay'
 import { Link } from "react-router-dom"
 
 import { HOME_URL } from '../../Constants'
 import {
     ListAlert, PhoneInput
 } from '../utils/CustomComponents'
-import environment from '../../Environment'
 import SendVerificationEmailMutation from '../../mutations/SendVerificationEmailMutation'
+import SignUpMutation from '../../mutations/SignUpMutation'
 
-const mutation = graphql`
-    mutation SignUpMutation($input: UserInput!) {
-        createAccount(input: $input){
-            email
-            result
-            errors
-        }
-    }
-`
 
 function SignUp(props) {
 
@@ -39,100 +29,74 @@ function SignUp(props) {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [showPhoneNumberInvalid, setShowPhoneNumberInvalid] = useState(false)
 
-
     // It is true when the Rest API to create user is called without any error
     const [userCreated, setUserCreated] = useState(false)
 
-    async function _confirm(e) {
+    function _confirm(e) {
         e.preventDefault()
         const form = formRef.current
-        const isValidForm = form.checkValidity()
         setShowPhoneNumberInvalid(!isValidPhoneNumber(phoneNumber))
+        const isValidForm = form.checkValidity() && isValidPhoneNumber(phoneNumber)
         setValidated(true);
 
         if (isValidForm) {
-            const variables = {
-                input: {
-                    email: email,
-                    password1: password1,
-                    password2: password2,
-                    name: name,
-                    surnames: surnames,
-                    phoneNumber: phoneNumber
-                }
-            }
+            SignUpMutation(
+                email,
+                password1,
+                password2,
+                name,
+                surnames,
+                phoneNumber,
+                (data, errors) => {
+                    let errorMessageList = []
 
-            commitMutation(
-                environment,
-                {
-                    mutation,
-                    variables,
-                    onCompleted: data => {
-                        let errorMessageList = []
-
-                        if (null != data.createAccount) {
-
-                            if (data.createAccount.errors.length > 0) {
-                                data.createAccount.errors.forEach(error => {
-                                    console.error(error)
-
-                                    if ('EmailRequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Email') }))
-                                    } else if ('EmailRegexError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
-                                    } else if ('EmailAlreadyRegisteredError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.EmailAlreadyRegisteredError'))
-                                    } else if ('Password1RequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword1') }))
-                                    } else if ('Password2RequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword2') }))
-                                    } else if ('PasswordsNotMatchError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.PasswordsNotMatchError'))
-                                    } else if ('PasswordRegexError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.PasswordRegexError'))
-                                    } else if ('NameRequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Name') }))
-                                    } else if ('SurnamesRequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Surnames') }))
-                                    } else if ('PhoneNumberRequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.PhoneNumber') }))
-                                    } else if ('PhoneNumberNotValidError' === error) {
-                                        errorMessageList.push(props.t('error.FieldInvalidError', { field_name: props.t('account.PhoneNumber') }))
-                                        setShowPhoneNumberInvalid(true)
-                                    } else {
-                                        errorMessageList.push(props.t('error.AdministratorContact'))
-                                    }
-                                })
-
+                    if (errors.length > 0) {
+                        errors.forEach(error => {
+                            if ('EmailRequiredError' === error) {
+                                errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Email') }))
+                            } else if ('EmailRegexError' === error) {
+                                errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
+                            } else if ('EmailAlreadyRegisteredError' === error) {
+                                errorMessageList.push(props.t('account.backendError.EmailAlreadyRegisteredError'))
+                            } else if ('Password1RequiredError' === error) {
+                                errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword1') }))
+                            } else if ('Password2RequiredError' === error) {
+                                errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword2') }))
+                            } else if ('PasswordsNotMatchError' === error) {
+                                errorMessageList.push(props.t('account.backendError.PasswordsNotMatchError'))
+                            } else if ('PasswordRegexError' === error) {
+                                errorMessageList.push(props.t('account.backendError.PasswordRegexError'))
+                            } else if ('NameRequiredError' === error) {
+                                errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Name') }))
+                            } else if ('SurnamesRequiredError' === error) {
+                                errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Surnames') }))
+                            } else if ('PhoneNumberRequiredError' === error) {
+                                errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.PhoneNumber') }))
+                            } else if ('PhoneNumberNotValidError' === error) {
+                                errorMessageList.push(props.t('error.FieldInvalidError', { field_name: props.t('account.PhoneNumber') }))
+                                setShowPhoneNumberInvalid(true)
                             } else {
-
-                                if ("OK" === data.createAccount.result) {
-                                    SendVerificationEmailMutation(email, "ACTIVATE_ACCOUNT")
-                                    setUserCreated(true);
-                                } else {
-                                    errorMessageList.push(props.t('error.AdministratorContact'))
-                                }
-
+                                errorMessageList.push(props.t('error.AdministratorContact'))
                             }
+                        })
+
+                    } else {
+
+                        if ("OK" === data.result) {
+                            SendVerificationEmailMutation(email, "ACTIVATE_ACCOUNT")
+                            setUserCreated(true);
                         } else {
                             errorMessageList.push(props.t('error.AdministratorContact'))
                         }
 
-                        if (errorMessageList.length > 0) {
-                            ReactDOM.render(
-                                <ListAlert variant="danger" messagesList={errorMessageList} />,
-                                document.getElementById('errorsCreateAccountConfirmDiv'))
-                        }
-                    },
-                    onError: err => {
-                        console.log(err)
-                        let errorMessageList = [props.t('error.AdministratorContact')]
+                    }
+
+                    if (errorMessageList.length > 0) {
                         ReactDOM.render(
                             <ListAlert variant="danger" messagesList={errorMessageList} />,
-                            document.getElementById('errorsCreateAccountConfirmDiv')
-                        )
-                    },
-                },
+                            document.getElementById('errorsCreateAccountConfirmDiv'))
+                    }
+                }
             )
         }
     }

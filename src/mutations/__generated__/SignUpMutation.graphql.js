@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1e0a6a303f67d121f218847227c76220
+ * @relayHash 1c431ab54881df955ec13dfe4dd5924c
  */
 
 /* eslint-disable */
@@ -9,7 +9,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type UserInput = {|
+export type CreateAccountInput = {|
   email?: ?string,
   password1?: ?string,
   password2?: ?string,
@@ -18,7 +18,7 @@ export type UserInput = {|
   phoneNumber?: ?string,
 |};
 export type SignUpMutationVariables = {|
-  input: UserInput
+  input: CreateAccountInput
 |};
 export type SignUpMutationResponse = {|
   +createAccount: ?{|
@@ -36,7 +36,7 @@ export type SignUpMutation = {|
 
 /*
 mutation SignUpMutation(
-  $input: UserInput!
+  $input: CreateAccountInput!
 ) {
   createAccount(input: $input) {
     email
@@ -51,7 +51,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "input",
-    "type": "UserInput!",
+    "type": "CreateAccountInput!",
     "defaultValue": null
   }
 ],
@@ -115,11 +115,11 @@ return {
     "operationKind": "mutation",
     "name": "SignUpMutation",
     "id": null,
-    "text": "mutation SignUpMutation(\n  $input: UserInput!\n) {\n  createAccount(input: $input) {\n    email\n    result\n    errors\n  }\n}\n",
+    "text": "mutation SignUpMutation(\n  $input: CreateAccountInput!\n) {\n  createAccount(input: $input) {\n    email\n    result\n    errors\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '72461d3e5026a5c74a374603a2920727';
+(node/*: any*/).hash = '5f0e43856365a05a3d4922baff2e8e00';
 module.exports = node;
