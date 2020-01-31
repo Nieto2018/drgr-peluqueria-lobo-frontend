@@ -3,24 +3,11 @@ import ReactDOM from 'react-dom';
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
-import { commitMutation, graphql } from 'react-relay'
 import { Link } from "react-router-dom"
 
 import { LOG_IN_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
-import environment from '../../Environment'
-
-
-const mutation = graphql`
-    mutation ResetPasswordEmailMutation($email: String, $action: AccountActionEnum) {
-        sendVerificationEmail(email: $email, action: $action) {
-            email
-            action
-            result
-            errors
-        }
-    }
-`
+import SendVerificationEmailMutation from '../../mutations/SendVerificationEmailMutation'
 
 
 function ResetPasswordEmail(props) {
@@ -42,63 +29,39 @@ function ResetPasswordEmail(props) {
 
         if (isValidForm) {
 
-            const variables = {
-                email: email,
-                action: "RESET_PASSWORD"
-            }
+            SendVerificationEmailMutation(email, "RESET_PASSWORD", (data, errors) => {
+                let errorMessageList = []
 
-            commitMutation(
-                environment,
-                {
-                    mutation,
-                    variables,
-                    onCompleted: data => {
-                        let errorMessageList = []
-
-                        if (null != data.sendVerificationEmail) {
-
-                            if (data.sendVerificationEmail.errors.length > 0) {
-                                data.sendVerificationEmail.errors.forEach(error => {
-                                    console.error(error)
-
-                                    if ('EmailRequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Email') }))
-                                    } else if ('AccountDoesNotExistError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
-                                    } else {
-                                        errorMessageList.push(props.t('error.AdministratorContact'))
-                                    }
-                                })
-
-                            } else {
-
-                                if ("OK" === data.sendVerificationEmail.result) {
-                                    setEmailSent(true);
-                                } else {
-                                    errorMessageList.push(props.t('error.AdministratorContact'))
-                                }
-
-                            }
+                if (errors.length > 0) {
+                    errors.forEach(error => {
+                        console.error(error)
+                        if ('EmailRequiredError' === error) {
+                            errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Email') }))
+                        } else if ('AccountDoesNotExistError' === error) {
+                            errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
+                        } else if ('AccountInactiveError' === error) {
+                            errorMessageList.push(props.t('account.backendError.AccountInactiveError'))
                         } else {
                             errorMessageList.push(props.t('error.AdministratorContact'))
                         }
+                    })
 
-                        if (errorMessageList.length > 0) {
-                            ReactDOM.render(
-                                <ListAlert variant="danger" messagesList={errorMessageList} />,
-                                document.getElementById('errorsResetPasswordEmailDiv'))
-                        }
-                    },
-                    onError: err => {
-                        console.log(err)
-                        let errorMessageList = [props.t('error.AdministratorContact')]
-                        ReactDOM.render(
-                            <ListAlert variant="danger" messagesList={errorMessageList} />,
-                            document.getElementById('errorsResetPasswordEmailDiv')
-                        )
-                    },
-                },
-            )
+                } else {
+
+                    if ("OK" === data.result) {
+                        setEmailSent(true);
+                    } else {
+                        errorMessageList.push(props.t('error.AdministratorContact'))
+                    }
+
+                }
+
+                if (errorMessageList.length > 0) {
+                    ReactDOM.render(
+                        <ListAlert variant="danger" messagesList={errorMessageList} />,
+                        document.getElementById('errorsResetPasswordEmailDiv'))
+                }
+            })
 
         }
     }

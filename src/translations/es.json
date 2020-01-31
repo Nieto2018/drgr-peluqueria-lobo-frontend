@@ -30,12 +30,13 @@
         "AccountActivating": "Activando la cuenta",
         "AccountActivated": "La cuenta ha sido activada con éxito",
         "error": {
-            "EnterValidEmailError": "Introduce una dirección de correo electrónico válida"
+            "EnterValidEmailError": "Introduce una dirección de correo electrónico válida",
+            "ActivationEmailNotSentError": "El usuario se ha registrado correctamente, pero no se ha podido enviar el correo electrónico de activación, contacte con el administrador."
         },
         "backendError": {
             "AccountDoesNotExistError": "La dirección de correo electrónico no está registrada",
             "AccountActiveError": "La cuenta ya está activa",
-            "AccountInactiveError": "La cuenta ya está activa",
+            "AccountInactiveError": "La cuenta no está activa",
             "InvalidEmailError": "La dirección de correo electrónico no es válida",
             "EmailAlreadyRegisteredError": "La dirección de correo electrónico ya está registrada",
             "EnterValidCredentialsError": "Por favor, introduce unas credenciales válidas",

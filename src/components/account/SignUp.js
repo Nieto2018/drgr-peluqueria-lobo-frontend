@@ -83,8 +83,16 @@ function SignUp(props) {
                     } else {
 
                         if ("OK" === data.result) {
-                            SendVerificationEmailMutation(email, "ACTIVATE_ACCOUNT")
-                            setUserCreated(true);
+                            SendVerificationEmailMutation(email, "ACTIVATE_ACCOUNT", (dataEmail, errors) => {
+                                if (errors.length > 0) {
+                                    errors.forEach(error => {
+                                        console.error(error)
+                                    })
+                                    errorMessageList.push(props.t('account.error.ActivationEmailNotSentError'))
+                                } else {
+                                    setUserCreated(true)
+                                }
+                            })
                         } else {
                             errorMessageList.push(props.t('error.AdministratorContact'))
                         }
