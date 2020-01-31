@@ -3,23 +3,13 @@ import ReactDOM from 'react-dom';
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { translate } from 'react-multi-lang'
-import { commitMutation, graphql } from 'react-relay'
 import { Link } from "react-router-dom"
 import queryString from 'query-string'
 
 import { HOME_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
-import environment from '../../Environment'
+import ResetPasswordMutation from '../../mutations/account/ResetPasswordMutation'
 
-const mutation = graphql`
-    mutation ResetPasswordConfirmMutation($token: String, $password1: String, $password2: String) {
-        resetPassword(token: $token, password1: $password1, password2: $password2){
-            email
-            result
-            errors
-        }
-    }
-`
 
 function ResetPasswordConfirm(props) {
 
@@ -46,82 +36,55 @@ function ResetPasswordConfirm(props) {
 
             const token = params["token"]
 
-            const variables = {
-                token: token,
-                password1: password1,
-                password2: password2
-            }
+            ResetPasswordMutation(token, password1, password2, (data, errors) => {
+                let errorMessageList = []
 
-            commitMutation(
-                environment,
-                {
-                    mutation,
-                    variables,
-                    onCompleted: data => {
-                        let errorMessageList = []
-
-                        if (null != data.resetPassword) {
-
-                            if (data.resetPassword.errors.length > 0) {
-                                data.resetPassword.errors.forEach(error => {
-                                    console.error(error)
-
-                                    if ('TokenRequiredError' === error) {
-                                        errorMessageList.push(props.t('error.TokenNotFoundError'))
-                                    } else if ('ExpiredTokenError' === error) {
-                                        errorMessageList.push(props.t('error.TokenExpiredError'))
-                                    } else if ('TokenNotMatchError' === error) {
-                                        errorMessageList.push(props.t('error.TokenNotMatchError'))
-                                    } else if ('TokenUsedError' === error) {
-                                        errorMessageList.push(props.t('error.TokenUsedError'))
-                                    } else if ('TokenError' === error) {
-                                        errorMessageList.push(props.t('error.InvalidToken'))
-                                    } else if ('Password1RequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword1') }))
-                                    } else if ('Password2RequiredError' === error) {
-                                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword2') }))
-                                    } else if ('PasswordsNotMatchError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.PasswordsNotMatchError'))
-                                    } else if ('PasswordRegexError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.PasswordRegexError'))
-                                    } else if ('AccountDoesNotExistError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
-                                    } else if ('AccountInactiveError' === error) {
-                                        errorMessageList.push(props.t('account.backendError.AccountInactiveError'))
-                                    } else {
-                                        errorMessageList.push(props.t('error.AdministratorContact'))
-                                    }
-                                })
-
-                            } else {
-
-                                if ("OK" === data.resetPassword.result) {
-                                    setPasswordChanged(true);
-                                } else {
-                                    errorMessageList.push(props.t('error.AdministratorContact'))
-                                }
-
-                            }
+                if (errors.length > 0) {
+                    errors.forEach(error => {
+                        if ('TokenRequiredError' === error) {
+                            errorMessageList.push(props.t('error.TokenNotFoundError'))
+                        } else if ('ExpiredTokenError' === error) {
+                            errorMessageList.push(props.t('error.TokenExpiredError'))
+                        } else if ('TokenNotMatchError' === error) {
+                            errorMessageList.push(props.t('error.TokenNotMatchError'))
+                        } else if ('TokenUsedError' === error) {
+                            errorMessageList.push(props.t('error.TokenUsedError'))
+                        } else if ('TokenError' === error) {
+                            errorMessageList.push(props.t('error.InvalidToken'))
+                        } else if ('Password1RequiredError' === error) {
+                            errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword1') }))
+                        } else if ('Password2RequiredError' === error) {
+                            errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword2') }))
+                        } else if ('PasswordsNotMatchError' === error) {
+                            errorMessageList.push(props.t('account.backendError.PasswordsNotMatchError'))
+                        } else if ('PasswordRegexError' === error) {
+                            errorMessageList.push(props.t('account.backendError.PasswordRegexError'))
+                        } else if ('AccountDoesNotExistError' === error) {
+                            errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
+                        } else if ('AccountInactiveError' === error) {
+                            errorMessageList.push(props.t('account.backendError.AccountInactiveError'))
                         } else {
                             errorMessageList.push(props.t('error.AdministratorContact'))
                         }
+                    })
 
-                        if (errorMessageList.length > 0) {
-                            ReactDOM.render(
-                                <ListAlert variant="danger" messagesList={errorMessageList} />,
-                                document.getElementById('errorsResetPasswordConfirmDiv'))
-                        }
-                    },
-                    onError: err => {
-                        console.log(err)
-                        let errorMessageList = [props.t('error.AdministratorContact')]
-                        ReactDOM.render(
-                            <ListAlert variant="danger" messagesList={errorMessageList} />,
-                            document.getElementById('errorsResetPasswordConfirmDiv')
-                        )
-                    },
-                },
-            )
+                } else {
+
+                    if ("OK" === data.result) {
+                        setPasswordChanged(true);
+                    } else {
+                        errorMessageList.push(props.t('error.AdministratorContact'))
+                    }
+
+                }
+
+                if (errorMessageList.length > 0) {
+                    ReactDOM.render(
+                        <ListAlert variant="danger" messagesList={errorMessageList} />,
+                        document.getElementById('errorsResetPasswordConfirmDiv'))
+                }
+            })
+
         }
     }
 
@@ -163,7 +126,7 @@ function ResetPasswordConfirm(props) {
                                             {props.t('account.PasswordResetSecurityExplanation')}
                                         </Form.Text>
                                         <Form.Control.Feedback type="invalid">
-                                        {props.t('error.FieldMinLengthError', { field_name: '', length: '8' })}
+                                            {props.t('error.FieldMinLengthError', { field_name: '', length: '8' })}
                                         </Form.Control.Feedback>
                                     </InputGroup>
                                 </Form.Group>

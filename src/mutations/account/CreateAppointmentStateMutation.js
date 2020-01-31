@@ -1,5 +1,6 @@
 import { commitMutation, graphql } from 'react-relay'
-import environment from '../Environment'
+
+import environment from '../../Environment'
 
 const mutation = graphql`
   mutation CreateAppointmentStateMutation($name: String!){

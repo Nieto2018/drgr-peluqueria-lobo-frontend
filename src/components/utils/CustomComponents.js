@@ -76,7 +76,7 @@ function CustomPhoneInputComponent(props) {
                 isValid={() => { return !showPhoneNumberInvalid }}
             />
             {showPhoneNumberInvalid ?
-                <div class="invalid-feedback-visible">
+                <div className="invalid-feedback-visible">
                     {props.t('error.FieldInvalidError', { field_name: props.t('account.PhoneNumber') })}
                 </div>
                 :

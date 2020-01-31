@@ -1,8 +1,6 @@
-import {
-    commitMutation,
-    graphql
-} from 'react-relay'
-import environment from '../Environment'
+import { commitMutation, graphql } from 'react-relay'
+
+import environment from '../../Environment'
 
 const mutation = graphql`
     mutation SendVerificationEmailMutation($email: String, $action: AccountActionEnum) {

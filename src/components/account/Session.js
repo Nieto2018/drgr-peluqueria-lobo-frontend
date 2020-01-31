@@ -6,7 +6,7 @@ import {
     HOME_URL,
     LOG_IN_URL
 } from '../../Constants'
-import VerifyTokenMutation from '../../mutations/VerifyTokenMutation'
+import VerifyTokenMutation from '../../mutations/account/VerifyTokenMutation'
 
 const Session = {
 

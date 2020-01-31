@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom';
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 import { translate } from 'react-multi-lang'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import { Link } from "react-router-dom"
 
 import { HOME_URL } from '../../Constants'
-import {
-    ListAlert, PhoneInput
-} from '../utils/CustomComponents'
-import SendVerificationEmailMutation from '../../mutations/SendVerificationEmailMutation'
-import SignUpMutation from '../../mutations/SignUpMutation'
+import CreateAccountMutation from '../../mutations/account/CreateAccountMutation'
+import { ListAlert, PhoneInput } from '../utils/CustomComponents'
+import SendVerificationEmailMutation from '../../mutations/account/SendVerificationEmailMutation'
 
 
 function SignUp(props) {
@@ -40,7 +38,7 @@ function SignUp(props) {
         setValidated(true);
 
         if (isValidForm) {
-            SignUpMutation(
+            CreateAccountMutation(
                 email,
                 password1,
                 password2,

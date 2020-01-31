@@ -1,11 +1,9 @@
-import {
-    commitMutation,
-    graphql
-} from 'react-relay'
-import environment from '../Environment'
+import { commitMutation, graphql } from 'react-relay'
+
+import environment from '../../Environment'
 
 const mutation = graphql`
-    mutation SignUpMutation($input: CreateAccountInput!) {
+    mutation CreateAccountMutation($input: CreateAccountInput!) {
         createAccount(input: $input){
             email
             result
@@ -42,10 +40,10 @@ export default (
             onCompleted: response => {
                 let data = null
                 let errors = []
-                if(null == response.createAccount){
+                if (null == response.createAccount) {
                     console.error('NotDataReceived')
                     errors.push('NotDataReceived')
-                }else{
+                } else {
                     data = response.createAccount
                     errors = response.createAccount.errors
                 }

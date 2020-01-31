@@ -1,6 +1,6 @@
 import { fetchQuery, graphql } from 'relay-runtime';
 
-import environment from '../Environment'
+import environment from '../../Environment'
 
 const query = graphql`
     query MeQuery{

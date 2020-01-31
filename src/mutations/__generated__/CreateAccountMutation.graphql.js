@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1c431ab54881df955ec13dfe4dd5924c
+ * @relayHash 3ba019bd2c95286d3db54ca56d1a84bb
  */
 
 /* eslint-disable */
@@ -17,25 +17,25 @@ export type CreateAccountInput = {|
   surnames?: ?string,
   phoneNumber?: ?string,
 |};
-export type SignUpMutationVariables = {|
+export type CreateAccountMutationVariables = {|
   input: CreateAccountInput
 |};
-export type SignUpMutationResponse = {|
+export type CreateAccountMutationResponse = {|
   +createAccount: ?{|
     +email: ?string,
     +result: ?string,
     +errors: ?$ReadOnlyArray<?string>,
   |}
 |};
-export type SignUpMutation = {|
-  variables: SignUpMutationVariables,
-  response: SignUpMutationResponse,
+export type CreateAccountMutation = {|
+  variables: CreateAccountMutationVariables,
+  response: CreateAccountMutationResponse,
 |};
 */
 
 
 /*
-mutation SignUpMutation(
+mutation CreateAccountMutation(
   $input: CreateAccountInput!
 ) {
   createAccount(input: $input) {
@@ -99,7 +99,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "SignUpMutation",
+    "name": "CreateAccountMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -107,19 +107,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "SignUpMutation",
+    "name": "CreateAccountMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
-    "name": "SignUpMutation",
+    "name": "CreateAccountMutation",
     "id": null,
-    "text": "mutation SignUpMutation(\n  $input: CreateAccountInput!\n) {\n  createAccount(input: $input) {\n    email\n    result\n    errors\n  }\n}\n",
+    "text": "mutation CreateAccountMutation(\n  $input: CreateAccountInput!\n) {\n  createAccount(input: $input) {\n    email\n    result\n    errors\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '5f0e43856365a05a3d4922baff2e8e00';
+(node/*: any*/).hash = 'ce8b0fdfe299d3cb09eecaaa6aa7a130';
 module.exports = node;

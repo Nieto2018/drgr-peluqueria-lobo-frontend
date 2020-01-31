@@ -1,23 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import { translate } from 'react-multi-lang'
-import { commitMutation, graphql } from 'react-relay'
 import { Link } from "react-router-dom"
 import queryString from 'query-string'
 
+import ActivateAccountMutation from '../../mutations/account/ActivateAccountMutation'
 import { HOME_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
-import environment from '../../Environment'
 
-const mutation = graphql`
-    mutation ActivateAccountMutation($token: String) {
-        activateAccount(token: $token){
-            email
-            result
-            errors
-        }
-    }
-`
 
 /*
 This class was created because the method componentDidMount is neccessary 
@@ -37,75 +27,49 @@ class ActivateAccount extends React.Component {
 
         const url = this.props.location.search
         const params = queryString.parse(url)
-    
+
         const token = params["token"]
-    
-        const variables = {
-            token: token
-        }
-    
-        commitMutation(
-            environment,
-            {
-                mutation,
-                variables,
-                onCompleted: data => {
-                    let errorMessageList = []
-    
-                    if (null != data.activateAccount) {
-    
-                        if (data.activateAccount.errors.length > 0) {
-                            data.activateAccount.errors.forEach(error => {
-                                console.error(error)
-    
-                                if ('TokenRequiredError' === error) {
-                                    errorMessageList.push(this.props.t('error.TokenNotFoundError'))
-                                } else if ('ExpiredTokenError' === error) {
-                                    errorMessageList.push(this.props.t('error.TokenExpiredError'))
-                                } else if ('TokenNotMatchError' === error) {
-                                    errorMessageList.push(this.props.t('error.TokenNotMatchError'))
-                                } else if ('TokenUsedError' === error) {
-                                    errorMessageList.push(this.props.t('error.TokenUsedError'))
-                                } else if ('TokenError' === error) {
-                                    errorMessageList.push(this.props.t('error.InvalidToken'))
-                                } else if ('AccountDoesNotExistError' === error) {
-                                    errorMessageList.push(this.props.t('account.backendError.InvalidEmailError'))
-                                } else if ('AccountActiveError' === error) {
-                                    errorMessageList.push(this.props.t('account.backendError.AccountActiveError'))
-                                } else {
-                                    errorMessageList.push(this.props.t('error.AdministratorContact'))
-                                }
-                            })
-    
-                        } else {
-    
-                            if ("OK" === data.activateAccount.result) {
-                                this.setState({ accountActivated: true })
-                            } else {
-                                errorMessageList.push(this.props.t('error.AdministratorContact'))
-                            }
-    
-                        }
+
+        ActivateAccountMutation(token, (data, errors) => {
+            let errorMessageList = []
+
+            if (errors.length > 0) {
+                errors.forEach(error => {
+                    if ('TokenRequiredError' === error) {
+                        errorMessageList.push(this.props.t('error.TokenNotFoundError'))
+                    } else if ('ExpiredTokenError' === error) {
+                        errorMessageList.push(this.props.t('error.TokenExpiredError'))
+                    } else if ('TokenNotMatchError' === error) {
+                        errorMessageList.push(this.props.t('error.TokenNotMatchError'))
+                    } else if ('TokenUsedError' === error) {
+                        errorMessageList.push(this.props.t('error.TokenUsedError'))
+                    } else if ('TokenError' === error) {
+                        errorMessageList.push(this.props.t('error.InvalidToken'))
+                    } else if ('AccountDoesNotExistError' === error) {
+                        errorMessageList.push(this.props.t('account.backendError.InvalidEmailError'))
+                    } else if ('AccountActiveError' === error) {
+                        errorMessageList.push(this.props.t('account.backendError.AccountActiveError'))
                     } else {
                         errorMessageList.push(this.props.t('error.AdministratorContact'))
                     }
-    
-                    if (errorMessageList.length > 0) {
-                        ReactDOM.render(
-                            <ListAlert variant="danger" messagesList={errorMessageList} />,
-                            document.getElementById('errorsActivateAccountDiv'))
-                    }
-                },
-                onError: err => {
-                    console.log(err)
-                    let errorMessageList = [this.props.t('error.AdministratorContact')]
-                    ReactDOM.render(
-                        <ListAlert variant="danger" messagesList={errorMessageList} />,
-                        document.getElementById('errorsActivateAccountDiv')
-                    )
-                },
-            },
-        )
+                })
+
+            } else {
+
+                if ("OK" === data.result) {
+                    this.setState({ accountActivated: true })
+                } else {
+                    errorMessageList.push(this.props.t('error.AdministratorContact'))
+                }
+
+            }
+
+            if (errorMessageList.length > 0) {
+                ReactDOM.render(
+                    <ListAlert variant="danger" messagesList={errorMessageList} />,
+                    document.getElementById('errorsActivateAccountDiv'))
+            }
+        })
     }
 
     componentDidMount() {

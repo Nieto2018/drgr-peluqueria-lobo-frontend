@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 
 import { LOG_IN_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
-import SendVerificationEmailMutation from '../../mutations/SendVerificationEmailMutation'
+import SendVerificationEmailMutation from '../../mutations/account/SendVerificationEmailMutation'
 
 
 function ResetPasswordEmail(props) {
