@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 
-import UpdateAppointmentStateMutation from '../mutations/UpdateAppointmentStateMutation'
-import DeleteAppointmentStateMutation from '../mutations/DeleteAppointmentStateMutation'
+import UpdateAppointmentStateMutation from '../mutations/account/UpdateAppointmentStateMutation'
+import DeleteAppointmentStateMutation from '../mutations/account/DeleteAppointmentStateMutation'
 
 class AppointmentStatesNode extends Component {
 

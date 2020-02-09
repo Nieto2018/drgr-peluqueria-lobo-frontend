@@ -14,7 +14,7 @@
         "Password": "Contraseña",
         "PasswordForgot": "¿Contraseña olvidada?",
         "PasswordReset": "Restablecer contraseña",
-        "PasswordResetEmailExplanation": "Se enviará un mensaje a la dirección de correo electrónico indicada, en caso de no recibirlo, pruebe con otra dirección de correo electrónico distinta",
+        "PasswordResetEmailExplanation": "Se enviará un mensaje a la dirección de correo electrónico indicada para confirmar la operación.En caso de no recibirlo, compruebe que la dirección de correo electrónico es correcta.",
         "PasswordResetEmailSent": "Se ha enviado un mensaje a {param} con los pasos a seguir para restablecer la contraseña. Compruebe también si lo ha recibido en la bandeja de Spam/Correo no deseado",
         "PasswordConfirm": "Confirmar la contraseña",
         "PasswordNew": "Contraseña nueva",
@@ -29,11 +29,16 @@
         "ActivateAccount": "Activar cuenta",
         "AccountActivating": "Activando la cuenta",
         "AccountActivated": "La cuenta ha sido activada con éxito",
+        "EditAccount": "Editar cuenta",
+        "UpdateEmail": "Actualizar correo electrónico",
+        "UpdatePassword": "Actualizar contraseña",
+        "UserData": "Datos del usuario",
         "error": {
             "EnterValidEmailError": "Introduce una dirección de correo electrónico válida",
             "ActivationEmailNotSentError": "El usuario se ha registrado correctamente, pero no se ha podido enviar el correo electrónico de activación, contacte con el administrador."
         },
         "backendError": {
+            "UserNotLoggedInError": "El usuario no ha iniciado sesión",
             "AccountDoesNotExistError": "La dirección de correo electrónico no está registrada",
             "AccountActiveError": "La cuenta ya está activa",
             "AccountInactiveError": "La cuenta no está activa",
@@ -55,10 +60,13 @@
         "Loading": "Cargando",
         "Settings": "Configuración",
         "Accept": "Aceptar",
+        "Cancel": "Cancelar",
         "Reset": "Restablecer",
+        "Save": "Guardar",
         "Create": "Crear",
         "Update": "Actualizar",
-        "Delete": "Eliminar"
+        "Delete": "Eliminar",
+        "Close": "Cerrar"
     },
     "error": {
         "Error": "Error",

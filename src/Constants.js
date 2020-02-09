@@ -21,12 +21,13 @@ export const RESET_PASSWORD_URL = BACKEND_SERVER_URL + '/rest-auth/password/rese
 export const HOME_URL = '/'
 
 // Account URLs
-// export const LOG_IN_URL = '/'
 export const ACTIVATE_ACCOUNT_URL = '/account/activate-account/'
+export const EDIT_ACCOUNT_URL = '/account/edit-account/'
 export const LOG_IN_URL = '/account/log-in/'
 export const SIGN_UP_URL = '/account/sign-up/'
 export const RESET_PASSWORD_EMAIL_URL = '/account/reset-password-email/'
 export const RESET_PASSWORD_CONFIRM_URL = '/account/reset-password-confirm/'
+export const UPDATE_EMAIL_URL = '/account/update-email/'
 
 
 /*
