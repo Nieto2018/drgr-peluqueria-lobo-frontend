@@ -8,7 +8,7 @@ import { translate } from 'react-multi-lang'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import { Link } from "react-router-dom"
 
-import { HOME_URL } from '../../Constants'
+import { HOME_URL, GRAPHQL_URL, GRAPHQL_SUBSCRIPTION_WS } from '../../Constants'
 import { ListAlert, PhoneInput } from '../utils/CustomComponents'
 import EditAccountMutation from '../../mutations/account/EditAccountMutation'
 import SendVerificationEmailMutation from '../../mutations/account/SendVerificationEmailMutation'
@@ -194,6 +194,10 @@ function EditAccount(props) {
 
             <section id="main" className="wrapper">
                 <div className="inner login">
+
+                    REACT_APP_BACKEND_URL: {process.env.REACT_APP_BACKEND_URL}<br />
+                    GRAPHQL_URL: {GRAPHQL_URL}<br />
+                    GRAPHQL_SUBSCRIPTION_WS: {GRAPHQL_SUBSCRIPTION_WS}<br />
 
                     {!userCreated ?
                         <div className="content">
