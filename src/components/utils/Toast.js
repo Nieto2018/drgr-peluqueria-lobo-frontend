@@ -1,3 +1,5 @@
+// https://fkhadra.github.io/react-toastify/introduction/
+
 // Toast configuration
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
@@ -5,6 +7,9 @@ toast.configure()
 
 const notify = (msg, type) => {
     switch(type){
+        case 'info':
+            toast.info(msg)
+            break
         case 'success':
             toast.success(msg)
             break

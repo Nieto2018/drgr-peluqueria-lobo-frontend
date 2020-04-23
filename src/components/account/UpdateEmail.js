@@ -1,114 +1,135 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom';
+import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import Modal from 'react-bootstrap/Modal'
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 import { translate } from 'react-multi-lang'
-import { Link } from "react-router-dom"
-import queryString from 'query-string'
 
-import { HOME_URL } from '../../Constants'
+import { G_USER_EMAIL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
-import UpdateEmailMutation from '../../mutations/account/UpdateEmailMutation'
+import SendVerificationEmailMutation from '../../mutations/account/SendVerificationEmailMutation'
+import toast from '../utils/Toast'
 
 
-function UpdateEmail(props) {
+function EditAccount(props) {
 
-    // const formRef = React.createRef()
-    // const [validated, setValidated] = useState(false)
+    const email = localStorage.getItem(G_USER_EMAIL)
+    const updateEmailFormRef = React.createRef()
+    const [validatedUpdateEmailForm, setValidatedUpdateEmailForm] = useState(false)
+    const [newEmail, setNewEmail] = useState('')
+    const [showUpdateEmailModal, setShowUpdateEmailModal] = useState(false)
 
-    // const [password1, setPassword1] = useState('')
-    // const [password2, setPassword2] = useState('')
-    // const [showPassword, setShowPassword] = useState(false)
-
-    // It is true when the Rest API to reset email is called without any error
-    const [emailUpdated, setEmailUpdated] = useState(false)
-
-    function _confirm(e) {
+    function handleShowUpdateEmail(e) {
         e.preventDefault()
+        setValidatedUpdateEmailForm(false)
+        setNewEmail('')
+        setShowUpdateEmailModal(true)
+    }
 
-        const url = props.location.search
-        const params = queryString.parse(url)
+    function handleUpdateEmail(e) {
+        e.preventDefault()
+        const form = updateEmailFormRef.current
+        const isValidForm = form.checkValidity()
+        setValidatedUpdateEmailForm(true)
 
-        const token = params["token"]
+        if (isValidForm) {
+            SendVerificationEmailMutation(newEmail, "UPDATE_EMAIL", (data, errors) => {
+                let errorMessageList = []
 
-        UpdateEmailMutation(token, (data, errors) => {
-            let errorMessageList = []
+                if (errors.length > 0) {
+                    errors.forEach(error => {
+                        if ('EmailRequiredError' === error) {
+                            errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.Email') }))
+                        } else if ('EmailRegexError' === error) {
+                            errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
+                        } else if ('EmailAlreadyRegisteredError' === error) {
+                            errorMessageList.push(props.t('account.backendError.EmailAlreadyRegisteredError'))
+                        } else if ('UserNotLoggedInError' === error) {
+                            errorMessageList.push(props.t('account.backendError.UserNotLoggedInError'))
+                        } else if ('AccountInactiveError' === error) {
+                            errorMessageList.push(props.t('account.backendError.AccountInactiveError'))
+                        } else {
+                            errorMessageList.push(props.t('error.AdministratorContact'))
+                        }
+                    })
 
-            if (errors.length > 0) {
-                errors.forEach(error => {
-                    if ('TokenRequiredError' === error) {
-                        errorMessageList.push(props.t('error.TokenNotFoundError'))
-                    } else if ('ExpiredTokenError' === error) {
-                        errorMessageList.push(props.t('error.TokenExpiredError'))
-                    } else if ('TokenNotMatchError' === error) {
-                        errorMessageList.push(props.t('error.TokenNotMatchError'))
-                    } else if ('TokenUsedError' === error) {
-                        errorMessageList.push(props.t('error.TokenUsedError'))
-                    } else if ('TokenError' === error) {
-                        errorMessageList.push(props.t('error.InvalidToken'))
-                    } else if ('Password1RequiredError' === error) {
-                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword1') }))
-                    } else if ('Password2RequiredError' === error) {
-                        errorMessageList.push(props.t('error.FieldRequired', { field_name: props.t('account.NewPassword2') }))
-                    } else if ('PasswordsNotMatchError' === error) {
-                        errorMessageList.push(props.t('account.backendError.PasswordsNotMatchError'))
-                    } else if ('PasswordRegexError' === error) {
-                        errorMessageList.push(props.t('account.backendError.PasswordRegexError'))
-                    } else if ('AccountDoesNotExistError' === error) {
-                        errorMessageList.push(props.t('account.backendError.InvalidEmailError'))
-                    } else if ('AccountInactiveError' === error) {
-                        errorMessageList.push(props.t('account.backendError.AccountInactiveError'))
-                    } else {
-                        errorMessageList.push(props.t('error.AdministratorContact'))
-                    }
-                })
-
-            } else {
-
-                if ("OK" === data.result) {
-                    setEmailUpdated(true);
                 } else {
-                    errorMessageList.push(props.t('error.AdministratorContact'))
+                    setShowUpdateEmailModal(false)
+                    toast(<p><span role="img" aria-label="emoji">📨</span> {props.t('generic.MessageSentToEmail')}</p>)
                 }
 
+                if (errorMessageList.length > 0) {
+                    ReactDOM.render(
+                        <ListAlert variant="danger" messagesList={errorMessageList} />,
+                        document.getElementById('errorsUpdateEmailDiv'))
+                }
             }
-
-            if (errorMessageList.length > 0) {
-                ReactDOM.render(
-                    <ListAlert variant="danger" messagesList={errorMessageList} />,
-                    document.getElementById('errorsUpdateEmailConfirmDiv'))
-            }
-        })
-
+            )
+        }
     }
 
     return (
-        <div>
+        <div className="custom-container-column-center custom-container">
 
-            <section id="main" className="wrapper">
-                <div className="inner login">
+            {/* Email form */}
+            <InputGroup>
+                <InputGroup.Prepend>
+                    <InputGroup.Text id="inputGroupPrependEmail" className="text-icon"><i className="fas fa-at" /></InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control
+                    type="email"
+                    placeholder={props.t('account.Email')}
+                    value={email}
+                    disabled />
+            </InputGroup>
 
-                    {!emailUpdated ?
-                        <div className="content">
-                            <h3>{props.t('account.UpdateEmail')}</h3>
-                            <div id="errorsUpdateEmailConfirmDiv" />
-                        </div>
-                        :
-                        <div className="content">
-                            <h3>{props.t('account.UpdateEmail')}</h3>
-                            <p>{props.t('account.EmailUpdated')}</p>
-                            <Link to={HOME_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
-                        </div>
+            <div className="align-center-content">
+                <input type="submit" className="primary small" value={props.t('account.UpdateEmail')} onClick={handleShowUpdateEmail} />
+            </div>
 
-                    }
+            <Modal
+                show={showUpdateEmailModal}
+                onHide={() => setShowUpdateEmailModal(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>{props.t('account.UpdateEmail')}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
 
-                </div>
+                    <div id="errorsUpdateEmailDiv" />
+                    <Form ref={updateEmailFormRef} noValidate validated={validatedUpdateEmailForm} >
+                        <Form.Group controlId="formUpdateEmail">
+                            <InputGroup>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text id="inputGroupPrependEmail" className="text-icon"><i className="fas fa-at" /></InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                    type="email"
+                                    placeholder={props.t('account.Email')}
+                                    onChange={(e) => setNewEmail(e.target.value)}
+                                    required />
+                                <Form.Text className="text-muted">
+                                    {props.t('account.PasswordResetEmailExplanation')}
+                                </Form.Text>
+                                <Form.Control.Feedback type="invalid">
+                                    {props.t('account.error.EnterValidEmailError')}
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                    </Form>
 
-            </section>
-
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowUpdateEmailModal(false)}>{props.t('generic.Cancel')}</Button>
+                    <Button variant="danger" onClick={handleUpdateEmail}>{props.t('generic.Accept')}</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 
 }
 
-export default translate(UpdateEmail)
+export default translate(EditAccount)

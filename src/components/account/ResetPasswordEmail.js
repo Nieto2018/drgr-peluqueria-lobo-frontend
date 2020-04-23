@@ -105,7 +105,7 @@ function ResetPasswordEmail(props) {
                                 </Form.Group>
 
                                 <Form.Group className="form-group-center">
-                                    <Link to={LOG_IN_URL} >{props.t('link.GoTo', { param: props.t('account.SignIn') })}</Link>
+                                    <Link to={LOG_IN_URL} >{props.t('link.GoTo', { destination: props.t('account.SignIn') })}</Link>
                                 </Form.Group>
                             </Form>
 
@@ -115,8 +115,8 @@ function ResetPasswordEmail(props) {
 
                             <h3>{props.t('account.PasswordReset')}</h3>
 
-                            <p>{props.t('account.PasswordResetEmailSent', { param: email })}</p>
-                            <Link to={LOG_IN_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
+                            <p>{props.t('account.PasswordResetEmailSent', { email_address: email })}</p>
+                            <Link to={LOG_IN_URL} >{props.t('link.GoTo', { destination: props.t('link.Home') })}</Link>
                         </div>
 
                     }

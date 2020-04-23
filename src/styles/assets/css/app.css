@@ -6,7 +6,7 @@
 
 /* React Toast Notifications - End */
 
-/* Spinner - Beginning */
+/* Spinner - Beging */
 
 .spinner-border {
   margin-top: 20px;
@@ -133,7 +133,7 @@ form > .form-group-center {
 
 /* Login - End */
 
-/* Begin dropdown-menu-header */
+/* dropdown-menu-header - Beginning */
 #dropdown-menu-header {
   color: white !important;
   line-height: 2rem !important;
@@ -145,9 +145,9 @@ form > .form-group-center {
 #dropdown-menu-header:hover {
   color: #ce1b28 !important;
 }
-/* End dropdown-menu-header */
+/* dropdown-menu-header - End */
 
-/* Begin react-phone-input-2 */
+/* react-phone-input-2 - Beginning */
 
 .phone-input-container {
   width: 100%;
@@ -175,21 +175,18 @@ form > .form-group-center {
   #dc3545;
 }
 
-/* End react-phone-input-2 */
+/* react-phone-input-2 - End */
 
-/* 
-Begin Modal
-*/
+/* Modal - Beginning */
 
 .modal-footer > .btn {
   color: white !important;
   box-shadow: none;
 }
 
-/* End General */
-/* 
-Bening General
- */
+/* Modal - End */
+
+/* General - Beginning */
 
 .align-center-content{
   align-self: center;
@@ -199,4 +196,15 @@ Bening General
   margin-bottom: 1rem !important;
 }
 
-/* End General */
+.custom-container-column-center {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.custom-container > * {
+  margin-bottom: 10px;
+}
+
+/* General - End */
