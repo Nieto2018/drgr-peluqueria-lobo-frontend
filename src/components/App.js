@@ -21,7 +21,7 @@ import Elements from './Elements'
 import Footer from './Footer'
 import Generic from './Generic';
 import Header from './Header'
-import Home from './Home'
+// import Home from './Home'
 import LogIn from './account/LogIn'
 import PageNotFound from './PageNotFound'
 import Protected from './Protected'
@@ -29,7 +29,7 @@ import ResetPasswordConfirm from './account/ResetPasswordConfirm'
 import ResetPasswordEmail from './account/ResetPasswordEmail'
 import Session, { LogInRoute, PrivateRoute } from './account/Session'
 import SignUp from './account/SignUp'
-import UpdateEmail from './account/UpdateEmail'
+import UpdateEmail from './account/UpdateEmailConfirm'
 import '../styles/assets/css/app.css';
 import '../styles/assets/css/fontawesome.min.css';
 import '../styles/assets/css/solid.min.css';

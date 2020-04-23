@@ -250,7 +250,7 @@ function SignUp(props) {
                                 <input type="submit" value={props.t('generic.Accept')} className="primary" onClick={_confirm} />
                             </div>
                             <div className="align-center-content">
-                                <Link to={HOME_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
+                                <Link to={HOME_URL} >{props.t('link.GoTo', { destination: props.t('link.Home') })}</Link>
                             </div>
 
 
@@ -261,7 +261,7 @@ function SignUp(props) {
                             <h3>{props.t('account.CreateAccount')}</h3>
 
                             <p>{props.t('account.CreateAccountEmailSent', { email_address: email })}</p>
-                            <Link to={HOME_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
+                            <Link to={HOME_URL} >{props.t('link.GoTo', { destination: props.t('link.Home') })}</Link>
                         </div>
 
                     }
