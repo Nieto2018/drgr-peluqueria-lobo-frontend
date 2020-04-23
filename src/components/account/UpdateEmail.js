@@ -4,7 +4,7 @@ import { translate } from 'react-multi-lang'
 import { Link } from "react-router-dom"
 import queryString from 'query-string'
 
-import ActivateAccountMutation from '../../mutations/account/ActivateAccountMutation'
+import UpdateEmailMutation from '../../mutations/account/UpdateEmailMutation'
 import { HOME_URL } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
 
@@ -14,12 +14,12 @@ This class was created because the method componentDidMount is neccessary
 but the method componentDidMount isn't.
 With hooks errors are throwed because it calls method componentDidUpdate
 */
-class ActivateAccount extends React.Component {
+class UpdateEmail extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            accountActivated: false
+            emailUpdated: false
         };
     }
 
@@ -30,7 +30,7 @@ class ActivateAccount extends React.Component {
 
         const token = params["token"]
 
-        ActivateAccountMutation(token, (data, errors) => {
+        UpdateEmailMutation(token, (data, errors) => {
             let errorMessageList = []
 
             if (errors.length > 0) {
@@ -45,10 +45,14 @@ class ActivateAccount extends React.Component {
                         errorMessageList.push(this.props.t('error.TokenUsedError'))
                     } else if ('TokenError' === error) {
                         errorMessageList.push(this.props.t('error.InvalidToken'))
+                    } else if ('EmailRegexError' === error) {
+                        errorMessageList.push(this.props.t('account.backendError.InvalidEmailError'))
+                    } else if ('EmailAlreadyRegisteredError' === error) {
+                        errorMessageList.push(this.props.t('account.backendError.EmailAlreadyRegisteredError'))
                     } else if ('AccountDoesNotExistError' === error) {
                         errorMessageList.push(this.props.t('account.backendError.InvalidEmailError'))
-                    } else if ('AccountActiveError' === error) {
-                        errorMessageList.push(this.props.t('account.backendError.AccountActiveError'))
+                    } else if ('AccountInactiveError' === error) {
+                        errorMessageList.push(this.props.t('account.backendError.AccountInactiveError'))
                     } else {
                         errorMessageList.push(this.props.t('error.AdministratorContact'))
                     }
@@ -57,7 +61,7 @@ class ActivateAccount extends React.Component {
             } else {
 
                 if ("OK" === data.result) {
-                    this.setState({ accountActivated: true })
+                    this.setState({ emailUpdated: true })
                 } else {
                     errorMessageList.push(this.props.t('error.AdministratorContact'))
                 }
@@ -67,7 +71,7 @@ class ActivateAccount extends React.Component {
             if (errorMessageList.length > 0) {
                 ReactDOM.render(
                     <ListAlert variant="danger" messagesList={errorMessageList} />,
-                    document.getElementById('errorsActivateAccountDiv'))
+                    document.getElementById('errorsUpdateEmailDiv'))
             }
         })
     }
@@ -85,12 +89,12 @@ class ActivateAccount extends React.Component {
 
                         <div className="content">
 
-                            <h3>{this.props.t('account.ActivateAccount')}</h3>
-                            <div id="errorsActivateAccountDiv" />
-                            {!this.state.accountActivated ?
-                                <p>{this.props.t('account.AccountActivating')}</p>
+                            <h3>{this.props.t('account.UpdateEmail')}</h3>
+                            <div id="errorsUpdateEmailDiv" />
+                            {!this.state.emailUpdated ?
+                                <p>{this.props.t('account.EmailUpdating')}</p>
                                 :
-                                <p>{this.props.t('account.AccountActivated')}</p>
+                                <p>{this.props.t('account.EmailUpdated')}</p>
                             }
                             <Link to={HOME_URL}>{this.props.t('link.GoTo', { destination: this.props.t('link.Home') })}</Link>
                         </div>
@@ -105,4 +109,4 @@ class ActivateAccount extends React.Component {
 
 }
 
-export default translate(ActivateAccount)
+export default translate(UpdateEmail)

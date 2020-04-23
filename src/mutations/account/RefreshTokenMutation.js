@@ -1,9 +1,7 @@
-import {
-    commitMutation,
-    graphql
-} from 'react-relay'
-import { G_AUTH_TOKEN } from '../Constants'
-import environment from '../Environment'
+import { commitMutation, graphql } from 'react-relay'
+
+import { G_AUTH_TOKEN } from '../../Constants'
+import environment from '../../Environment'
 
 const mutation = graphql`
     mutation RefreshTokenMutation($input: RefreshInput!){

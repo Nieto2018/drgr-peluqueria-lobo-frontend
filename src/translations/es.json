@@ -1,7 +1,7 @@
 {
     "link": {
         "Home": "Inicio",
-        "GoTo": "Ir a {param}"
+        "GoTo": "Ir a {destination}"
     },
     "account": {
         "Account": "Cuenta",
@@ -14,8 +14,8 @@
         "Password": "Contraseña",
         "PasswordForgot": "¿Contraseña olvidada?",
         "PasswordReset": "Restablecer contraseña",
-        "PasswordResetEmailExplanation": "Se enviará un mensaje a la dirección de correo electrónico indicada, en caso de no recibirlo, pruebe con otra dirección de correo electrónico distinta",
-        "PasswordResetEmailSent": "Se ha enviado un mensaje a {param} con los pasos a seguir para restablecer la contraseña. Compruebe también si lo ha recibido en la bandeja de Spam/Correo no deseado",
+        "PasswordResetEmailExplanation": "Se enviará un mensaje a la dirección de correo electrónico indicada para confirmar la operación. En caso de no recibirlo, compruebe que la dirección de correo electrónico es correcta.",
+        "PasswordResetEmailSent": "Se ha enviado un mensaje a {email_address} con los pasos a seguir para restablecer la contraseña. Compruebe también si lo ha recibido en la bandeja de Spam/Correo no deseado",
         "PasswordConfirm": "Confirmar la contraseña",
         "PasswordNew": "Contraseña nueva",
         "PasswordNewConfirm": "Confirmar la nueva contraseña",
@@ -29,13 +29,21 @@
         "ActivateAccount": "Activar cuenta",
         "AccountActivating": "Activando la cuenta",
         "AccountActivated": "La cuenta ha sido activada con éxito",
+        "EditAccount": "Editar cuenta",
+        "UpdateEmail": "Actualizar correo electrónico",
+        "EmailUpdating": "Actualizando la dirección de correo electrónico",
+        "EmailUpdated": "La dirección de correo electrónico se ha actualizado con éxito. Recuerde que a partir de ahora será la que debes de usar para acceder a la aplicación.",
+        "UpdatePassword": "Actualizar contraseña",
+        "UserData": "Datos del usuario",
         "error": {
-            "EnterValidEmailError": "Introduce una dirección de correo electrónico válida"
+            "EnterValidEmailError": "Introduce una dirección de correo electrónico válida",
+            "ActivationEmailNotSentError": "El usuario se ha registrado correctamente, pero no se ha podido enviar el correo electrónico de activación, contacte con el administrador."
         },
         "backendError": {
+            "UserNotLoggedInError": "El usuario no ha iniciado sesión",
             "AccountDoesNotExistError": "La dirección de correo electrónico no está registrada",
             "AccountActiveError": "La cuenta ya está activa",
-            "AccountInactiveError": "La cuenta ya está activa",
+            "AccountInactiveError": "La cuenta no está activa",
             "InvalidEmailError": "La dirección de correo electrónico no es válida",
             "EmailAlreadyRegisteredError": "La dirección de correo electrónico ya está registrada",
             "EnterValidCredentialsError": "Por favor, introduce unas credenciales válidas",
@@ -54,10 +62,14 @@
         "Loading": "Cargando",
         "Settings": "Configuración",
         "Accept": "Aceptar",
+        "Cancel": "Cancelar",
         "Reset": "Restablecer",
+        "Save": "Guardar",
         "Create": "Crear",
         "Update": "Actualizar",
-        "Delete": "Eliminar"
+        "Delete": "Eliminar",
+        "Close": "Cerrar",
+        "MessageSentToEmail": "Mensaje enviado al correo electrónico"
     },
     "error": {
         "Error": "Error",

@@ -10,23 +10,25 @@ export const TOAST_TYPE = {
 /*
 Server constants
 */
-export const BACKEND_SERVER_DOMAIN = 'localhost:8000'
-export const BACKEND_SERVER_URL = 'http://' + BACKEND_SERVER_DOMAIN
+export const BACKEND_SERVER_DOMAIN = process.env.REACT_APP_BACKEND_URL || 'localhost:8000'
+const WEB_PROTOCOL = window.location.protocol.includes('https') ? 'https' : 'http'
+export const BACKEND_SERVER_URL = WEB_PROTOCOL + '://' + BACKEND_SERVER_DOMAIN
 export const GRAPHQL_URL = BACKEND_SERVER_URL + '/graphql/'
-export const BACKEND_SERVER_WS = 'ws://' + BACKEND_SERVER_DOMAIN
+const WS_PROTOCOL = window.location.protocol.includes('https') ? 'wss' : 'ws'
+export const BACKEND_SERVER_WS = WS_PROTOCOL + '://' + BACKEND_SERVER_DOMAIN
 export const GRAPHQL_SUBSCRIPTION_WS = BACKEND_SERVER_WS + '/subscriptions/'
-export const RESET_PASSWORD_URL = BACKEND_SERVER_URL + '/rest-auth/password/reset/'
 
 // Site URLs
 export const HOME_URL = '/'
 
 // Account URLs
-// export const LOG_IN_URL = '/'
 export const ACTIVATE_ACCOUNT_URL = '/account/activate-account/'
+export const EDIT_ACCOUNT_URL = '/account/edit-account/'
 export const LOG_IN_URL = '/account/log-in/'
 export const SIGN_UP_URL = '/account/sign-up/'
 export const RESET_PASSWORD_EMAIL_URL = '/account/reset-password-email/'
 export const RESET_PASSWORD_CONFIRM_URL = '/account/reset-password-confirm/'
+export const UPDATE_EMAIL_URL = '/account/update-email/'
 
 
 /*

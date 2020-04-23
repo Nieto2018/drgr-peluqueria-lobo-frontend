@@ -65,10 +65,25 @@ type AppointmentStateNodeEdge {
   cursor: String!
 }
 
+type ChangePassword {
+  email: String
+  result: String
+  errors: [String]
+}
+
 type CreateAccount {
   email: String
   result: String
   errors: [String]
+}
+
+input CreateAccountInput {
+  email: String
+  password1: String
+  password2: String
+  name: String
+  surnames: String
+  phoneNumber: String
 }
 
 type CreateAppointmentState {
@@ -92,6 +107,22 @@ type DeleteAppointmentState {
   appointmentStateNode: AppointmentStateNode
 }
 
+type EditAccount {
+  email: String
+  result: String
+  errors: [String]
+}
+
+input EditAccountInput {
+  email: String
+  name: String
+  surnames: String
+  phoneNumber: String
+  isVip: Boolean
+  isActive: Boolean
+  isStaff: Boolean
+}
+
 """
 The `GenericScalar` scalar type represents a generic
 GraphQL scalar value that could be:
@@ -106,10 +137,12 @@ type Mutation {
     action: AccountActionEnum
     email: String
   ): SendVerificationEmail
-  createAccount(input: UserInput): CreateAccount
+  createAccount(input: CreateAccountInput): CreateAccount
+  editAccount(input: EditAccountInput): EditAccount
   activateAccount(token: String): ActivateAccount
   deactivateAccount: DeactivateAccount
   updateEmail(token: String): UpdateEmail
+  changePassword(password1: String, password2: String): ChangePassword
   resetPassword(password1: String, password2: String, token: String): ResetPassword
   createAppointmentState(name: String!): CreateAppointmentState
   updateAppointmentState(id: String!, name: String!): UpdateAppointmentState
@@ -225,15 +258,6 @@ type UpdateEmail {
   newEmail: String
   result: String
   errors: [String]
-}
-
-input UserInput {
-  email: String
-  password1: String
-  password2: String
-  name: String
-  surnames: String
-  phoneNumber: String
 }
 
 type UserType {

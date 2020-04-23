@@ -1,11 +1,9 @@
-import {
-    commitMutation,
-    graphql
-} from 'react-relay'
-import environment from '../Environment'
+import { commitMutation, graphql } from 'react-relay'
+
+import environment from '../../Environment'
 
 const mutation = graphql`
-    mutation SigninUserMutation($input: ObtainJSONWebTokenInput!) {
+    mutation TokenAuthMutation($input: ObtainJSONWebTokenInput!) {
         tokenAuth(input: $input) {
             token
         }
@@ -14,7 +12,7 @@ const mutation = graphql`
 
 export default (email, password, callback) => {
     const variables = {
-        "input":{
+        "input": {
             "email": email,
             "password": password
         }

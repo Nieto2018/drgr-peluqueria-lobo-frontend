@@ -177,7 +177,19 @@ form > .form-group-center {
 
 /* End react-phone-input-2 */
 
-/* General */
+/* 
+Begin Modal
+*/
+
+.modal-footer > .btn {
+  color: white !important;
+  box-shadow: none;
+}
+
+/* End General */
+/* 
+Bening General
+ */
 
 .align-center-content{
   align-self: center;
@@ -186,3 +198,5 @@ form > .form-group-center {
 .margin-bottom-1rem{
   margin-bottom: 1rem !important;
 }
+
+/* End General */

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1e0a6a303f67d121f218847227c76220
+ * @relayHash 0d2054977ee9c9a7bfa7303b5703657d
  */
 
 /* eslint-disable */
@@ -9,37 +9,31 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type UserInput = {|
-  email?: ?string,
-  password1?: ?string,
-  password2?: ?string,
-  name?: ?string,
-  surnames?: ?string,
-  phoneNumber?: ?string,
+export type UpdateEmailMutationVariables = {|
+  token: string
 |};
-export type SignUpMutationVariables = {|
-  input: UserInput
-|};
-export type SignUpMutationResponse = {|
-  +createAccount: ?{|
-    +email: ?string,
+export type UpdateEmailMutationResponse = {|
+  +updateEmail: ?{|
+    +oldEmail: ?string,
+    +newEmail: ?string,
     +result: ?string,
     +errors: ?$ReadOnlyArray<?string>,
   |}
 |};
-export type SignUpMutation = {|
-  variables: SignUpMutationVariables,
-  response: SignUpMutationResponse,
+export type UpdateEmailMutation = {|
+  variables: UpdateEmailMutationVariables,
+  response: UpdateEmailMutationResponse,
 |};
 */
 
 
 /*
-mutation SignUpMutation(
-  $input: UserInput!
+mutation UpdateEmailMutation(
+  $token: String!
 ) {
-  createAccount(input: $input) {
-    email
+  updateEmail(token: $token) {
+    oldEmail
+    newEmail
     result
     errors
   }
@@ -50,8 +44,8 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "UserInput!",
+    "name": "token",
+    "type": "String!",
     "defaultValue": null
   }
 ],
@@ -59,22 +53,29 @@ v1 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "createAccount",
+    "name": "updateEmail",
     "storageKey": null,
     "args": [
       {
         "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
+        "name": "token",
+        "variableName": "token"
       }
     ],
-    "concreteType": "CreateAccount",
+    "concreteType": "UpdateEmail",
     "plural": false,
     "selections": [
       {
         "kind": "ScalarField",
         "alias": null,
-        "name": "email",
+        "name": "oldEmail",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "newEmail",
         "args": null,
         "storageKey": null
       },
@@ -99,7 +100,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "SignUpMutation",
+    "name": "UpdateEmailMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -107,19 +108,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "SignUpMutation",
+    "name": "UpdateEmailMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
-    "name": "SignUpMutation",
+    "name": "UpdateEmailMutation",
     "id": null,
-    "text": "mutation SignUpMutation(\n  $input: UserInput!\n) {\n  createAccount(input: $input) {\n    email\n    result\n    errors\n  }\n}\n",
+    "text": "mutation UpdateEmailMutation(\n  $token: String!\n) {\n  updateEmail(token: $token) {\n    oldEmail\n    newEmail\n    result\n    errors\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '72461d3e5026a5c74a374603a2920727';
+(node/*: any*/).hash = '56476e3602c609f0f317c8a7d1a36cad';
 module.exports = node;

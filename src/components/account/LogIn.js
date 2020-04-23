@@ -18,8 +18,8 @@ import {
     G_USER_NAME
 } from '../../Constants'
 import { ListAlert } from '../utils/CustomComponents'
-import SigninUserMutation from '../../mutations/SigninUserMutation'
-import MeQuery from '../../queries/MeQuery'
+import MeQuery from '../../queries/account/MeQuery'
+import TokenAuthMutation from '../../mutations/account/TokenAuthMutation'
 
 
 function LogIn(props) {
@@ -42,7 +42,7 @@ function LogIn(props) {
         setValidated(true)
 
         if (isValidForm) {
-            SigninUserMutation(email, password, (token, errors) => {
+            TokenAuthMutation(email, password, (token, errors) => {
                 let errorMessageList = []
                 if (errors !== null) {
                     if ('Please, enter valid credentials' === errors[0].message) {

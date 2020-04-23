@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Table from 'react-bootstrap/Table'
 
-import CreateAppointmentStateMutation from '../mutations/CreateAppointmentStateMutation'
+import CreateAppointmentStateMutation from '../mutations/account/CreateAppointmentStateMutation'
 
 class CreateAppointmentState extends Component {
   state = {

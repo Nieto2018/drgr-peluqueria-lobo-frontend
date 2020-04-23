@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 75153d70e7c5754638b963b638cd38a7
+ * @relayHash 1d3b760402a2f72abce4ae589aee4995
  */
 
 /* eslint-disable */
@@ -9,33 +9,34 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type ResetPasswordConfirmMutationVariables = {|
-  token?: ?string,
-  password1?: ?string,
-  password2?: ?string,
+export type AccountActionEnum = "ACTIVATE_ACCOUNT" | "RESET_PASSWORD" | "UPDATE_EMAIL" | "%future added value";
+export type SendVerificationEmailMutationVariables = {|
+  email?: ?string,
+  action?: ?AccountActionEnum,
 |};
-export type ResetPasswordConfirmMutationResponse = {|
-  +resetPassword: ?{|
+export type SendVerificationEmailMutationResponse = {|
+  +sendVerificationEmail: ?{|
     +email: ?string,
+    +action: ?string,
     +result: ?string,
     +errors: ?$ReadOnlyArray<?string>,
   |}
 |};
-export type ResetPasswordConfirmMutation = {|
-  variables: ResetPasswordConfirmMutationVariables,
-  response: ResetPasswordConfirmMutationResponse,
+export type SendVerificationEmailMutation = {|
+  variables: SendVerificationEmailMutationVariables,
+  response: SendVerificationEmailMutationResponse,
 |};
 */
 
 
 /*
-mutation ResetPasswordConfirmMutation(
-  $token: String
-  $password1: String
-  $password2: String
+mutation SendVerificationEmailMutation(
+  $email: String
+  $action: AccountActionEnum
 ) {
-  resetPassword(token: $token, password1: $password1, password2: $password2) {
+  sendVerificationEmail(email: $email, action: $action) {
     email
+    action
     result
     errors
   }
@@ -46,20 +47,14 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "token",
+    "name": "email",
     "type": "String",
     "defaultValue": null
   },
   {
     "kind": "LocalArgument",
-    "name": "password1",
-    "type": "String",
-    "defaultValue": null
-  },
-  {
-    "kind": "LocalArgument",
-    "name": "password2",
-    "type": "String",
+    "name": "action",
+    "type": "AccountActionEnum",
     "defaultValue": null
   }
 ],
@@ -67,32 +62,34 @@ v1 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "resetPassword",
+    "name": "sendVerificationEmail",
     "storageKey": null,
     "args": [
       {
         "kind": "Variable",
-        "name": "password1",
-        "variableName": "password1"
+        "name": "action",
+        "variableName": "action"
       },
       {
         "kind": "Variable",
-        "name": "password2",
-        "variableName": "password2"
-      },
-      {
-        "kind": "Variable",
-        "name": "token",
-        "variableName": "token"
+        "name": "email",
+        "variableName": "email"
       }
     ],
-    "concreteType": "ResetPassword",
+    "concreteType": "SendVerificationEmail",
     "plural": false,
     "selections": [
       {
         "kind": "ScalarField",
         "alias": null,
         "name": "email",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "action",
         "args": null,
         "storageKey": null
       },
@@ -117,7 +114,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "ResetPasswordConfirmMutation",
+    "name": "SendVerificationEmailMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -125,19 +122,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "ResetPasswordConfirmMutation",
+    "name": "SendVerificationEmailMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
-    "name": "ResetPasswordConfirmMutation",
+    "name": "SendVerificationEmailMutation",
     "id": null,
-    "text": "mutation ResetPasswordConfirmMutation(\n  $token: String\n  $password1: String\n  $password2: String\n) {\n  resetPassword(token: $token, password1: $password1, password2: $password2) {\n    email\n    result\n    errors\n  }\n}\n",
+    "text": "mutation SendVerificationEmailMutation(\n  $email: String\n  $action: AccountActionEnum\n) {\n  sendVerificationEmail(email: $email, action: $action) {\n    email\n    action\n    result\n    errors\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a31efe6474d8258b9f29b0a1fdd25244';
+(node/*: any*/).hash = '5e9e84e5cab099218a89ee9bc8bb776e';
 module.exports = node;

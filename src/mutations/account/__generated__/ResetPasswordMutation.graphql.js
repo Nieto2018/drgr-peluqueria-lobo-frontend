@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 64a6ce718660ddffe2dc1c721b174286
+ * @relayHash 6e3ed3ae1d0148e6e262374895d6aa24
  */
 
 /* eslint-disable */
@@ -9,34 +9,33 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type AccountActionEnum = "ACTIVATE_ACCOUNT" | "RESET_PASSWORD" | "UPDATE_EMAIL" | "%future added value";
-export type ResetPasswordEmailMutationVariables = {|
-  email?: ?string,
-  action?: ?AccountActionEnum,
+export type ResetPasswordMutationVariables = {|
+  token?: ?string,
+  password1?: ?string,
+  password2?: ?string,
 |};
-export type ResetPasswordEmailMutationResponse = {|
-  +sendVerificationEmail: ?{|
+export type ResetPasswordMutationResponse = {|
+  +resetPassword: ?{|
     +email: ?string,
-    +action: ?string,
     +result: ?string,
     +errors: ?$ReadOnlyArray<?string>,
   |}
 |};
-export type ResetPasswordEmailMutation = {|
-  variables: ResetPasswordEmailMutationVariables,
-  response: ResetPasswordEmailMutationResponse,
+export type ResetPasswordMutation = {|
+  variables: ResetPasswordMutationVariables,
+  response: ResetPasswordMutationResponse,
 |};
 */
 
 
 /*
-mutation ResetPasswordEmailMutation(
-  $email: String
-  $action: AccountActionEnum
+mutation ResetPasswordMutation(
+  $token: String
+  $password1: String
+  $password2: String
 ) {
-  sendVerificationEmail(email: $email, action: $action) {
+  resetPassword(token: $token, password1: $password1, password2: $password2) {
     email
-    action
     result
     errors
   }
@@ -47,14 +46,20 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "email",
+    "name": "token",
     "type": "String",
     "defaultValue": null
   },
   {
     "kind": "LocalArgument",
-    "name": "action",
-    "type": "AccountActionEnum",
+    "name": "password1",
+    "type": "String",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "password2",
+    "type": "String",
     "defaultValue": null
   }
 ],
@@ -62,34 +67,32 @@ v1 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "sendVerificationEmail",
+    "name": "resetPassword",
     "storageKey": null,
     "args": [
       {
         "kind": "Variable",
-        "name": "action",
-        "variableName": "action"
+        "name": "password1",
+        "variableName": "password1"
       },
       {
         "kind": "Variable",
-        "name": "email",
-        "variableName": "email"
+        "name": "password2",
+        "variableName": "password2"
+      },
+      {
+        "kind": "Variable",
+        "name": "token",
+        "variableName": "token"
       }
     ],
-    "concreteType": "SendVerificationEmail",
+    "concreteType": "ResetPassword",
     "plural": false,
     "selections": [
       {
         "kind": "ScalarField",
         "alias": null,
         "name": "email",
-        "args": null,
-        "storageKey": null
-      },
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "action",
         "args": null,
         "storageKey": null
       },
@@ -114,7 +117,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "ResetPasswordEmailMutation",
+    "name": "ResetPasswordMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -122,19 +125,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "ResetPasswordEmailMutation",
+    "name": "ResetPasswordMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
-    "name": "ResetPasswordEmailMutation",
+    "name": "ResetPasswordMutation",
     "id": null,
-    "text": "mutation ResetPasswordEmailMutation(\n  $email: String\n  $action: AccountActionEnum\n) {\n  sendVerificationEmail(email: $email, action: $action) {\n    email\n    action\n    result\n    errors\n  }\n}\n",
+    "text": "mutation ResetPasswordMutation(\n  $token: String\n  $password1: String\n  $password2: String\n) {\n  resetPassword(token: $token, password1: $password1, password2: $password2) {\n    email\n    result\n    errors\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '1d041d8e3edeb20f583699ed6508617f';
+(node/*: any*/).hash = '71b3827bfe9625a8084f035b877e682e';
 module.exports = node;

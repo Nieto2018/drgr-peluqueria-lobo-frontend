@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d64aa79b29aad9f8c02d70cd791046e3
+ * @relayHash fae426a679b218d4485235dd232c1ede
  */
 
 /* eslint-disable */
@@ -14,23 +14,23 @@ export type ObtainJSONWebTokenInput = {|
   email: string,
   password: string,
 |};
-export type SigninUserMutationVariables = {|
+export type TokenAuthMutationVariables = {|
   input: ObtainJSONWebTokenInput
 |};
-export type SigninUserMutationResponse = {|
+export type TokenAuthMutationResponse = {|
   +tokenAuth: ?{|
     +token: ?string
   |}
 |};
-export type SigninUserMutation = {|
-  variables: SigninUserMutationVariables,
-  response: SigninUserMutationResponse,
+export type TokenAuthMutation = {|
+  variables: TokenAuthMutationVariables,
+  response: TokenAuthMutationResponse,
 |};
 */
 
 
 /*
-mutation SigninUserMutation(
+mutation TokenAuthMutation(
   $input: ObtainJSONWebTokenInput!
 ) {
   tokenAuth(input: $input) {
@@ -78,7 +78,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "SigninUserMutation",
+    "name": "TokenAuthMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -86,19 +86,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "SigninUserMutation",
+    "name": "TokenAuthMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
-    "name": "SigninUserMutation",
+    "name": "TokenAuthMutation",
     "id": null,
-    "text": "mutation SigninUserMutation(\n  $input: ObtainJSONWebTokenInput!\n) {\n  tokenAuth(input: $input) {\n    token\n  }\n}\n",
+    "text": "mutation TokenAuthMutation(\n  $input: ObtainJSONWebTokenInput!\n) {\n  tokenAuth(input: $input) {\n    token\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '90843e3fe29f01256162f35c8c397aa2';
+(node/*: any*/).hash = '84afff6196322f5a3dd6ee434b08dde7';
 module.exports = node;
