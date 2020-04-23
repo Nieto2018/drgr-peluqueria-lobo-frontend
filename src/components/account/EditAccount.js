@@ -8,16 +8,17 @@ import { translate } from 'react-multi-lang'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import { Link } from "react-router-dom"
 
-import { HOME_URL, GRAPHQL_URL, GRAPHQL_SUBSCRIPTION_WS } from '../../Constants'
+import { G_USER_EMAIL, HOME_URL } from '../../Constants'
 import { ListAlert, PhoneInput } from '../utils/CustomComponents'
 import EditAccountMutation from '../../mutations/account/EditAccountMutation'
 import SendVerificationEmailMutation from '../../mutations/account/SendVerificationEmailMutation'
+import toast from '../utils/Toast'
 
 
 function EditAccount(props) {
 
 
-    const email = 'test@test.com'
+    const email = localStorage.getItem(G_USER_EMAIL)
     const updateEmailFormRef = React.createRef()
     const [validatedUpdateEmailForm, setValidatedUpdateEmailForm] = useState(false)
     const [newEmail, setNewEmail] = useState('')
@@ -60,9 +61,7 @@ function EditAccount(props) {
         setValidatedUpdateEmailForm(true)
 
         if (isValidForm) {
-            SendVerificationEmailMutation(
-                email,
-                (data, errors) => {
+            SendVerificationEmailMutation(newEmail, "UPDATE_EMAIL", (data, errors) => {
                     let errorMessageList = []
 
                     if (errors.length > 0) {
@@ -83,22 +82,8 @@ function EditAccount(props) {
                         })
 
                     } else {
-
-                        if ("OK" === data.result) {
-                            SendVerificationEmailMutation(email, "UPDATE_EMAIL", (dataEmail, errors) => {
-                                if (errors.length > 0) {
-                                    errors.forEach(error => {
-                                        console.error(error)
-                                    })
-                                    errorMessageList.push(props.t('error.AdministratorContact'))
-                                } else{
-                                    setShowUpdateEmailModal(false)
-                                }
-                            })
-                        } else {
-                            errorMessageList.push(props.t('error.AdministratorContact'))
-                        }
-
+                        setShowUpdateEmailModal(false)
+                        toast(<p><span role="img" aria-label="emoji">📨</span> {props.t('generic.MessageSentToEmail')}</p>)
                     }
 
                     if (errorMessageList.length > 0) {
@@ -194,10 +179,6 @@ function EditAccount(props) {
 
             <section id="main" className="wrapper">
                 <div className="inner login">
-
-                    REACT_APP_BACKEND_URL: {process.env.REACT_APP_BACKEND_URL}<br />
-                    GRAPHQL_URL: {GRAPHQL_URL}<br />
-                    GRAPHQL_SUBSCRIPTION_WS: {GRAPHQL_SUBSCRIPTION_WS}<br />
 
                     {!userCreated ?
                         <div className="content">
@@ -385,7 +366,7 @@ function EditAccount(props) {
                                 <input type="submit" value={props.t('generic.Save')} className="primary small" />
                             </div>
                             <div className="align-center-content">
-                                <Link to={HOME_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
+                                <Link to={HOME_URL} >{props.t('link.GoTo', { destination: props.t('link.Home') })}</Link>
                             </div>
 
 
@@ -396,7 +377,7 @@ function EditAccount(props) {
                             <h3>{props.t('account.EditAccount')}</h3>
 
                             <p>{props.t('account.CreateAccountEmailSent', { email_address: email })}</p>
-                            <Link to={HOME_URL} >{props.t('link.GoTo', { param: props.t('link.Home') })}</Link>
+                            <Link to={HOME_URL} >{props.t('link.GoTo', { destination: props.t('link.Home') })}</Link>
                         </div>
 
                     }

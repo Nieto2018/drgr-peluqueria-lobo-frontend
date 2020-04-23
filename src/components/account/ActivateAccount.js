@@ -92,7 +92,7 @@ class ActivateAccount extends React.Component {
                                 :
                                 <p>{this.props.t('account.AccountActivated')}</p>
                             }
-                            <Link to={HOME_URL}>{this.props.t('link.GoTo', { param: this.props.t('link.Home') })}</Link>
+                            <Link to={HOME_URL}>{this.props.t('link.GoTo', { destination: this.props.t('link.Home') })}</Link>
                         </div>
 
                     </div>

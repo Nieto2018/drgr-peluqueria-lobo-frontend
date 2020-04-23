@@ -21,7 +21,7 @@ import Elements from './Elements'
 import Footer from './Footer'
 import Generic from './Generic';
 import Header from './Header'
-import Home from './Home'
+// import Home from './Home'
 import LogIn from './account/LogIn'
 import PageNotFound from './PageNotFound'
 import Protected from './Protected'
