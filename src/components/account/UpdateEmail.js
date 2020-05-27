@@ -70,7 +70,7 @@ function EditAccount(props) {
     }
 
     return (
-        <div className="custom-container-column-center custom-container">
+        <div className="custom-container-column-center custom-container-mb10">
 
             {/* Email form */}
             <InputGroup>

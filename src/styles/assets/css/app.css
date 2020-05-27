@@ -203,7 +203,7 @@ form > .form-group-center {
   flex-direction: column;
 }
 
-.custom-container > * {
+.custom-container-mb10 > * {
   margin-bottom: 10px;
 }
 
